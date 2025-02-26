@@ -1,0 +1,44 @@
+/* Centralização do conteúdo */
+.container {
+  height: 100vh;  // Ocupa a altura total da tela
+}
+
+.card {
+  border-radius: 10px;  // Bordas arredondadas
+}
+
+.card-header {
+  background-color: #007bff;  // Cor de fundo ao passar o mouse
+  border-bottom: none;  // Remove a borda inferior do cabeçalho
+  color: #ffffff;
+}
+
+
+button:hover {
+  background-color: #007bff;  // Cor de fundo ao passar o mouse
+  border-color: #007bff;  // Cor da borda ao passar o mouse
+}
+
+button:disabled {
+  background-color: #d6d6d6;  // Cor do botão desabilitado
+  border-color: #d6d6d6;
+}
+
+.card-body {
+  padding: 2rem;  // Adiciona mais espaço interno na parte do corpo da card
+}
+
+.form-group label {
+  font-weight: bold;  // Torna o texto do label mais forte
+}
+
+input.form-control {
+  border-radius: 5px;  // Bordas arredondadas nos inputs
+  box-shadow: none;  // Remove a sombra do input
+  border: 1px solid #ccc;  // Borda suave
+}
+
+input.form-control:focus {
+  border-color: #007bff;  // Cor da borda do input ao focar
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);  // Sombra suave ao focar
+}
