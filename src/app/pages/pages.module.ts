@@ -6,18 +6,8 @@ import { PagamentosComponent } from './pagamentos/pagamentos.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 
-
-
 @NgModule({
-  declarations: [
-    AlunosComponent,
-    ProfessoresComponent,
-    PagamentosComponent,
-    LoginComponent
-  ],
-  imports: [
-    CommonModule,
-    FormsModule
-  ]
+  declarations: [AlunosComponent, ProfessoresComponent, PagamentosComponent],
+  imports: [CommonModule, FormsModule],
 })
-export class PagesModule { }
+export class PagesModule {}

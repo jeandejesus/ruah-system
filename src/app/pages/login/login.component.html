@@ -9,10 +9,10 @@
           <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
             <!-- Campo de Usuário -->
             <div class="form-group">
-              <label for="username">Usuário</label>
-              <input type="text" id="username" class="form-control" required [(ngModel)]="username" name="username" #usernameModel="ngModel">
+              <label for="username">Email</label>
+              <input type="text" id="username" class="form-control" required [(ngModel)]="email" name="email" #usernameModel="ngModel">
               <div *ngIf="usernameModel.invalid && usernameModel.touched" class="text-danger">
-                O campo de usuário é obrigatório.
+                O campo de email é obrigatório.
               </div>
             </div>
 

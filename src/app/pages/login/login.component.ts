@@ -5,26 +5,29 @@ import { AuthenticationService } from 'src/app/core/services/authentication.serv
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  username: string = '';  // Para armazenar o nome de usuário
-  password: string = '';  // Para armazenar a senha
+  email: string = ''; // Para armazenar o nome de usuário
+  password: string = ''; // Para armazenar a senha
   errorMessage: string = '';
 
-  constructor(private authService: AuthenticationService, private router: Router) {}
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router
+  ) {}
 
-   onSubmit() {
-    this.authService.login(this.username, this.password).subscribe(
-      (response) => {
-         console.log('Login bem-sucedido:', response);
-        localStorage.setItem('authToken', response.accessToken);  // Armazena o token no localStorage
-        this.router.navigate(['/dashboard']);  // Redireciona para a página do dashboard
+  onSubmit() {
+    this.authService.login(this.email, this.password).subscribe({
+      next: (response) => {
+        console.log('Login bem-sucedido:', response.usuarioLogado); // Log para debug
+        localStorage.setItem('authToken', response.usuarioLogado.accessToken); // Armazena o token no localStorage
+        this.router.navigate(['/dashboard']); // Redireciona para a página do dashboard
       },
-      (error) => {
+      error: (error) => {
         // Se ocorrer um erro, mostramos a mensagem de erro
         this.errorMessage = error.error.message || 'Erro ao fazer login';
-      }
-    );
+      },
+    });
   }
 }
