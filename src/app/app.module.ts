@@ -8,9 +8,15 @@ import { AuthInterceptor } from './core/interceptor/auth.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Importe o FormsModule
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 @NgModule({
-  declarations: [AppComponent, RegisterComponent, LoginComponent],
+  declarations: [
+    AppComponent,
+    RegisterComponent,
+    LoginComponent,
+    DashboardComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthenticationService {
   // A URL do backend para o login
-  private apiUrl = 'http://localhost:3000/auth/login'; // Altere para a URL correta do seu backend
+  private apiUrl = 'http://localhost:3000/auth'; // Altere para a URL correta do seu backend
 
   constructor(private http: HttpClient) {}
 
@@ -18,7 +18,7 @@ export class AuthenticationService {
     });
 
     return this.http.post(
-      this.apiUrl,
+      `${this.apiUrl}/login`,
       { email, password },
       { headers, withCredentials: true }
     );
