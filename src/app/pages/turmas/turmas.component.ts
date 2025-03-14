@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TurmaService } from 'src/app/core/services/turma.service';
 import * as bootstrap from 'bootstrap';
+import { LocaisService } from 'src/app/core/services/locais.service';
 
 @Component({
   selector: 'app-turmas',
@@ -10,20 +11,26 @@ import * as bootstrap from 'bootstrap';
 })
 export class TurmasComponent implements OnInit {
   turmas: any[] = []; // Lista de turmas existentes
-  novaTurma = {
+  locais: any[] = []; // Lista de locais
+  turma = {
     name: '',
     duration: 0,
     schedule: '',
-    location: '',
+    local: '', // ID do local selecionado
   };
 
   editMode = false; // Define se estamos em modo de edição
   turmaId: string | null = null; // Para armazenar o ID da turma, caso seja edição
 
-  constructor(private turmaService: TurmaService, private router: Router) {}
+  constructor(
+    private turmaService: TurmaService,
+    private localService: LocaisService, // Injetando o serviço de Local
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.carregarTurmas(); // Carregar as turmas existentes
+    this.carregarLocais(); // Carregar os locais cadastrados
   }
 
   // Método para carregar todas as turmas
@@ -38,10 +45,27 @@ export class TurmasComponent implements OnInit {
     );
   }
 
-  openModal() {
+  // Método para carregar todos os locais
+  carregarLocais(): void {
+    this.localService.getLocais().subscribe(
+      (response) => {
+        this.locais = response;
+      },
+      (error) => {
+        console.error('Erro ao carregar os locais', error);
+      }
+    );
+  }
+
+  openModal(turma: any = {}) {
+    if (turma) {
+      this.editMode = true;
+      this.turmaId = turma._id;
+      this.turma = { ...turma }; // Usando spread operator para não mutar a referência
+    }
+
     const modalElement = document.getElementById('turmaModal');
 
-    // Verifique se o modalElement não é null antes de usá-lo
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
       modal.show();
@@ -52,7 +76,8 @@ export class TurmasComponent implements OnInit {
 
   // Método para enviar o formulário (criar ou editar)
   onSubmit(): void {
-    if (this.editMode && this.turmaId) {
+    console.log(this.turma);
+    if (this.turmaId) {
       this.atualizarTurma();
     } else {
       this.criarTurma();
@@ -61,7 +86,7 @@ export class TurmasComponent implements OnInit {
 
   // Método para criar a turma
   criarTurma(): void {
-    this.turmaService.criarTurma(this.novaTurma).subscribe(
+    this.turmaService.criarTurma(this.turma).subscribe(
       (response) => {
         console.log('Turma criada com sucesso!', response);
         this.carregarTurmas(); // Recarregar lista de turmas
@@ -76,7 +101,7 @@ export class TurmasComponent implements OnInit {
   // Método para atualizar a turma
   atualizarTurma(): void {
     if (this.turmaId) {
-      this.turmaService.atualizarTurma(this.turmaId, this.novaTurma).subscribe(
+      this.turmaService.atualizarTurma(this.turmaId, this.turma).subscribe(
         (response) => {
           console.log('Turma atualizada com sucesso!', response);
           this.carregarTurmas(); // Recarregar lista de turmas
@@ -84,6 +109,21 @@ export class TurmasComponent implements OnInit {
         },
         (error) => {
           console.error('Erro ao atualizar a turma', error);
+        }
+      );
+    }
+  }
+
+  // Método para excluir a turma
+  excluirTurma(id: string): void {
+    if (confirm('Tem certeza que deseja excluir esta turma?')) {
+      this.turmaService.deletarTurma(id).subscribe(
+        (response) => {
+          console.log('Turma excluída com sucesso!', response);
+          this.carregarTurmas(); // Recarregar lista de turmas
+        },
+        (error) => {
+          console.error('Erro ao excluir a turma', error);
         }
       );
     }

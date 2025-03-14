@@ -6,6 +6,7 @@ import { authGuard } from './guards/auth.guard';
 import { TurmasComponent } from './pages/turmas/turmas.component';
 import { LayoutComponent } from './layout/layout.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { LocaisComponent } from './pages/locais/locais.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'turmas', component: TurmasComponent },
+      { path: 'locais', component: LocaisComponent },
     ],
   },
   { path: 'login', component: LoginComponent },
@@ -32,6 +34,11 @@ const routes: Routes = [
       import('./pages/dashboard/dashboard.module').then(
         (m) => m.DashboardModule
       ),
+  },
+  {
+    path: 'locais',
+    loadChildren: () =>
+      import('./pages/locais/locais.module').then((m) => m.LocaisModule),
   },
 ];
 

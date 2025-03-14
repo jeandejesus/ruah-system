@@ -1,17 +1,41 @@
 <!-- Botão para abrir o modal de criação/edição -->
-<button class="btn btn-primary" (click)="openModal()">Criar Turma</button>
+<h2>Gerenciamento de Locais</h2>
 
-<!-- Lista de turmas existentes -->
+<button class="btn btn-primary" (click)="openModal()">Nova Turma</button>
+
+<!-- Lista de turmas existentes transformada em tabela -->
 <div class="mt-4">
   <h3>Turmas Existentes</h3>
-  <ul class="list-group">
-    <li *ngFor="let turma of turmas" class="list-group-item">
-      {{ turma.name }} - {{ turma.schedule }} - {{ turma.location }}
-      <button class="btn btn-info btn-sm float-right" (click)="openModal()">
-        Editar
-      </button>
-    </li>
-  </ul>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Horário</th>
+        <th scope="col">Local</th>
+        <th scope="col" class="text-center">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let turma of turmas">
+        <td>{{ turma.name }}</td>
+        <td>{{ turma.schedule }}</td>
+        <td>{{ turma.local.name }}</td>
+        <td class="text-center">
+          <!-- Botão de edição -->
+          <button class="btn btn-info btn-sm mr-2" (click)="openModal(turma)">
+            Editar
+          </button>
+          <!-- Botão de exclusão -->
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="excluirTurma(turma._id)"
+          >
+            Excluir
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <!-- Modal de criação/edição -->
@@ -44,7 +68,7 @@
               id="nome"
               class="form-control"
               required
-              [(ngModel)]="novaTurma.name"
+              [(ngModel)]="turma.name"
               name="nome"
               #nomeModel="ngModel"
             />
@@ -63,7 +87,7 @@
               id="duracao"
               class="form-control"
               required
-              [(ngModel)]="novaTurma.duration"
+              [(ngModel)]="turma.duration"
               name="duracao"
               #duracaoModel="ngModel"
             />
@@ -77,15 +101,18 @@
 
           <div class="form-group">
             <label for="local">Local</label>
-            <input
-              type="text"
+            <select
               id="local"
-              class="form-control"
+              class="form-select"
               required
-              [(ngModel)]="novaTurma.location"
+              [(ngModel)]="turma.local"
               name="local"
               #localModel="ngModel"
-            />
+            >
+              <option *ngFor="let local of locais" [value]="local._id">
+                {{ local.name }}
+              </option>
+            </select>
             <div
               *ngIf="localModel.invalid && localModel.touched"
               class="text-danger"
@@ -101,7 +128,7 @@
               id="horario"
               class="form-control"
               required
-              [(ngModel)]="novaTurma.schedule"
+              [(ngModel)]="turma.schedule"
               name="horario"
               #horarioModel="ngModel"
             />

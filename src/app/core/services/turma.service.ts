@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class TurmaService {
   // URL do backend onde as turmas são manipuladas
-  private baseUrl = 'http://localhost:3000/classes'; // Substitua com o URL do seu backend
+  private baseUrl = 'http://localhost:3000/turmas'; // Substitua com o URL do seu backend
 
   constructor(private http: HttpClient) {}
 
