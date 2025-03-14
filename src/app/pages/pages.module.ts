@@ -5,6 +5,7 @@ import { ProfessoresComponent } from './professores/professores.component';
 import { PagamentosComponent } from './pagamentos/pagamentos.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
+import { TurmasComponent } from './turmas/turmas.component';
 
 @NgModule({
   declarations: [AlunosComponent, ProfessoresComponent, PagamentosComponent],

@@ -1,0 +1,127 @@
+<!-- Botão para abrir o modal de criação/edição -->
+<button class="btn btn-primary" (click)="openModal()">Criar Turma</button>
+
+<!-- Lista de turmas existentes -->
+<div class="mt-4">
+  <h3>Turmas Existentes</h3>
+  <ul class="list-group">
+    <li *ngFor="let turma of turmas" class="list-group-item">
+      {{ turma.name }} - {{ turma.schedule }} - {{ turma.location }}
+      <button class="btn btn-info btn-sm float-right" (click)="openModal()">
+        Editar
+      </button>
+    </li>
+  </ul>
+</div>
+
+<!-- Modal de criação/edição -->
+<div
+  class="modal fade"
+  id="turmaModal"
+  tabindex="-1"
+  aria-labelledby="turmaModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="turmaModalLabel">
+          {{ editMode ? "Editar Turma" : "Criar Turma" }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="onSubmit()" #turmaForm="ngForm">
+          <div class="form-group">
+            <label for="nome">Nome da Turma</label>
+            <input
+              type="text"
+              id="nome"
+              class="form-control"
+              required
+              [(ngModel)]="novaTurma.name"
+              name="nome"
+              #nomeModel="ngModel"
+            />
+            <div
+              *ngIf="nomeModel.invalid && nomeModel.touched"
+              class="text-danger"
+            >
+              O campo nome é obrigatório.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="duracao">Duração</label>
+            <input
+              type="number"
+              id="duracao"
+              class="form-control"
+              required
+              [(ngModel)]="novaTurma.duration"
+              name="duracao"
+              #duracaoModel="ngModel"
+            />
+            <div
+              *ngIf="duracaoModel.invalid && duracaoModel.touched"
+              class="text-danger"
+            >
+              O campo duração é obrigatório.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="local">Local</label>
+            <input
+              type="text"
+              id="local"
+              class="form-control"
+              required
+              [(ngModel)]="novaTurma.location"
+              name="local"
+              #localModel="ngModel"
+            />
+            <div
+              *ngIf="localModel.invalid && localModel.touched"
+              class="text-danger"
+            >
+              O campo local é obrigatório.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="horario">Horário</label>
+            <input
+              type="text"
+              id="horario"
+              class="form-control"
+              required
+              [(ngModel)]="novaTurma.schedule"
+              name="horario"
+              #horarioModel="ngModel"
+            />
+            <div
+              *ngIf="horarioModel.invalid && horarioModel.touched"
+              class="text-danger"
+            >
+              O campo horário é obrigatório.
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary mt-4"
+            [disabled]="!turmaForm.valid"
+          >
+            {{ editMode ? "Atualizar" : "Criar" }}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

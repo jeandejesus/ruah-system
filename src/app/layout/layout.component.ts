@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { DashboardService } from 'src/app/core/services/dashboard.service';
-import { School } from 'src/app/interfaces/school.interface';
+import { DashboardService } from '../core/services/dashboard.service';
+import { School } from '../interfaces/school.interface';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  selector: 'app-layout',
+  templateUrl: './layout.component.html',
+  styleUrls: ['./layout.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class LayoutComponent {
   jwtHelper = new JwtHelperService();
   noExistesSchool = true;
   errorMessage: string = '';
@@ -36,14 +36,6 @@ export class DashboardComponent implements OnInit {
         },
       });
     }
-  }
-
-  onSubmit() {
-    this.dashboardService.createSchool(this.school).subscribe({
-      next: (response) => {
-        console.log(response);
-      },
-    });
   }
 
   logout() {
