@@ -12,7 +12,7 @@ import { LocaisService } from 'src/app/core/services/locais.service';
 export class TurmasComponent implements OnInit {
   turmas: any[] = []; // Lista de turmas existentes
   locais: any[] = []; // Lista de locais
-  turma = {
+  Novaturma = {
     name: '',
     duration: 0,
     schedule: '',
@@ -58,10 +58,14 @@ export class TurmasComponent implements OnInit {
   }
 
   openModal(turma: any = {}) {
-    if (turma) {
+    console.log(turma);
+    if (turma._id) {
       this.editMode = true;
       this.turmaId = turma._id;
-      this.turma = { ...turma }; // Usando spread operator para não mutar a referência
+      this.Novaturma = { ...turma }; // Usando spread operator para não mutar a referência
+      this.Novaturma.local = turma.local?._id; // Setando o ID do local
+    } else {
+      this.editMode = false;
     }
 
     const modalElement = document.getElementById('turmaModal');
@@ -76,7 +80,6 @@ export class TurmasComponent implements OnInit {
 
   // Método para enviar o formulário (criar ou editar)
   onSubmit(): void {
-    console.log(this.turma);
     if (this.turmaId) {
       this.atualizarTurma();
     } else {
@@ -86,7 +89,7 @@ export class TurmasComponent implements OnInit {
 
   // Método para criar a turma
   criarTurma(): void {
-    this.turmaService.criarTurma(this.turma).subscribe(
+    this.turmaService.criarTurma(this.Novaturma).subscribe(
       (response) => {
         console.log('Turma criada com sucesso!', response);
         this.carregarTurmas(); // Recarregar lista de turmas
@@ -101,7 +104,7 @@ export class TurmasComponent implements OnInit {
   // Método para atualizar a turma
   atualizarTurma(): void {
     if (this.turmaId) {
-      this.turmaService.atualizarTurma(this.turmaId, this.turma).subscribe(
+      this.turmaService.atualizarTurma(this.turmaId, this.Novaturma).subscribe(
         (response) => {
           console.log('Turma atualizada com sucesso!', response);
           this.carregarTurmas(); // Recarregar lista de turmas

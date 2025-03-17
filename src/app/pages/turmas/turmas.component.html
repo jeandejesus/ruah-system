@@ -68,7 +68,7 @@
               id="nome"
               class="form-control"
               required
-              [(ngModel)]="turma.name"
+              [(ngModel)]="Novaturma.name"
               name="nome"
               #nomeModel="ngModel"
             />
@@ -87,7 +87,7 @@
               id="duracao"
               class="form-control"
               required
-              [(ngModel)]="turma.duration"
+              [(ngModel)]="Novaturma.duration"
               name="duracao"
               #duracaoModel="ngModel"
             />
@@ -105,11 +105,15 @@
               id="local"
               class="form-select"
               required
-              [(ngModel)]="turma.local"
+              [(ngModel)]="Novaturma.local"
               name="local"
               #localModel="ngModel"
             >
-              <option *ngFor="let local of locais" [value]="local._id">
+              <option
+                *ngFor="let local of locais"
+                [value]="local._id"
+                [selected]="local._id === Novaturma.local"
+              >
                 {{ local.name }}
               </option>
             </select>
@@ -128,7 +132,7 @@
               id="horario"
               class="form-control"
               required
-              [(ngModel)]="turma.schedule"
+              [(ngModel)]="Novaturma.schedule"
               name="horario"
               #horarioModel="ngModel"
             />
