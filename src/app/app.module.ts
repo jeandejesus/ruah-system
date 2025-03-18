@@ -11,6 +11,8 @@ import { RegisterComponent } from './auth/register/register.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { TurmasComponent } from './pages/turmas/turmas.component';
 import { LayoutComponent } from './layout/layout.component';
+import { AlunosComponent } from './pages/alunos/alunos.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { LayoutComponent } from './layout/layout.component';
     LoginComponent,
     DashboardComponent,
     TurmasComponent,
+    AlunosComponent,
     LayoutComponent,
   ],
   imports: [
@@ -27,6 +30,7 @@ import { LayoutComponent } from './layout/layout.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgSelectModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

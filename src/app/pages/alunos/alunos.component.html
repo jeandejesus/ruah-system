@@ -1,1 +1,204 @@
-<p>alunos works!</p>
+<form (ngSubmit)="onSubmit()">
+  <div class="row">
+    <!-- Nome do aluno -->
+    <div class="col-md-6 col-12 mb-3">
+      <label for="name" class="form-label">Nome</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        [(ngModel)]="aluno.name"
+        name="name"
+        required
+      />
+    </div>
+
+    <!-- CPF -->
+    <div class="col-md-6 col-12 mb-3">
+      <label for="cpf" class="form-label">CPF</label>
+      <input
+        type="text"
+        class="form-control"
+        id="cpf"
+        [(ngModel)]="aluno.cpf"
+        name="cpf"
+        required
+      />
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- RG -->
+    <div class="col-md-6 col-12 mb-3">
+      <label for="rg" class="form-label">RG</label>
+      <input
+        type="text"
+        class="form-control"
+        id="rg"
+        [(ngModel)]="aluno.rg"
+        name="rg"
+      />
+    </div>
+
+    <!-- Data de Nascimento -->
+    <div class="col-md-6 col-12 mb-3">
+      <label for="birthDate" class="form-label">Data de Nascimento</label>
+      <input
+        type="date"
+        class="form-control"
+        id="birthDate"
+        [(ngModel)]="aluno.birthDate"
+        name="birthDate"
+      />
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Telefone -->
+    <div class="col-md-6 col-12 mb-3">
+      <label for="phone" class="form-label">Telefone</label>
+      <input
+        type="text"
+        class="form-control"
+        id="phone"
+        [(ngModel)]="aluno.phone"
+        name="phone"
+      />
+    </div>
+
+    <!-- Email -->
+    <div class="col-md-6 col-12 mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        [(ngModel)]="aluno.email"
+        name="email"
+      />
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Endereço -->
+    <div class="col-md-6 col-12 mb-3">
+      <label for="address" class="form-label">Endereço</label>
+      <input
+        type="text"
+        class="form-control"
+        id="address"
+        [(ngModel)]="aluno.address"
+        name="address"
+      />
+    </div>
+
+    <!-- Contato de Emergência -->
+    <div class="col-md-6 col-12 mb-3">
+      <label for="emergencyContactName" class="form-label"
+        >Contato de Emergência (Nome)</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="emergencyContactName"
+        [(ngModel)]="aluno.emergencyContact.name"
+        name="emergencyContactName"
+      />
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Se é menor de idade -->
+    <div class="col-md-6 col-12 mb-3 form-check">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="isMinor"
+        [(ngModel)]="aluno.isMinor"
+        name="isMinor"
+      />
+      <label class="form-check-label" for="isMinor">É menor de idade?</label>
+    </div>
+
+    <div class="row">
+      <!-- Responsável (Nome) -->
+      <div *ngIf="aluno.isMinor" class="col-md-6 col-12 mb-3">
+        <label for="responsibleName" class="form-label"
+          >Responsável (Nome)</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="responsibleName"
+          [(ngModel)]="aluno.responsible.name"
+          name="responsibleName"
+        />
+      </div>
+
+      <!-- Responsável (CPF) -->
+      <div *ngIf="aluno.isMinor" class="col-md-6 col-12 mb-3">
+        <label for="responsibleCpf" class="form-label">Responsável (CPF)</label>
+        <input
+          type="text"
+          class="form-control"
+          id="responsibleCpf"
+          [(ngModel)]="aluno.responsible.cpf"
+          name="responsibleCpf"
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Responsável (RG) -->
+      <div *ngIf="aluno.isMinor" class="col-md-6 col-12 mb-3">
+        <label for="responsibleRg" class="form-label">Responsável (RG)</label>
+        <input
+          type="text"
+          class="form-control"
+          id="responsibleRg"
+          [(ngModel)]="aluno.responsible.rg"
+          name="responsibleRg"
+        />
+      </div>
+
+      <!-- Responsável (Telefone) -->
+      <div *ngIf="aluno.isMinor" class="col-md-6 col-12 mb-3">
+        <label for="responsiblePhone" class="form-label"
+          >Responsável (Telefone)</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="responsiblePhone"
+          [(ngModel)]="aluno.responsible.phone"
+          name="responsiblePhone"
+        />
+      </div>
+    </div>
+
+    <!-- Turmas -->
+    <ng-select
+      [items]="turmas"
+      bindLabel="name"
+      bindValue="id"
+      placeholder="Selecione as turmas"
+      [(ngModel)]="aluno.turmas"
+      [multiple]="true"
+      [searchable]="true"
+      [closeOnSelect]="false"
+      [virtualScroll]="true"
+      [loading]="isLoading"
+      [clearable]="true"
+      class="form-control"
+    >
+    </ng-select>
+  </div>
+
+  <!-- Botões -->
+  <button type="submit" class="btn btn-success">
+    {{ editMode ? "Atualizar" : "Cadastrar" }}
+  </button>
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+    Cancelar
+  </button>
+</form>

@@ -7,6 +7,7 @@ import { TurmasComponent } from './pages/turmas/turmas.component';
 import { LayoutComponent } from './layout/layout.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LocaisComponent } from './pages/locais/locais.component';
+import { AlunosComponent } from './pages/alunos/alunos.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,11 @@ const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'turmas', component: TurmasComponent },
       { path: 'locais', component: LocaisComponent },
+      {
+        path: 'alunos',
+        component: AlunosComponent,
+        children: [{ path: 'cadastro', component: AlunosComponent }],
+      },
     ],
   },
   { path: 'login', component: LoginComponent },

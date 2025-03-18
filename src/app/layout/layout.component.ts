@@ -14,6 +14,7 @@ export class LayoutComponent {
   noExistesSchool = true;
   errorMessage: string = '';
   school: School = {};
+  alunoMenuOpen: boolean = false;
 
   constructor(
     private dashboardService: DashboardService,
@@ -41,5 +42,9 @@ export class LayoutComponent {
   logout() {
     localStorage.removeItem('authToken');
     this.router.navigate(['/login']);
+  }
+
+  toggleAlunoMenu() {
+    this.alunoMenuOpen = !this.alunoMenuOpen;
   }
 }

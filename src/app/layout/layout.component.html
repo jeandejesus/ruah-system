@@ -1,13 +1,16 @@
 <div class="row header" *ngIf="!noExistesSchool">
   <nav>{{ school.name }}</nav>
 </div>
+
 <div class="d-flex">
   <!-- Sidebar -->
   <div id="sidebar" class="sidebar bg-dark text-white">
     <h4 class="text-center mt-3">Painel da Escola</h4>
     <ul class="nav flex-column">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/painel/locais">📍 Locais</a>
+        <a class="nav-link" routerLink="/painel/locais">
+          <i class="bi bi-geo-alt"></i> Locais
+        </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="/painel/turmas">
@@ -19,11 +22,35 @@
           <i class="bi bi-person"></i> Professores
         </a>
       </li>
+
+      <!-- Alunos (com Submenu) -->
       <li class="nav-item">
-        <a class="nav-link" routerLink="/alunos">
+        <a class="nav-link" (mouseover)="toggleAlunoMenu()">
           <i class="bi bi-person-badge"></i> Alunos
+          <i
+            class="bi"
+            [class]="alunoMenuOpen ? 'bi-chevron-down' : 'bi-chevron-right'"
+          ></i>
+          <!-- Ícone para expandir/recolher -->
         </a>
+        <ul
+          *ngIf="alunoMenuOpen"
+          class="nav flex-column ms-3"
+          (mouseleave)="toggleAlunoMenu()"
+        >
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/painel/alunos/cadastro">
+              <i class="bi bi-plus-circle"></i> Cadastro de Aluno
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/painel/alunos/visualizacao">
+              <i class="bi bi-eye"></i> Visualização de Alunos
+            </a>
+          </li>
+        </ul>
       </li>
+
       <li class="nav-item">
         <a class="nav-link" routerLink="/pagamentos">
           <i class="bi bi-credit-card"></i> Pagamentos
@@ -42,7 +69,8 @@
     </ul>
   </div>
 
-  <div class="content p-4">
+  <!-- Content Area -->
+  <div class="content p-4 flex-grow-1">
     <router-outlet></router-outlet>
   </div>
 </div>
