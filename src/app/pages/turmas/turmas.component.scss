@@ -1,182 +1,182 @@
-/* turma.component.scss */
+// Variáveis globais
+$primary-color: #4a90e2;
+$secondary-color: #27ae60;
+$warning-color: #f1c40f;
+$danger-color: #e74c3c;
+$background-color: #f4f6f9;
+$text-color: #333;
+$border-radius: 10px;
+$box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
-/* Estilo geral da página */
-:host {
-  display: block;
-  padding: 20px;
-  background-color: #f4f4f4;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: $background-color;
+  color: $text-color;
 }
 
-/* Título da seção */
-h3 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #333;
+// Container principal
+div {
+  border-radius: $border-radius;
+  text-align: center;
+
+  h2,
+  h3 {
+    font-size: 24px;
+    color: $primary-color;
+    margin-bottom: 20px;
+  }
 }
 
-/* Estilo da tabela de turmas */
+// Tabela de turmas
 .table {
-  margin-top: 20px;
   width: 100%;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-collapse: collapse;
+  margin-top: 15px;
 
   thead {
-    background-color: #007bff;
-    color: white;
+    background: $primary-color;
+    color: #fff;
+
+    th {
+      padding: 10px;
+      text-align: left;
+    }
   }
 
   tbody {
-    background-color: #f9f9f9;
+    text-align: start;
+    tr {
+      &:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      &:hover {
+        background-color: lighten($primary-color, 40%);
+      }
+    }
+
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
   }
 
-  th,
-  td {
-    padding: 12px;
-    text-align: left;
-  }
+  // Botões de ação
+  .btn {
+    padding: 8px 12px;
+    font-size: 13px;
+    border-radius: $border-radius;
+    transition: all 0.3s ease-in-out;
+    margin: 0 10px;
 
-  th {
-    font-weight: bold;
-    font-size: 1rem;
-  }
+    &-warning {
+      background-color: $warning-color;
+      border: none;
+      color: #fff;
 
-  td {
-    font-size: 0.9rem;
-  }
+      &:hover {
+        background-color: darken($warning-color, 10%);
+      }
+    }
 
-  tr:hover {
-    background-color: #f0f0f0;
-  }
+    &-danger {
+      background-color: $danger-color;
+      border: none;
+      color: #fff;
 
-  /* Estilo da célula de ações */
-  .text-center {
-    text-align: center;
-  }
-
-  button {
-    margin-left: 10px;
+      &:hover {
+        background-color: darken($danger-color, 10%);
+      }
+    }
   }
 }
 
-/* Estilo do modal */
+// Estilização do modal
 .modal-content {
-  border-radius: 8px;
-  padding: 20px;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
 
   .modal-header {
-    background-color: #007bff;
-    color: white;
-    border-bottom: 1px solid #ddd;
+    background-color: $primary-color;
+    color: #fff;
+    border-radius: $border-radius $border-radius 0 0;
+    padding: 15px;
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
 
     .btn-close {
-      background-color: transparent;
+      background: transparent;
       border: none;
-      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      color: #fff;
+
+      &:hover {
+        color: darken(#fff, 20%);
+      }
     }
   }
 
   .modal-body {
     padding: 20px;
-    background-color: #fff;
-  }
-}
 
-/* Estilo do formulário */
-form {
-  .form-group {
-    margin-bottom: 15px;
-
-    label {
+    .form-label {
       font-weight: 600;
-      color: #555;
-      margin-bottom: 5px;
+      font-size: 14px;
     }
 
-    input,
-    select {
+    .form-control {
       width: 100%;
       padding: 10px;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
+      border-radius: $border-radius;
+      border: 1px solid #ddd;
+      transition: all 0.3s ease-in-out;
 
       &:focus {
-        border-color: #007bff;
+        border-color: $primary-color;
         outline: none;
+        box-shadow: 0 0 8px rgba($primary-color, 0.2);
       }
     }
 
-    .text-danger {
-      font-size: 0.875rem;
-      color: #f44336;
-      margin-top: 5px;
-    }
-  }
+    .btn-success {
+      background-color: $secondary-color;
+      border: none;
+      padding: 10px 15px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: $border-radius;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
 
-  /* Botão de ação */
-  button {
-    width: 100%;
-    padding: 10px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-    &:hover {
-      background-color: #0056b3;
-    }
-
-    &:disabled {
-      background-color: #b0d0f2;
-      cursor: not-allowed;
+      &:hover {
+        background-color: darken($secondary-color, 10%);
+      }
     }
   }
 }
 
-/* Estilo para o botão de criar turma */
-button.btn-primary {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 1.1rem;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-
-  &:hover {
-    background-color: #218838;
-  }
+.modal-dialog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Estilo para o botão de exclusão */
-button.btn-danger {
-  margin-left: 10px;
-  background-color: #dc3545;
-  border: none;
-  border-radius: 5px;
-
-  &:hover {
-    background-color: #c82333;
+// Responsividade
+@media (max-width: 768px) {
+  div {
+    padding: 15px;
   }
-}
 
-/* Estilo do botão de editar */
-button.btn-info {
-  background-color: #17a2b8;
-  border: none;
-  border-radius: 5px;
+  .table {
+    font-size: 12px;
+  }
 
-  &:hover {
-    background-color: #138496;
+  .btn {
+    padding: 6px 10px;
+    font-size: 12px;
   }
 }

@@ -109,6 +109,87 @@ button[type="button"]:hover {
   color: #dc3545;
 }
 
+::ng-deep ng-select {
+  background: #fff !important;
+  border: 1px solid #ced4da !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.3s ease-in-out !important;
+
+  .ng-select-container {
+    background-color: #fff !important;
+    border: none !important;
+    font-size: 1rem !important;
+    color: #495057 !important;
+    border-radius: 8px !important;
+  }
+
+  .ng-value-container {
+    background-color: #fff !important;
+
+    .ng-value {
+      background: #007bff !important; /* Cor azul para cada item selecionado */
+      color: #fff !important;
+      border-radius: 15px !important;
+      font-size: 0.9rem !important;
+      padding: 0px 10px;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important; /* Espaço entre o texto e o ícone */
+      white-space: nowrap !important; /* Evita que o texto quebre */
+      max-width: 100% !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+
+      .ng-value-icon {
+        color: #fff !important;
+        transition: color 0.2s ease-in-out !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 20px !important;
+        height: 20px !important;
+        min-width: unset !important; /* Remove a largura mínima que pode estar empurrando o texto */
+
+        &:hover {
+          color: #ff4d4d !important; /* Vermelho ao passar o mouse no botão de remover */
+        }
+      }
+    }
+  }
+
+  .ng-dropdown-panel {
+    background-color: #fff !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .ng-option {
+    padding: 10px 12px !important;
+    font-size: 1rem !important;
+    transition: background 0.3s ease-in-out !important;
+
+    &:hover {
+      background: #f8f9fa !important;
+    }
+
+    &.ng-option-selected {
+      background: #007bff !important;
+      color: #fff !important;
+    }
+  }
+
+  .ng-arrow-wrapper {
+    color: #495057 !important;
+  }
+
+  &:focus-within {
+    border-color: #007bff !important;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5) !important;
+  }
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 10px;

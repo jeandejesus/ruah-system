@@ -1,11 +1,9 @@
-<!-- Botão para abrir o modal de criação/edição -->
-<h2>Gerenciamento de Locais</h2>
-
-<button class="btn btn-primary" (click)="openModal()">Nova Turma</button>
-
 <!-- Lista de turmas existentes transformada em tabela -->
 <div class="mt-4">
-  <h3>Turmas Existentes</h3>
+  <h2>Gerenciamento de Turmas</h2>
+
+  <button class="btn btn-primary" (click)="openModal()">Nova Turma</button>
+
   <table class="table table-striped">
     <thead>
       <tr>
@@ -20,9 +18,9 @@
         <td>{{ turma.name }}</td>
         <td>{{ turma.schedule }}</td>
         <td>{{ turma.local.name }}</td>
-        <td class="text-center">
+        <td class="text-center buttons">
           <!-- Botão de edição -->
-          <button class="btn btn-info btn-sm mr-2" (click)="openModal(turma)">
+          <button class="btn btn-sm btn-primary" (click)="openModal(turma)">
             Editar
           </button>
           <!-- Botão de exclusão -->

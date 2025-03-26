@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()">
+<form (ngSubmit)="onSubmit()" class="mt-4">
   <div class="row">
     <!-- Nome do aluno -->
     <div class="col-md-6 col-12 mb-3">
@@ -105,6 +105,36 @@
         name="emergencyContactName"
       />
     </div>
+    <div class="col-md-6 col-12 mb-3">
+      <label for="responsiblePhone" class="form-label"
+        >Contato de emergência (Telefone)</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="responsiblePhone"
+        [(ngModel)]="aluno.emergencyContact.phone"
+        name="responsiblePhone"
+      />
+    </div>
+    <div class="col-md-6 col-12 mb-3">
+      <label for="turmas" class="form-label">Turmas</label>
+      <ng-select
+        [items]="turmas"
+        bindLabel="name"
+        bindValue="_id"
+        [(ngModel)]="aluno.turmas"
+        [ngModelOptions]="{ standalone: true }"
+        name="turmas"
+        [multiple]="true"
+        [searchable]="true"
+        [closeOnSelect]="true"
+        [virtualScroll]="true"
+        [loading]="isLoading"
+        class="form-control"
+      >
+      </ng-select>
+    </div>
   </div>
 
   <div class="row">
@@ -119,86 +149,64 @@
       />
       <label class="form-check-label" for="isMinor">É menor de idade?</label>
     </div>
+  </div>
 
-    <div class="row">
-      <!-- Responsável (Nome) -->
-      <div *ngIf="aluno.isMinor" class="col-md-6 col-12 mb-3">
-        <label for="responsibleName" class="form-label"
-          >Responsável (Nome)</label
-        >
-        <input
-          type="text"
-          class="form-control"
-          id="responsibleName"
-          [(ngModel)]="aluno.responsible.name"
-          name="responsibleName"
-        />
-      </div>
-
-      <!-- Responsável (CPF) -->
-      <div *ngIf="aluno.isMinor" class="col-md-6 col-12 mb-3">
-        <label for="responsibleCpf" class="form-label">Responsável (CPF)</label>
-        <input
-          type="text"
-          class="form-control"
-          id="responsibleCpf"
-          [(ngModel)]="aluno.responsible.cpf"
-          name="responsibleCpf"
-        />
-      </div>
+  <div class="row" *ngIf="aluno.isMinor">
+    <!-- Responsável (Nome) -->
+    <div class="col-md-6 col-12 mb-3">
+      <label for="responsibleName" class="form-label">Responsável (Nome)</label>
+      <input
+        type="text"
+        class="form-control"
+        id="responsibleName"
+        [(ngModel)]="aluno.responsible.name"
+        name="responsibleName"
+      />
     </div>
 
-    <div class="row">
-      <!-- Responsável (RG) -->
-      <div *ngIf="aluno.isMinor" class="col-md-6 col-12 mb-3">
-        <label for="responsibleRg" class="form-label">Responsável (RG)</label>
-        <input
-          type="text"
-          class="form-control"
-          id="responsibleRg"
-          [(ngModel)]="aluno.responsible.rg"
-          name="responsibleRg"
-        />
-      </div>
-
-      <!-- Responsável (Telefone) -->
-      <div *ngIf="aluno.isMinor" class="col-md-6 col-12 mb-3">
-        <label for="responsiblePhone" class="form-label"
-          >Responsável (Telefone)</label
-        >
-        <input
-          type="text"
-          class="form-control"
-          id="responsiblePhone"
-          [(ngModel)]="aluno.responsible.phone"
-          name="responsiblePhone"
-        />
-      </div>
+    <!-- Responsável (CPF) -->
+    <div class="col-md-6 col-12 mb-3">
+      <label for="responsibleCpf" class="form-label">Responsável (CPF)</label>
+      <input
+        type="text"
+        class="form-control"
+        id="responsibleCpf"
+        [(ngModel)]="aluno.responsible.cpf"
+        name="responsibleCpf"
+      />
     </div>
 
-    <!-- Turmas -->
-    <ng-select
-      [items]="turmas"
-      bindLabel="name"
-      bindValue="id"
-      placeholder="Selecione as turmas"
-      [(ngModel)]="aluno.turmas"
-      [multiple]="true"
-      [searchable]="true"
-      [closeOnSelect]="false"
-      [virtualScroll]="true"
-      [loading]="isLoading"
-      [clearable]="true"
-      class="form-control"
-    >
-    </ng-select>
+    <!-- Responsável (RG) -->
+    <div class="col-md-6 col-12 mb-3">
+      <label for="responsibleRg" class="form-label">Responsável (RG)</label>
+      <input
+        type="text"
+        class="form-control"
+        id="responsibleRg"
+        [(ngModel)]="aluno.responsible.rg"
+        name="responsibleRg"
+      />
+    </div>
+
+    <!-- Responsável (Telefone) -->
+    <div class="col-md-6 col-12 mb-3">
+      <label for="responsiblePhone" class="form-label"
+        >Responsável (Telefone)</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="responsiblePhone"
+        [(ngModel)]="aluno.responsible.phone"
+        name="responsiblePhone"
+      />
+    </div>
   </div>
 
   <!-- Botões -->
-  <button type="submit" class="btn btn-success">
-    {{ editMode ? "Atualizar" : "Cadastrar" }}
-  </button>
-  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-    Cancelar
-  </button>
+  <div class="row justify-content-center mt-3">
+    <button type="submit" class="btn btn-success col-3 m-2">
+      {{ editMode ? "Atualizar" : "Cadastrar" }}
+    </button>
+  </div>
 </form>

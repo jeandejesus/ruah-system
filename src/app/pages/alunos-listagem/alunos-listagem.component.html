@@ -1,0 +1,29 @@
+<div class="mt-4">
+  <input
+    type="text"
+    [(ngModel)]="searchText"
+    placeholder="Buscar aluno..."
+    class="search-input"
+  />
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Telefone</th>
+        <th>Turmas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let aluno of alunos | alunoFilter : searchText">
+        <td>{{ aluno.name }}</td>
+        <td>{{ aluno.email }}</td>
+        <td>{{ aluno.phone }}</td>
+        <td>
+          {{ getTurmas(aluno) }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

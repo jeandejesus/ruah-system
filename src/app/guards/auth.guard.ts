@@ -18,6 +18,7 @@ export const authGuard = (roleRequired?: string) => {
     return false;
   }
   const decodedToken: any = jwtHelper.decodeToken(token);
+  console.log('Token decodificado:', decodedToken);
 
   if (roleRequired && decodedToken.role !== roleRequired) {
     console.log('Usuário sem permissão. Redirecionando para "não autorizado".');

@@ -58,7 +58,6 @@ export class TurmasComponent implements OnInit {
   }
 
   openModal(turma: any = {}) {
-    console.log(turma);
     if (turma._id) {
       this.editMode = true;
       this.turmaId = turma._id;
@@ -66,6 +65,12 @@ export class TurmasComponent implements OnInit {
       this.Novaturma.local = turma.local?._id; // Setando o ID do local
     } else {
       this.editMode = false;
+      this.Novaturma = {
+        name: '',
+        duration: 0,
+        schedule: '',
+        local: '', // ID do local selecionado
+      };
     }
 
     const modalElement = document.getElementById('turmaModal');

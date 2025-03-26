@@ -15,6 +15,7 @@ export class LayoutComponent {
   errorMessage: string = '';
   school: School = {};
   alunoMenuOpen: boolean = false;
+  token = localStorage.getItem('authToken');
 
   constructor(
     private dashboardService: DashboardService,

@@ -22,7 +22,7 @@ export class LoginComponent {
       next: (response) => {
         console.log('Login bem-sucedido:', response.usuarioLogado); // Log para debug
         localStorage.setItem('authToken', response.usuarioLogado.accessToken); // Armazena o token no localStorage
-        this.router.navigate(['/dashboard']); // Redireciona para a página do dashboard
+        this.router.navigate(['/painel']); // Redireciona para a página do dashboard
       },
       error: (error) => {
         // Se ocorrer um erro, mostramos a mensagem de erro

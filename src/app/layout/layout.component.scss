@@ -1,13 +1,11 @@
-.container {
-  max-width: 900px;
-}
-
 .card {
   border-radius: 10px;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   &:hover {
     transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
 
   h5 {
@@ -17,35 +15,57 @@
 
 .header {
   height: 50px;
+  width: 100%;
+  margin-left: 119px;
   color: white;
   background: #570a0a;
   text-align: center;
   justify-content: center;
   display: flex;
   align-items: center;
+  position: fixed;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #sidebar {
   width: 250px;
   height: 100vh;
   position: fixed;
-  top: 0;
   left: 0;
   overflow-y: auto;
+  background-color: #2c3e50;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .content {
   margin-left: 250px;
   width: calc(100% - 250px);
+  transition: margin-left 0.3s ease-in-out;
 }
+
 .nav-link {
   padding: 10px;
   display: flex;
   align-items: center;
+  color: #ecf0f1;
+  transition: all 0.3s ease-in-out;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding-left: 25px;
+  }
 }
+
 .nav-link i {
   margin-right: 10px;
 }
+
+.bgdark {
+  background-color: rgb(2 34 63);
+}
+
 /* Sidebar */
 .sidebar {
   width: 250px;
@@ -57,6 +77,13 @@
   display: flex;
   flex-direction: column;
   padding-top: 10px;
+  background-color: #34495e;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+h4 {
+  margin-left: 10px;
+  color: #ecf0f1;
 }
 
 /* Estilização do menu */
@@ -69,13 +96,18 @@
 }
 
 .nav-link {
-  color: #fff;
+  color: #ecf0f1;
   padding: 12px 20px;
   display: flex;
   align-items: center;
   font-size: 16px;
   transition: all 0.3s ease-in-out;
   border-radius: 5px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding-left: 25px;
+  }
 }
 
 .nav-link i {
@@ -93,11 +125,11 @@
 .logout {
   color: #ff4d4d !important;
   font-weight: bold;
-}
 
-.logout:hover {
-  background-color: rgba(255, 77, 77, 0.2);
-  padding-left: 25px;
+  &:hover {
+    background-color: rgba(255, 77, 77, 0.2);
+    padding-left: 25px;
+  }
 }
 
 /* Ajuste do conteúdo */
@@ -105,4 +137,19 @@
   margin-left: 250px;
   width: calc(100% - 250px);
   transition: margin-left 0.3s ease-in-out;
+}
+
+/* Botões */
+.btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+  }
 }

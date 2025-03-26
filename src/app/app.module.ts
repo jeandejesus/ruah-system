@@ -13,6 +13,11 @@ import { TurmasComponent } from './pages/turmas/turmas.component';
 import { LayoutComponent } from './layout/layout.component';
 import { AlunosComponent } from './pages/alunos/alunos.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Necessário para animações
+import { CommonModule } from '@angular/common';
+import { AlunosListagemComponent } from './pages/alunos-listagem/alunos-listagem.component';
+import { AlunoFilterPipe } from './pipes/aluno-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -21,8 +26,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
     LoginComponent,
     DashboardComponent,
     TurmasComponent,
+    AlunosListagemComponent,
     AlunosComponent,
     LayoutComponent,
+    AlunoFilterPipe,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +38,13 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
+    BrowserAnimationsModule, // Importando a animação
+    ToastrModule.forRoot({
+      timeOut: 3000, // Tempo de exibição do toast
+      positionClass: 'toast-top-right', // Posição do toast
+      preventDuplicates: true, // Evita toasts duplicados
+    }),
+    CommonModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

@@ -8,6 +8,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LocaisComponent } from './pages/locais/locais.component';
 import { AlunosComponent } from './pages/alunos/alunos.component';
+import { AlunosListagemComponent } from './pages/alunos-listagem/alunos-listagem.component';
 
 const routes: Routes = [
   {
@@ -16,36 +17,41 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'painel',
+    path: '',
+    component: LayoutComponent,
     children: [
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'turmas', component: TurmasComponent },
-      { path: 'locais', component: LocaisComponent },
       {
-        path: 'alunos',
-        component: AlunosComponent,
-        children: [{ path: 'cadastro', component: AlunosComponent }],
+        path: 'painel',
+        children: [
+          { path: 'dashboard', component: DashboardComponent },
+          { path: 'turmas', component: TurmasComponent },
+          { path: 'locais', component: LocaisComponent },
+          {
+            path: 'alunos',
+            children: [
+              { path: 'cadastro', component: AlunosComponent },
+              { path: 'lista', component: AlunosListagemComponent },
+            ],
+          },
+        ],
+        canActivate: [() => authGuard('owner')], // Apenas administradores
+      },
+      {
+        path: 'register',
+        component: RegisterComponent,
+        canActivate: [() => authGuard('owner')], // Apenas administradores
+      },
+      {
+        path: 'locais',
+        loadChildren: () =>
+          import('./pages/locais/locais.module').then((m) => m.LocaisModule),
       },
     ],
   },
+
   { path: 'login', component: LoginComponent },
-  {
-    path: 'register',
-    component: RegisterComponent,
-    canActivate: [() => authGuard('owner')], // Apenas administradores
-  },
-  {
-    path: 'dashboard',
-    loadChildren: () =>
-      import('./pages/dashboard/dashboard.module').then(
-        (m) => m.DashboardModule
-      ),
-  },
-  {
-    path: 'locais',
-    loadChildren: () =>
-      import('./pages/locais/locais.module').then((m) => m.LocaisModule),
-  },
+
+  { path: '**', redirectTo: 'login' }, // Redireciona qualquer rota inválida para login
 ];
 
 @NgModule({

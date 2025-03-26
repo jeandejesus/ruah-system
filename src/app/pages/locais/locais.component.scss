@@ -1,207 +1,199 @@
-/* Estilo geral da página */
-:host {
-  display: block;
-  padding: 20px;
-  background-color: #f4f4f4;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  width: 100%; /* Garantir que o componente ocupe toda a largura da tela */
+// Variáveis globais
+$primary-color: #4a90e2;
+$secondary-color: #27ae60;
+$warning-color: #f1c40f;
+$danger-color: #e74c3c;
+$background-color: #f4f6f9;
+$text-color: #333;
+$border-radius: 10px;
+$box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: $background-color;
+  color: $text-color;
 }
 
-/* Título da seção */
-h3 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #333;
+// Container principal
+div {
+  border-radius: $border-radius;
+  text-align: center;
+
+  h2 {
+    font-size: 24px;
+    color: $primary-color;
+    margin-bottom: 20px;
+  }
+
+  .btn {
+    margin: 0 10px;
+  }
+  // Botão principal
+  .btn-primary {
+    background-color: $primary-color;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+  }
 }
 
-/* Tabela de turmas */
+// Tabela de locais
 .table {
-  margin-top: 20px;
   width: 100%;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-collapse: collapse;
+  margin-top: 15px;
 
   thead {
-    background-color: #007bff;
-    color: white;
+    background: $primary-color;
+    color: #fff;
+
+    th {
+      padding: 10px;
+      text-align: left;
+    }
   }
 
   tbody {
-    background-color: #f9f9f9;
-  }
+    text-align: start;
+    tr {
+      &:nth-child(even) {
+        background-color: #f9f9f9;
+      }
 
-  th,
-  td {
-    padding: 12px;
-    text-align: left;
-  }
-
-  th {
-    font-weight: bold;
-    font-size: 1rem;
-  }
-
-  td {
-    font-size: 0.9rem;
-  }
-
-  tr:hover {
-    background-color: #f0f0f0;
-  }
-
-  /* Ajustes para as colunas */
-  .col-name {
-    width: 25%;
-  }
-
-  .col-schedule {
-    width: 25%;
-  }
-
-  .col-local {
-    width: 40%; /* Garantir que o local ocupe mais espaço */
-  }
-
-  /* Estilo da célula de ações */
-  .text-center {
-    text-align: center;
-  }
-
-  button {
-    margin-left: 10px;
-  }
-}
-
-/* Modal */
-.modal-content {
-  border-radius: 8px;
-  padding: 20px;
-  width: 80%; /* Definindo o container do modal para 80% da largura */
-  max-width: 800px; /* Limitar a largura máxima do modal */
-  margin: 0 auto; /* Centraliza o modal horizontalmente */
-}
-
-.modal-header {
-  background-color: #007bff;
-  color: white;
-  border-bottom: 1px solid #ddd;
-
-  .btn-close {
-    background-color: transparent;
-    border: none;
-    color: white;
-  }
-}
-
-.modal-body {
-  padding: 20px;
-  background-color: #fff;
-}
-
-/* Formulário */
-form {
-  .form-group {
-    margin-bottom: 15px;
-
-    label {
-      font-weight: 600;
-      color: #555;
-      margin-bottom: 5px;
-    }
-
-    input,
-    select {
-      width: 100%;
-      padding: 10px;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
-
-      &:focus {
-        border-color: #007bff;
-        outline: none;
+      &:hover {
+        background-color: lighten($primary-color, 40%);
       }
     }
 
-    .text-danger {
-      font-size: 0.875rem;
-      color: #f44336;
-      margin-top: 5px;
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
     }
   }
 
-  button {
-    width: 100%;
-    padding: 10px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  // Botões de ação
+  .btn {
+    padding: 8px 12px;
+    font-size: 13px;
+    border-radius: $border-radius;
+    transition: all 0.3s ease-in-out;
 
-    &:hover {
-      background-color: #0056b3;
+    &-warning {
+      background-color: $warning-color;
+      border: none;
+      color: #fff;
+
+      &:hover {
+        background-color: darken($warning-color, 10%);
+      }
     }
 
-    &:disabled {
-      background-color: #b0d0f2;
-      cursor: not-allowed;
+    &-danger {
+      background-color: $danger-color;
+      border: none;
+      color: #fff;
+
+      &:hover {
+        background-color: darken($danger-color, 10%);
+      }
     }
   }
 }
 
-/* Botões */
-button.btn-primary {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 1.1rem;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-
-  &:hover {
-    background-color: #218838;
-  }
-}
-
-button.btn-danger {
-  margin-left: 10px;
-  background-color: #dc3545;
-  border: none;
-  border-radius: 5px;
-
-  &:hover {
-    background-color: #c82333;
-  }
-}
-
-button.btn-info {
-  background-color: #17a2b8;
-  border: none;
-  border-radius: 5px;
-
-  &:hover {
-    background-color: #138496;
-  }
-}
-
-/* Garantir que o modal ocupa 100% da tela em dispositivos pequenos */
-.modal-dialog {
-  max-width: 100%;
-  width: 100%;
-  margin: 0;
-}
-
+// Estilização do modal
 .modal-content {
-  width: 80%; /* Definindo o container do modal para 80% da largura */
-  max-width: 800px; /* Limitar a largura máxima do modal */
-  margin: 0 auto; /* Centraliza o modal horizontalmente */
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+
+  .modal-header {
+    background-color: $primary-color;
+    color: #fff;
+    border-radius: $border-radius $border-radius 0 0;
+    padding: 15px;
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .btn-close {
+      background: transparent;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: #fff;
+
+      &:hover {
+        color: darken(#fff, 20%);
+      }
+    }
+  }
+
+  .modal-body {
+    padding: 20px;
+
+    .form-label {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      border-radius: $border-radius;
+      border: 1px solid #ddd;
+      transition: all 0.3s ease-in-out;
+
+      &:focus {
+        border-color: $primary-color;
+        outline: none;
+        box-shadow: 0 0 8px rgba($primary-color, 0.2);
+      }
+    }
+
+    .btn-success {
+      background-color: $secondary-color;
+      border: none;
+      padding: 10px 15px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: $border-radius;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        background-color: darken($secondary-color, 10%);
+      }
+    }
+  }
+}
+
+.modal-dialog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  div {
+    padding: 15px;
+  }
+
+  .table {
+    font-size: 12px;
+  }
+
+  .btn {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
 }

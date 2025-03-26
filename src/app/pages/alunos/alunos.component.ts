@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AlunoService } from 'src/app/core/services/aluno.service';
+import { TurmaService } from 'src/app/core/services/turma.service';
+import { format } from 'date-fns';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-aluno',
@@ -27,17 +30,20 @@ export class AlunosComponent implements OnInit {
   editMode: boolean = false;
 
   // Lista de turmas - Aqui você deve preencher com os dados reais
-  turmas: any[] = [
-    { id: 1, name: 'Turma A' },
-    { id: 2, name: 'Turma B' },
-    { id: 3, name: 'Turma C' },
-  ];
+  turmas: any[] = [];
 
-  filteredTurmas: any[] = [...this.turmas];
+  constructor(
+    private alunosService: AlunoService,
+    private turmaService: TurmaService,
+    private toastr: ToastrService
+  ) {}
 
-  constructor(private alunosService: AlunoService) {}
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.turmaService.getTurmas().subscribe((turmas) => {
+      this.turmas = turmas;
+    });
+    this.aluno.turmas = [];
+  }
 
   // Função para abrir o modal (muda o estado de edição)
   openModal() {
@@ -66,6 +72,8 @@ export class AlunosComponent implements OnInit {
 
   // Função para enviar o formulário (criação ou atualização de aluno)
   onSubmit() {
+    this.aluno.birthDate = format(new Date(this.aluno.birthDate), 'yyyy-MM-dd');
+
     if (this.editMode) {
       this.updateAluno();
     } else {
@@ -77,11 +85,14 @@ export class AlunosComponent implements OnInit {
   createAluno() {
     // Chama a service para criar o aluno
     this.alunosService.createAluno(this.aluno).subscribe(
-      (response) => {
-        console.log('Aluno cadastrado com sucesso:', response);
+      async (response) => {
+        this.toastr.success('Operação realizada com sucesso!', 'Sucesso');
+
         this.resetForm();
       },
-      (error) => {
+      async (error) => {
+        this.toastr.error('Ocorreu um erro. Tente novamente.', 'Erro');
+
         console.error('Erro ao cadastrar aluno:', error);
       }
     );
