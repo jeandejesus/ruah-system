@@ -18,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { CommonModule } from '@angular/common';
 import { AlunosListagemComponent } from './pages/alunos-listagem/alunos-listagem.component';
 import { AlunoFilterPipe } from './pipes/aluno-filter.pipe';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { AlunoFilterPipe } from './pipes/aluno-filter.pipe';
     ReactiveFormsModule,
     NgSelectModule,
     BrowserAnimationsModule, // Importando a animação
+    NgxMaskModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 3000, // Tempo de exibição do toast
       positionClass: 'toast-top-right', // Posição do toast

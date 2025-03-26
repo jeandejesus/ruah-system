@@ -22,6 +22,8 @@
         id="cpf"
         [(ngModel)]="aluno.cpf"
         name="cpf"
+        mask="000.000.000-00"
+        placeholder="Digite seu CPF"
         required
       />
     </div>
@@ -37,6 +39,8 @@
         id="rg"
         [(ngModel)]="aluno.rg"
         name="rg"
+        mask="00.000.000-0"
+        placeholder="Digite seu RG"
       />
     </div>
 
@@ -44,11 +48,13 @@
     <div class="col-md-6 col-12 mb-3">
       <label for="birthDate" class="form-label">Data de Nascimento</label>
       <input
-        type="date"
+        type="text"
         class="form-control"
         id="birthDate"
-        [(ngModel)]="aluno.birthDate"
         name="birthDate"
+        [(ngModel)]="aluno.birthDate"
+        mask="00/00/0000"
+        placeholder="DD/MM/AAAA"
       />
     </div>
   </div>
@@ -63,6 +69,8 @@
         id="phone"
         [(ngModel)]="aluno.phone"
         name="phone"
+        mask="(00) 00000-0000"
+        placeholder="(00) 00000-0000"
       />
     </div>
 
@@ -103,6 +111,9 @@
         id="emergencyContactName"
         [(ngModel)]="aluno.emergencyContact.name"
         name="emergencyContactName"
+        name="phone"
+        mask="(00) 00000-0000"
+        placeholder="(00) 00000-0000"
       />
     </div>
     <div class="col-md-6 col-12 mb-3">
@@ -115,6 +126,8 @@
         id="responsiblePhone"
         [(ngModel)]="aluno.emergencyContact.phone"
         name="responsiblePhone"
+        mask="(00) 00000-0000"
+        placeholder="(00) 00000-0000"
       />
     </div>
     <div class="col-md-6 col-12 mb-3">
@@ -173,6 +186,8 @@
         id="responsibleCpf"
         [(ngModel)]="aluno.responsible.cpf"
         name="responsibleCpf"
+        mask="000.000.000-00"
+        placeholder="Digite o CPF do responsável"
       />
     </div>
 
@@ -185,6 +200,8 @@
         id="responsibleRg"
         [(ngModel)]="aluno.responsible.rg"
         name="responsibleRg"
+        mask="00.000.000-0"
+        placeholder="Digite seu RG"
       />
     </div>
 
@@ -199,6 +216,8 @@
         id="responsiblePhone"
         [(ngModel)]="aluno.responsible.phone"
         name="responsiblePhone"
+        mask="(00) 00000-0000"
+        placeholder="(00) 00000-0000"
       />
     </div>
   </div>
