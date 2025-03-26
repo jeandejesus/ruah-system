@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlunoService } from 'src/app/core/services/aluno.service';
 interface Turma {
   name: string;
+  schedule: string;
 }
 
 interface Aluno {
@@ -46,6 +47,10 @@ export class AlunosListagemComponent implements OnInit {
 
   getTurmas(aluno: Aluno): string {
     // Implement the logic to get the turmas for the aluno
-    return aluno.turmas.map((turma: Turma) => turma.name).join(', ');
+
+    console.log(aluno);
+    return aluno.turmas
+      .map((turma: Turma) => turma.name + ' - ' + turma.schedule)
+      .join(', ');
   }
 }
