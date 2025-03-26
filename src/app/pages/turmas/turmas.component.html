@@ -133,6 +133,9 @@
               [(ngModel)]="Novaturma.schedule"
               name="horario"
               #horarioModel="ngModel"
+              name="time"
+              mask="00:00"
+              placeholder="HH:MM"
             />
             <div
               *ngIf="horarioModel.invalid && horarioModel.touched"

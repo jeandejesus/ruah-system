@@ -85,6 +85,11 @@ export class TurmasComponent implements OnInit {
 
   // Método para enviar o formulário (criar ou editar)
   onSubmit(): void {
+    this.Novaturma.schedule = this.Novaturma.schedule.replace(
+      /(\d{2})(\d{2})/,
+      '$1:$2'
+    );
+
     if (this.turmaId) {
       this.atualizarTurma();
     } else {
