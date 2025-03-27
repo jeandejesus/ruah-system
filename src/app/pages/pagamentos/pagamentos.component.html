@@ -1,1 +1,37 @@
-<p>pagamentos works!</p>
+<div class="mt-4">
+  <input
+    type="text"
+    [(ngModel)]="searchText"
+    placeholder="Buscar aluno..."
+    class="search-input"
+  />
+
+  <h2>Clientes e Status de Pagamento</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Status de Pagamento</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let aluno of customers | alunoFilter : searchText">
+        <td>{{ aluno.name }}</td>
+        <td>{{ aluno.email }}</td>
+        <td>
+          <span
+            [ngClass]="{
+              'badge-success': aluno.status === 'Pagamento em dia',
+              'badge-danger': aluno.status !== 'Pagamento em dia'
+            }"
+            class="badge"
+            >{{
+              aluno.status === "Pagamento em dia" ? "Pago" : "Pendente"
+            }}</span
+          >
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

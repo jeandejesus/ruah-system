@@ -8,14 +8,15 @@ export class AlunoFilterPipe implements PipeTransform {
     if (!alunos || !searchText) {
       return alunos;
     }
+    console.log(searchText);
 
     searchText = searchText.toLowerCase();
 
     return alunos.filter(
       (aluno) =>
-        aluno.name.toLowerCase().includes(searchText) ||
-        aluno.email.toLowerCase().includes(searchText) ||
-        aluno.phone.toLowerCase().includes(searchText)
+        aluno.name?.toLowerCase().includes(searchText) ||
+        aluno.email?.toLowerCase().includes(searchText) ||
+        aluno.phone?.toLowerCase().includes(searchText)
     );
   }
 }

@@ -1,0 +1,117 @@
+// Variáveis para estilos modernos
+$primary-color: #4a90e2;
+$secondary-color: #27ae60;
+$background-color: #f4f6f9;
+$text-color: #333;
+$font-family: "Poppins", sans-serif;
+$border-radius: 12px;
+$box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+// Input de pesquisa estilizado
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: $border-radius;
+  font-size: 16px;
+  color: $text-color;
+  background-color: #fff;
+  box-shadow: $box-shadow;
+  transition: all 0.3s ease-in-out;
+
+  &:focus {
+    outline: none;
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  }
+}
+
+// Estilo moderno para a tabela
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  overflow: hidden;
+
+  thead {
+    background: linear-gradient(135deg, $primary-color, $secondary-color);
+    color: #fff;
+    text-align: left;
+
+    th {
+      padding: 15px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+
+  tbody {
+    tr {
+      transition: all 0.3s ease-in-out;
+
+      &:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      &:hover {
+        background-color: rgba($primary-color, 0.1);
+        transform: scale(1.02);
+        cursor: pointer;
+      }
+
+      td {
+        padding: 15px;
+        font-size: 14px;
+        color: $text-color;
+
+        &:first-child {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+.badge {
+  display: inline-block;
+  width: 100px; // Define um tamanho fixo
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 12px;
+}
+
+.badge-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.badge-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+// Responsividade para telas menores
+@media (max-width: 768px) {
+  table {
+    font-size: 14px;
+
+    thead {
+      th {
+        padding: 12px;
+        font-size: 14px;
+      }
+    }
+
+    tbody {
+      td {
+        padding: 12px;
+      }
+    }
+  }
+}

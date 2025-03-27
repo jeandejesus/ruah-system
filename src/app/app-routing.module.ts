@@ -9,6 +9,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LocaisComponent } from './pages/locais/locais.component';
 import { AlunosComponent } from './pages/alunos/alunos.component';
 import { AlunosListagemComponent } from './pages/alunos-listagem/alunos-listagem.component';
+import { PagamentosComponent } from './pages/pagamentos/pagamentos.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,7 @@ const routes: Routes = [
           { path: 'dashboard', component: DashboardComponent },
           { path: 'turmas', component: TurmasComponent },
           { path: 'locais', component: LocaisComponent },
+          { path: 'pagamentos', component: PagamentosComponent },
           {
             path: 'alunos',
             children: [

@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { AlunosListagemComponent } from './pages/alunos-listagem/alunos-listagem.component';
 import { AlunoFilterPipe } from './pipes/aluno-filter.pipe';
 import { NgxMaskModule } from 'ngx-mask';
+import { PagamentosComponent } from './pages/pagamentos/pagamentos.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { NgxMaskModule } from 'ngx-mask';
     AlunosComponent,
     LayoutComponent,
     AlunoFilterPipe,
+    PagamentosComponent,
   ],
   imports: [
     BrowserModule,
