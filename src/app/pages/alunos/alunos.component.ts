@@ -3,6 +3,7 @@ import { AlunoService } from 'src/app/core/services/aluno.service';
 import { TurmaService } from 'src/app/core/services/turma.service';
 import { format } from 'date-fns';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-aluno',
@@ -15,7 +16,7 @@ export class AlunosComponent implements OnInit {
     name: '',
     cpf: '',
     rg: '',
-    birthDate: '',
+    birthDate: Date,
     phone: '',
     email: '',
     address: '',
@@ -35,7 +36,8 @@ export class AlunosComponent implements OnInit {
   constructor(
     private alunosService: AlunoService,
     private turmaService: TurmaService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +54,7 @@ export class AlunosComponent implements OnInit {
       name: '',
       cpf: '',
       rg: '',
-      birthDate: '',
+      birthDate: Date,
       phone: '',
       email: '',
       address: '',
@@ -72,7 +74,19 @@ export class AlunosComponent implements OnInit {
 
   // Função para enviar o formulário (criação ou atualização de aluno)
   onSubmit() {
-    this.aluno.birthDate = format(new Date(this.aluno.birthDate), 'yyyy-MM-dd');
+    console.log(this.aluno.birthDate); // Verifique o valor
+    const birthDateString = this.aluno.birthDate; // '25071994'
+
+    // Converter a string para o formato ISO 'YYYY-MM-DD'
+    const formattedDate = `${birthDateString.slice(
+      4,
+      8
+    )}-${birthDateString.slice(2, 4)}-${birthDateString.slice(0, 2)}`;
+
+    // Criar um objeto Date
+    const birthDate = new Date(formattedDate);
+
+    this.aluno.birthDate = format(new Date(birthDate), 'yyyy-MM-dd');
 
     if (this.editMode) {
       this.updateAluno();
@@ -87,6 +101,7 @@ export class AlunosComponent implements OnInit {
     this.alunosService.createAluno(this.aluno).subscribe(
       async (response) => {
         this.toastr.success('Operação realizada com sucesso!', 'Sucesso');
+        window.open(response.url, '_blank'); // Abre o Stripe Checkout em nova aba
 
         this.resetForm();
       },
@@ -118,7 +133,7 @@ export class AlunosComponent implements OnInit {
       name: '',
       cpf: '',
       rg: '',
-      birthDate: '',
+      birthDate: Date,
       phone: '',
       email: '',
       address: '',

@@ -19,7 +19,7 @@ export class AlunoService {
   }
 
   createAluno(aluno: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, aluno);
+    return this.http.post<any>(`${this.apiUrl}/create-payment`, aluno);
   }
 
   updateAluno(aluno: any): Observable<any> {
