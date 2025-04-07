@@ -1,27 +1,93 @@
-# RuahSystem
+# Ruah System
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.16.
+Sistema de gerenciamento educacional desenvolvido com Angular 16, focado no controle de turmas, alunos e pagamentos.
 
-## Development server
+## 🚀 Funcionalidades
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Autenticação e Autorização**
+  - Login e registro de usuários
+  - Sistema de autenticação com JWT
+  - Proteção de rotas com guards
 
-## Code scaffolding
+- **Gestão de Alunos**
+  - Cadastro e listagem de alunos
+  - Filtros de busca
+  - Visualização detalhada
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Gestão de Turmas**
+  - Criação e gerenciamento de turmas
+  - Associação de alunos às turmas
 
-## Build
+- **Gestão Financeira**
+  - Controle de pagamentos
+  - Registro de transações
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 🛠️ Tecnologias Utilizadas
 
-## Running unit tests
+- **Frontend**
+  - Angular 16
+  - TypeScript
+  - Bootstrap 5
+  - Ngx-Mask (para formatação de inputs)
+  - Ngx-Toastr (para notificações)
+  - Ng-Select (para seleção de itens)
+  - Date-fns (para manipulação de datas)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## 📦 Pré-requisitos
 
-## Running end-to-end tests
+- Node.js (versão compatível com Angular 16)
+- npm ou yarn
+- Angular CLI
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## 🔧 Instalação
 
-## Further help
+1. Clone o repositório:
+```bash
+git clone [URL_DO_REPOSITÓRIO]
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+2. Instale as dependências:
+```bash
+npm install
+```
+
+3. Inicie o servidor de desenvolvimento:
+```bash
+npm start
+```
+
+O aplicativo estará disponível em `http://localhost:4200`
+
+## 🏗️ Estrutura do Projeto
+
+```
+src/
+├── app/
+│   ├── auth/          # Componentes de autenticação
+│   ├── core/          # Serviços e interceptors
+│   ├── guards/        # Guards de autenticação
+│   ├── interfaces/    # Interfaces TypeScript
+│   ├── layout/        # Componentes de layout
+│   ├── pages/         # Páginas principais
+│   ├── pipes/         # Pipes personalizados
+│   └── shared/        # Componentes compartilhados
+```
+
+## 🔒 Segurança
+
+- Implementação de interceptors para autenticação
+- Proteção de rotas com guards
+- Validação de formulários
+- Sanitização de inputs
+
+## 📝 Licença
+
+Este projeto está sob a licença [INSERIR LICENÇA]
+
+## 🤝 Contribuição
+
+Contribuições são bem-vindas! Por favor, leia as diretrizes de contribuição antes de enviar pull requests.
+
+## 📞 Suporte
+
+Para suporte, envie um email para [INSERIR EMAIL DE CONTATO]
