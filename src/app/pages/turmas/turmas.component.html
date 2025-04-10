@@ -8,7 +8,8 @@
     <thead>
       <tr>
         <th scope="col">Nome</th>
-        <th scope="col">Horário</th>
+        <th scope="col">Horário Início</th>
+        <th scope="col">Horário Fim</th>
         <th scope="col">Local</th>
         <th scope="col" class="text-center">Ações</th>
       </tr>
@@ -16,7 +17,8 @@
     <tbody>
       <tr *ngFor="let turma of turmas">
         <td>{{ turma.name }}</td>
-        <td>{{ turma.schedule }}</td>
+        <td>{{ turma.startTime }}</td>
+        <td>{{ turma.endTime }}</td>
         <td>{{ turma.local.name }}</td>
         <td class="text-center buttons">
           <!-- Botão de edição -->
@@ -124,24 +126,44 @@
           </div>
 
           <div class="form-group">
-            <label for="horario">Horário</label>
+            <label for="horarioInicio">Horário de Início</label>
             <input
               type="text"
-              id="horario"
+              id="horarioInicio"
               class="form-control"
               required
-              [(ngModel)]="Novaturma.schedule"
-              name="horario"
-              #horarioModel="ngModel"
-              name="time"
+              [(ngModel)]="Novaturma.startTime"
+              name="horarioInicio"
+              #horarioInicioModel="ngModel"
               mask="00:00"
               placeholder="HH:MM"
             />
             <div
-              *ngIf="horarioModel.invalid && horarioModel.touched"
+              *ngIf="horarioInicioModel.invalid && horarioInicioModel.touched"
               class="text-danger"
             >
-              O campo horário é obrigatório.
+              O campo horário de início é obrigatório.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="horarioFim">Horário de Fim</label>
+            <input
+              type="text"
+              id="horarioFim"
+              class="form-control"
+              required
+              [(ngModel)]="Novaturma.endTime"
+              name="horarioFim"
+              #horarioFimModel="ngModel"
+              mask="00:00"
+              placeholder="HH:MM"
+            />
+            <div
+              *ngIf="horarioFimModel.invalid && horarioFimModel.touched"
+              class="text-danger"
+            >
+              O campo horário de fim é obrigatório.
             </div>
           </div>
 

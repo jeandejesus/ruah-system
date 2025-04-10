@@ -15,7 +15,8 @@ export class TurmasComponent implements OnInit {
   Novaturma = {
     name: '',
     duration: 0,
-    schedule: '',
+    startTime: '',
+    endTime: '',
     local: '', // ID do local selecionado
   };
 
@@ -68,7 +69,8 @@ export class TurmasComponent implements OnInit {
       this.Novaturma = {
         name: '',
         duration: 0,
-        schedule: '',
+        startTime: '',
+        endTime: '',
         local: '', // ID do local selecionado
       };
     }
@@ -85,10 +87,9 @@ export class TurmasComponent implements OnInit {
 
   // Método para enviar o formulário (criar ou editar)
   onSubmit(): void {
-    this.Novaturma.schedule = this.Novaturma.schedule.replace(
-      /(\d{2})(\d{2})/,
-      '$1:$2'
-    );
+    // Formatando os horários para o formato HH:MM
+    this.Novaturma.startTime = this.Novaturma.startTime.replace(/(\d{2})(\d{2})/, '$1:$2');
+    this.Novaturma.endTime = this.Novaturma.endTime.replace(/(\d{2})(\d{2})/, '$1:$2');
 
     if (this.turmaId) {
       this.atualizarTurma();
