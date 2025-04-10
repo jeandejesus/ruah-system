@@ -15,6 +15,7 @@ export class LayoutComponent {
   errorMessage: string = '';
   school: School = {};
   alunoMenuOpen: boolean = false;
+  pagamentoMenuOpen: boolean = false;
   token = localStorage.getItem('authToken');
 
   constructor(
@@ -47,5 +48,9 @@ export class LayoutComponent {
 
   toggleAlunoMenu() {
     this.alunoMenuOpen = !this.alunoMenuOpen;
+  }
+
+  togglePagamentoMenu() {
+    this.pagamentoMenuOpen = !this.pagamentoMenuOpen;
   }
 }

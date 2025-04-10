@@ -27,7 +27,8 @@ const routes: Routes = [
           { path: 'dashboard', component: DashboardComponent },
           { path: 'turmas', component: TurmasComponent },
           { path: 'locais', component: LocaisComponent },
-          { path: 'pagamentos', component: PagamentosComponent },
+          { path: 'pagamentos',             children: [
+           {path:'assinaturas', component: PagamentosComponent}] },
           {
             path: 'alunos',
             children: [

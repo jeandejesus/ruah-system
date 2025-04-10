@@ -51,11 +51,28 @@
         </ul>
       </li>
 
+      <!-- Pagamentos (com Submenu) -->
       <li class="nav-item">
-        <a class="nav-link" routerLink="/painel/pagamentos">
+        <a class="nav-link" (mouseover)="togglePagamentoMenu()">
           <i class="bi bi-credit-card"></i> Pagamentos
+          <i
+            class="bi"
+            [class]="pagamentoMenuOpen ? 'bi-chevron-down' : 'bi-chevron-right'"
+          ></i>
         </a>
+        <ul
+          *ngIf="pagamentoMenuOpen"
+          class="nav flex-column ms-3"
+          (mouseleave)="togglePagamentoMenu()"
+        >
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/painel/pagamentos/assinaturas">
+              <i class="bi bi-check-circle"></i> Assinaturas
+            </a>
+          </li>
+        </ul>
       </li>
+
       <!--   <li class="nav-item">
         <a class="nav-link" routerLink="/configuracoes">
           <i class="bi bi-gear"></i> Configurações
