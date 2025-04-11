@@ -1,6 +1,17 @@
 <div class="container mt-4">
   <h2>Clientes e Status de Pagamento</h2>
 
+  <!-- Search Input -->
+  <div class="mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Buscar por nome ou email..."
+      [value]="searchText"
+      (input)="onSearch($event)"
+    >
+  </div>
+
   <div class="table-responsive">
     <table class="table table-striped">
       <thead>

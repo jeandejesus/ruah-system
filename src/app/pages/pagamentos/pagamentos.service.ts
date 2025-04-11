@@ -26,10 +26,13 @@ export class PagamentosService {
 
   constructor(private http: HttpClient) {}
 
-  getCustomers(limit: number = 10, startingAfter?: string): Observable<CustomerResponse> {
+  getCustomers(limit: number = 10, startingAfter?: string, searchTerm?: string): Observable<CustomerResponse> {
     let url = `${this.apiUrl}/stripe/customers-with-status?limit=${limit}`;
     if (startingAfter) {
       url += `&startingAfter=${startingAfter}`;
+    }
+    if (searchTerm) {
+      url += `&search=${encodeURIComponent(searchTerm)}`;
     }
     return this.http.get<CustomerResponse>(url);
   }
