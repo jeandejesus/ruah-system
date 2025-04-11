@@ -1,37 +1,45 @@
-<div class="mt-4">
-  <input
-    type="text"
-    [(ngModel)]="searchText"
-    placeholder="Buscar aluno..."
-    class="search-input"
-  />
-
+<div class="container mt-4">
   <h2>Clientes e Status de Pagamento</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Email</th>
-        <th>Status de Pagamento</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let aluno of customers | alunoFilter : searchText">
-        <td>{{ aluno.name }}</td>
-        <td>{{ aluno.email }}</td>
-        <td>
-          <span
-            [ngClass]="{
-              'badge-success': aluno.status === 'Pagamento em dia',
-              'badge-danger': aluno.status !== 'Pagamento em dia'
-            }"
-            class="badge"
-            >{{
-              aluno.status === "Pagamento em dia" ? "Pago" : "Pendente"
-            }}</span
-          >
-        </td>
-      </tr>
-    </tbody>
-  </table>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Status de Pagamento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of customers">
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.email }}</td>
+          <td>
+            <span class="badge" [ngClass]="{'bg-success': customer.status === 'ativo', 'bg-danger': customer.status === 'inativo'}">
+              {{ customer.status }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div class="d-flex justify-content-center my-3" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Carregando...</span>
+    </div>
+  </div>
+
+  <!-- Load More Button -->
+  <div class="text-center mt-3" *ngIf="hasMore && !loading">
+    <button class="btn btn-primary" (click)="loadMore()">
+      Carregar Mais
+    </button>
+  </div>
+
+  <!-- No Results Message -->
+  <div class="text-center mt-3" *ngIf="customers.length === 0 && !loading">
+    <p>Nenhum cliente encontrado.</p>
+  </div>
 </div>
