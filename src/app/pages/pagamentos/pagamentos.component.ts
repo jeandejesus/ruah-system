@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PagamentosService } from './pagamentos.service';
+import { PagamentosService, Customer, CustomerResponse } from './pagamentos.service';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
@@ -9,7 +9,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   styleUrls: ['./pagamentos.component.scss']
 })
 export class PagamentosComponent implements OnInit {
-  customers: any[] = [];
+  customers: Customer[] = [];
   hasMore = false;
   loading = false;
   lastCustomerId: string | undefined = undefined;
@@ -47,7 +47,7 @@ export class PagamentosComponent implements OnInit {
 
     this.pagamentosService.getCustomers(this.pageSize, startingAfter, this.searchText)
       .subscribe({
-        next: (response) => {
+        next: (response: CustomerResponse) => {
           const newCustomers = response.customers;
           
           if (loadMore) {
@@ -70,15 +70,16 @@ export class PagamentosComponent implements OnInit {
           
           this.loading = false;
         },
-        error: (error) => {
+        error: (error: Error) => {
           console.error('Erro ao carregar clientes:', error);
           this.loading = false;
         }
       });
   }
 
-  onSearch(event: any) {
-    this.searchSubject.next(event.target.value);
+  onSearch(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.searchSubject.next(input.value);
   }
 
   loadMore() {
