@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TurmaService {
   // URL do backend onde as turmas são manipuladas
-  private baseUrl = 'http://localhost:3000/turmas'; // Substitua com o URL do seu backend
+  private baseUrl = `${environment.apiUrl}/turmas`;
 
   constructor(private http: HttpClient) {}
 

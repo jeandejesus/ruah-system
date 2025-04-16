@@ -2,13 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { School } from 'src/app/interfaces/school.interface';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DashboardService {
-  // A URL do backend para o login
-  private apiUrl = 'http://localhost:3000/admin'; // Altere para a URL correta do seu backend
+  private apiUrl = `${environment.apiUrl}/admin`;
   school: School = {};
 
   constructor(private http: HttpClient) {}

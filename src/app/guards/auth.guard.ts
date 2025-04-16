@@ -4,7 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-
+import { environment } from 'src/environments/environment';
+ 
 export const authGuard = (roleRequired?: string) => {
   // ⬅️ Aqui o parâmetro roleRequired é definido
   const router = inject(Router);
@@ -18,7 +19,6 @@ export const authGuard = (roleRequired?: string) => {
     return false;
   }
   const decodedToken: any = jwtHelper.decodeToken(token);
-  console.log('Token decodificado:', decodedToken);
 
   if (roleRequired && decodedToken.role !== roleRequired) {
     console.log('Usuário sem permissão. Redirecionando para "não autorizado".');
@@ -27,7 +27,7 @@ export const authGuard = (roleRequired?: string) => {
   }
 
   return http
-    .get<{ valid: boolean }>('http://localhost:3000/auth/validate-token')
+    .get<{ valid: boolean }>(`${environment.apiUrl}/auth/validate-token`)
     .pipe(
       map((response) => {
         if (response.valid) {

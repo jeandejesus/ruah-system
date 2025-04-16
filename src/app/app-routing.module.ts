@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { authGuard } from './guards/auth.guard';
 import { TurmasComponent } from './pages/turmas/turmas.component';
 import { LayoutComponent } from './layout/layout.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
@@ -10,7 +9,8 @@ import { LocaisComponent } from './pages/locais/locais.component';
 import { AlunosComponent } from './pages/alunos/alunos.component';
 import { AlunosListagemComponent } from './pages/alunos-listagem/alunos-listagem.component';
 import { PagamentosComponent } from './pages/pagamentos/pagamentos.component';
-
+import { authGuard } from './guards/auth.guard';
+  
 const routes: Routes = [
   {
     path: '',

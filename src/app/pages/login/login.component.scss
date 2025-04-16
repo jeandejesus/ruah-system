@@ -8,15 +8,17 @@
 }
 
 .card-header {
-  background-color: #007bff;  // Cor de fundo ao passar o mouse
+  background-color: #631d2d;
+
+  // Cor de fundo ao passar o mouse
   border-bottom: none;  // Remove a borda inferior do cabeçalho
   color: #ffffff;
 }
 
 
 button:hover {
-  background-color: #007bff;  // Cor de fundo ao passar o mouse
-  border-color: #007bff;  // Cor da borda ao passar o mouse
+  background-color: #631d2d;  // Cor de fundo ao passar o mouse
+  border-color: #631d2d;  // Cor da borda ao passar o mouse
 }
 
 button:disabled {
@@ -39,6 +41,6 @@ input.form-control {
 }
 
 input.form-control:focus {
-  border-color: #007bff;  // Cor da borda do input ao focar
+  border-color: #631d2d;  // Cor da borda do input ao focar
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);  // Sombra suave ao focar
 }

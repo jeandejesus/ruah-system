@@ -128,7 +128,7 @@ button[type="button"]:hover {
     background-color: #fff !important;
 
     .ng-value {
-      background: #007bff !important; /* Cor azul para cada item selecionado */
+      background: #631d2d !important; /* Cor azul para cada item selecionado */
       color: #fff !important;
       border-radius: 15px !important;
       font-size: 0.9rem !important;
@@ -175,7 +175,7 @@ button[type="button"]:hover {
     }
 
     &.ng-option-selected {
-      background: #007bff !important;
+      background: #631d2d !important;
       color: #fff !important;
     }
   }
@@ -185,7 +185,7 @@ button[type="button"]:hover {
   }
 
   &:focus-within {
-    border-color: #007bff !important;
+    border-color: #631d2d !important;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5) !important;
   }
 }
