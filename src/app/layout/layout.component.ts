@@ -65,4 +65,8 @@ export class LayoutComponent implements OnInit {
   toggleSidebar() {
     this.isSidebarClosed = !this.isSidebarClosed;
   }
+
+  closeSidebarOnMobile() {
+    this.isSidebarClosed = !this.isSidebarClosed;
+  }
 }

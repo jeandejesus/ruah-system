@@ -20,20 +20,23 @@
     <h4 class="ml-2 mt-1">Painel da Escola</h4>
     <ul class="nav flex-column">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/painel/locais">
+        <a
+          class="nav-link"
+          routerLink="/painel/locais"
+          (click)="closeSidebarOnMobile()"
+        >
           <i class="bi bi-geo-alt"></i> Locais
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/painel/turmas">
+        <a
+          class="nav-link"
+          routerLink="/painel/turmas"
+          (click)="closeSidebarOnMobile()"
+        >
           <i class="bi bi-people"></i> Turmas
         </a>
       </li>
-      <!-- <li class="nav-item">
-        <a class="nav-link" routerLink="/professores">
-          <i class="bi bi-person"></i> Professores
-        </a>
-      </li> -->
 
       <!-- Alunos (com Submenu) -->
       <li class="nav-item">
@@ -43,7 +46,6 @@
             class="bi"
             [class]="alunoMenuOpen ? 'bi-chevron-down' : 'bi-chevron-right'"
           ></i>
-          <!-- Ícone para expandir/recolher -->
         </a>
         <ul
           *ngIf="alunoMenuOpen"
@@ -51,12 +53,20 @@
           (mouseleave)="toggleAlunoMenu()"
         >
           <li class="nav-item">
-            <a class="nav-link" routerLink="/painel/alunos/cadastro">
+            <a
+              class="nav-link"
+              routerLink="/painel/alunos/cadastro"
+              (click)="closeSidebarOnMobile()"
+            >
               <i class="bi bi-plus-circle"></i> Cadastro de Aluno
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/painel/alunos/lista">
+            <a
+              class="nav-link"
+              routerLink="/painel/alunos/lista"
+              (click)="closeSidebarOnMobile()"
+            >
               <i class="bi bi-eye"></i> Lista de Alunos
             </a>
           </li>
@@ -78,18 +88,17 @@
           (mouseleave)="togglePagamentoMenu()"
         >
           <li class="nav-item">
-            <a class="nav-link" routerLink="/painel/pagamentos/assinaturas">
+            <a
+              class="nav-link"
+              routerLink="/painel/pagamentos/assinaturas"
+              (click)="closeSidebarOnMobile()"
+            >
               <i class="bi bi-check-circle"></i> Assinaturas
             </a>
           </li>
         </ul>
       </li>
 
-      <!--   <li class="nav-item">
-        <a class="nav-link" routerLink="/configuracoes">
-          <i class="bi bi-gear"></i> Configurações
-        </a>
-      </li> -->
       <li class="nav-item">
         <a class="nav-link logout" (click)="logout()">
           <i class="bi bi-box-arrow-right"></i> Sair
