@@ -1,6 +1,7 @@
-<div class="header" *ngIf="!noExistesSchool">
+<div class="header">
   <!-- Botão hambúrguer -->
   <button
+    *ngIf="!noExistesSchool"
     class="btn btn-light d-md-none ms-0"
     (click)="toggleSidebar()"
     aria-label="Abrir menu"

@@ -1,0 +1,75 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-header text-white text-center">
+          <h3>Criar Nova Escola</h3>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="onSubmit()" #schoolForm="ngForm">
+            <div class="mb-3">
+              <label for="name" class="form-label">Nome da Escola*</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                name="name"
+                [(ngModel)]="school.name"
+                required
+                #nameModel="ngModel"
+              />
+              <div
+                *ngIf="nameModel.invalid && nameModel.touched"
+                class="text-danger"
+              >
+                Nome da escola é obrigatório
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email*</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                [(ngModel)]="school.email"
+                required
+                email
+                #emailModel="ngModel"
+              />
+              <div
+                *ngIf="emailModel.invalid && emailModel.touched"
+                class="text-danger"
+              >
+                Email válido é obrigatório
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="phone" class="form-label">Telefone</label>
+              <input
+                type="text"
+                class="form-control"
+                id="phone"
+                name="phone"
+                [(ngModel)]="school.phone"
+                mask="(00) 00000-0000"
+              />
+            </div>
+
+            <div class="d-grid gap-2">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="!schoolForm.form.valid"
+              >
+                Criar Escola
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

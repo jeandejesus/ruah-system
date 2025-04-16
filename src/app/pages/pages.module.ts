@@ -4,9 +4,10 @@ import { ProfessoresComponent } from './professores/professores.component';
 import { PagamentosComponent } from './pagamentos/pagamentos.component';
 import { FormsModule } from '@angular/forms';
 import { AlunosListagemComponent } from './alunos-listagem/alunos-listagem.component';
+import { CreateSchoolComponent } from './create-school/create-school.component';
 
 @NgModule({
-  declarations: [ProfessoresComponent],
+  declarations: [ProfessoresComponent, CreateSchoolComponent],
   imports: [CommonModule, FormsModule],
 })
 export class PagesModule {}

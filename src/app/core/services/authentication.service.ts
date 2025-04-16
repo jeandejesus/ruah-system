@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -19,11 +19,18 @@ export class AuthenticationService {
       'Content-Type': 'application/json',
     });
 
-    return this.http.post(
-      `${this.apiUrl}/login`,
-      { email, password },
-      { headers, withCredentials: true }
-    );
+    return this.http
+      .post(
+        `${this.apiUrl}/login`,
+        { email, password },
+        { headers, withCredentials: true }
+      )
+      .pipe(
+        catchError((error) => {
+          console.log('Auth Service caught error:', error);
+          return throwError(() => error);
+        })
+      );
   }
 
   register(userData: any): Observable<any> {

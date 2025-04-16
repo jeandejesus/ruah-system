@@ -10,25 +10,35 @@ import { AlunosComponent } from './pages/alunos/alunos.component';
 import { AlunosListagemComponent } from './pages/alunos-listagem/alunos-listagem.component';
 import { PagamentosComponent } from './pages/pagamentos/pagamentos.component';
 import { authGuard } from './guards/auth.guard';
-  
+import { CreateSchoolComponent } from './pages/create-school/create-school.component';
+
 const routes: Routes = [
   {
     path: '',
     redirectTo: '/login',
     pathMatch: 'full',
   },
+
   {
     path: '',
     component: LayoutComponent,
     children: [
+      {
+        path: 'criar-escola',
+        component: CreateSchoolComponent,
+        canActivate: [() => authGuard('owner')], // Apenas administradores
+      },
+
       {
         path: 'painel',
         children: [
           { path: 'dashboard', component: DashboardComponent },
           { path: 'turmas', component: TurmasComponent },
           { path: 'locais', component: LocaisComponent },
-          { path: 'pagamentos',             children: [
-           {path:'assinaturas', component: PagamentosComponent}] },
+          {
+            path: 'pagamentos',
+            children: [{ path: 'assinaturas', component: PagamentosComponent }],
+          },
           {
             path: 'alunos',
             children: [

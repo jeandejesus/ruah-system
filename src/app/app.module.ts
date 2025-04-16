@@ -20,6 +20,7 @@ import { AlunosListagemComponent } from './pages/alunos-listagem/alunos-listagem
 import { AlunoFilterPipe } from './pipes/aluno-filter.pipe';
 import { NgxMaskModule } from 'ngx-mask';
 import { PagamentosComponent } from './pages/pagamentos/pagamentos.component';
+import { CreateSchoolComponent } from './pages/create-school/create-school.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { PagamentosComponent } from './pages/pagamentos/pagamentos.component';
     LayoutComponent,
     AlunoFilterPipe,
     PagamentosComponent,
+    CreateSchoolComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,8 @@ import { PagamentosComponent } from './pages/pagamentos/pagamentos.component';
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
-    BrowserAnimationsModule, // Importando a animação
+    BrowserAnimationsModule,
+    // Importando a animação
     NgxMaskModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 3000, // Tempo de exibição do toast
