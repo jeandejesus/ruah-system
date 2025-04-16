@@ -7,6 +7,13 @@ $font-family: "Poppins", sans-serif;
 $border-radius: 12px;
 $box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
+// Container adjustments
+.container {
+  padding: 20px;
+  background-color: $background-color;
+  min-height: calc(100vh - 60px); /* Adjust based on header/footer height */
+}
+
 // Input de pesquisa estilizado
 .search-input {
   width: 100%;
@@ -23,12 +30,16 @@ $box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
   &:focus {
     outline: none;
-    transform: scale(1.05);
+    transform: scale(1.02);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
   }
 }
 
 // Estilo moderno para a tabela
+.table-responsive {
+  overflow-x: auto; /* Ensure table scrolls horizontally if needed */
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -46,6 +57,7 @@ table {
       padding: 15px;
       font-size: 16px;
       font-weight: 600;
+      white-space: nowrap; /* Prevent header text wrapping */
     }
   }
 
@@ -59,7 +71,7 @@ table {
 
       &:hover {
         background-color: rgba($primary-color, 0.1);
-        transform: scale(1.02);
+        transform: scale(1.01);
         cursor: pointer;
       }
 
@@ -67,6 +79,7 @@ table {
         padding: 15px;
         font-size: 14px;
         color: $text-color;
+        vertical-align: middle; /* Align content vertically */
 
         &:first-child {
           font-weight: bold;
@@ -78,9 +91,9 @@ table {
 
 .badge {
   display: inline-block;
-  width: 100px; // Define um tamanho fixo
+  min-width: 80px; /* Ensure badges have a minimum width */
   padding: 6px 12px;
-  font-size: 14px;
+  font-size: 13px; /* Slightly smaller font for badges */
   font-weight: bold;
   text-align: center;
   border-radius: 12px;
@@ -98,20 +111,41 @@ table {
 
 // Responsividade para telas menores
 @media (max-width: 768px) {
-  table {
+  .container {
+    padding: 10px; /* Reduzir padding no mobile */
+  }
+
+  .search-input {
+    max-width: 100%; /* Input ocupa largura total */
     font-size: 14px;
+    padding: 10px 15px;
+  }
+
+  table {
+    font-size: 13px; /* Reduzir fonte da tabela */
 
     thead {
       th {
-        padding: 12px;
+        padding: 10px;
         font-size: 14px;
       }
     }
 
     tbody {
       td {
-        padding: 12px;
+        padding: 10px;
       }
     }
+
+    /* Esconder coluna de Email */
+    .email-column {
+      display: none;
+    }
+  }
+
+  .badge {
+    min-width: 70px;
+    font-size: 12px;
+    padding: 5px 10px;
   }
 }
