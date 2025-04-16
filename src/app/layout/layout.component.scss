@@ -298,13 +298,22 @@ h4 {
     margin-left: 0;
     position: relative;
     width: 100%;
-   }
-  .sidebar {
-    transform: translateX(-100%);
-    width: 280px; /* Slightly wider for mobile touch */
-    &.open {
-      transform: translateX(0);
+
+    button {
+      position: absolute; /* Garante que o botão fique fixo no canto esquerdo */
+      left: 0; /* Coloca o botão no canto esquerdo */
+      background-color: #570a0a;
     }
+  }
+  .sidebar {
+    position: fixed;
+    z-index: 1000;
+    transform: translateX(-100%);
+    margin-top: 48px;
+  }
+
+  .sidebar.sidebar-closed {
+    transform: translateX(0);
   }
 
   .main-content {
@@ -317,15 +326,15 @@ h4 {
   }
 
   .content-header {
-     padding-top: 50px; /* Add padding to avoid overlap with fixed toggle button */
+    padding-top: 50px; /* Add padding to avoid overlap with fixed toggle button */
   }
 
   .content {
     margin: 0;
+    padding: 0;
     width: calc(100% - 250px);
     transition: margin-left 0.3s ease-in-out;
   }
-  
 }
 
 /* Add your variable definitions here or import them */

@@ -21,8 +21,9 @@ export class LayoutComponent implements OnInit {
   isMobileMenuOpen: boolean = false;
   menuState: { [key: string]: boolean } = {
     alunos: false,
-    pagamentos: false
+    pagamentos: false,
   };
+  isSidebarClosed = false; // Estado inicial do menu lateral
 
   constructor(
     private dashboardService: DashboardService,
@@ -59,5 +60,9 @@ export class LayoutComponent implements OnInit {
 
   togglePagamentoMenu() {
     this.pagamentoMenuOpen = !this.pagamentoMenuOpen;
+  }
+
+  toggleSidebar() {
+    this.isSidebarClosed = !this.isSidebarClosed;
   }
 }
