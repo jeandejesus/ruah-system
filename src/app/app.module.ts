@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -46,10 +45,11 @@ import { CreateSchoolComponent } from './pages/create-school/create-school.compo
     BrowserAnimationsModule,
     // Importando a animação
     NgxMaskModule.forRoot(),
+    BrowserAnimationsModule,
     ToastrModule.forRoot({
-      timeOut: 3000, // Tempo de exibição do toast
-      positionClass: 'toast-top-right', // Posição do toast
-      preventDuplicates: true, // Evita toasts duplicados
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
     }),
     CommonModule,
   ],

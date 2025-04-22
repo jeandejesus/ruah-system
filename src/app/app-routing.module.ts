@@ -63,6 +63,7 @@ const routes: Routes = [
   },
 
   { path: 'login', component: LoginComponent },
+  { path: 'recuperar-senha', component: LoginComponent },
 
   { path: '**', redirectTo: 'login' }, // Redireciona qualquer rota inválida para login
 ];

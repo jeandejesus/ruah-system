@@ -63,3 +63,31 @@ input.form-control:focus {
     border-radius: 0; // Bordas arredondadas
   }
 }
+
+.form-control.ng-invalid.ng-touched {
+  border-color: #dc3545;
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+  }
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.spinner-border {
+  width: 1rem;
+  height: 1rem;
+}
+
+.text-muted {
+  font-size: 0.875rem;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+    color: #0056b3 !important;
+  }
+}

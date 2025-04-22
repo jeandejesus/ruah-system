@@ -7,7 +7,7 @@ import { AlunosListagemComponent } from './alunos-listagem/alunos-listagem.compo
 import { CreateSchoolComponent } from './create-school/create-school.component';
 
 @NgModule({
-  declarations: [ProfessoresComponent, CreateSchoolComponent],
+  declarations: [ProfessoresComponent],
   imports: [CommonModule, FormsModule],
 })
 export class PagesModule {}

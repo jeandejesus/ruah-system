@@ -13,24 +13,16 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {}
 
-  // Método para fazer login
   login(email: string, password: string): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
 
-    return this.http
-      .post(
-        `${this.apiUrl}/login`,
-        { email, password },
-        { headers, withCredentials: true }
-      )
-      .pipe(
-        catchError((error) => {
-          console.log('Auth Service caught error:', error);
-          return throwError(() => error);
-        })
-      );
+    return this.http.post(
+      `${this.apiUrl}/login`,
+      { email, password },
+      { headers, withCredentials: true }
+    );
   }
 
   register(userData: any): Observable<any> {
@@ -39,5 +31,30 @@ export class AuthenticationService {
 
   logout() {
     localStorage.removeItem('authToken');
+  }
+
+  resetSenha(email: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    return this.http.post(
+      `${this.apiUrl}/forgot-password`,
+      { email },
+      { headers, withCredentials: true }
+    );
+  }
+
+  resetPassword(
+    token: string,
+    newPassword: string
+  ): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(
+      `${environment.apiUrl}/auth/reset-password`,
+      {
+        token,
+        newPassword,
+      }
+    );
   }
 }
