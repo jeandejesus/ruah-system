@@ -7,12 +7,12 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class SchoolService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = `${environment.apiUrl}/admin`;
 
   constructor(private http: HttpClient) {}
 
   getSchoolByUserId(userId: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/admin/school/${userId}`);
+    return this.http.get(`${this.apiUrl}/school/${userId}`);
   }
 
   createSchool(schoolData: any): Observable<any> {

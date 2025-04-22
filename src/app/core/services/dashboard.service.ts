@@ -17,7 +17,7 @@ export class DashboardService {
   getSchoolById(schoolId: string): Observable<any> {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<any>(`${this.apiUrl}/school?id=${schoolId}`, {
+    return this.http.get<any>(`${this.apiUrl}/school/${schoolId}`, {
       headers,
     });
   }

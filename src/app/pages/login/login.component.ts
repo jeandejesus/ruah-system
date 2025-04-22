@@ -77,6 +77,8 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  // Método para redirecionar para a página de recuperação de senha
+
   forgotPassword() {
     this.authService.resetSenha(this.email).subscribe({
       next: () => {

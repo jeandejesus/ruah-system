@@ -21,15 +21,18 @@ export class CreateSchoolComponent {
   constructor(private schoolService: SchoolService, private router: Router) {
     const jwtHelper = new JwtHelperService();
     const token = localStorage.getItem('authToken');
+
     if (token) {
       const user = jwtHelper.decodeToken(token);
+      console.log('Decoded token:', user);
       if (user) {
-        this.school.userId = user._id;
+        this.school.userId = user.sub;
       }
     }
   }
 
   onSubmit() {
+    console.log('Creating school:', this.school);
     this.schoolService.createSchool(this.school).subscribe({
       next: (response) => {
         localStorage.setItem('schoolId', response._id);
