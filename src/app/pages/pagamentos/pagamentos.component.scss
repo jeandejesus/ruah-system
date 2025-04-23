@@ -100,12 +100,12 @@ table {
 }
 
 .badge-success {
-  background-color: #28a745;
+  background-color: #b9ffc9;
   color: white;
 }
 
 .badge-danger {
-  background-color: #dc3545;
+  background-color: #ffa9b1;
   color: white;
 }
 
@@ -123,6 +123,7 @@ table {
 
   table {
     font-size: 13px; /* Reduzir fonte da tabela */
+    border: 1px solid gray;
 
     thead {
       th {
@@ -133,7 +134,8 @@ table {
 
     tbody {
       td {
-        padding: 10px;
+        align-items: self-end;
+        display: flex;
       }
     }
 

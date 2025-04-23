@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
       next: (school: School) => {
         console.log('Escola:', school);
         if (school) {
-          this.router.navigate(['/painel']); // Redireciona para a página do dashboard
+          this.router.navigate(['/painel/pagamentos/assinaturas']); // Redireciona para a página do dashboard
         } else {
           this.router.navigate(['/criar-escola']);
         }

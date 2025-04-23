@@ -1,4 +1,7 @@
-<div [class]="school.name ? 'header' : 'header-nova-escola'">
+<div
+  [class]="school.name ? 'header' : 'header-nova-escola'"
+  [routerLink]="['/painel']"
+>
   <!-- Botão hambúrguer -->
   <button
     *ngIf="!noExistesSchool"

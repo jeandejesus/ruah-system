@@ -32,7 +32,7 @@ const routes: Routes = [
       {
         path: 'painel',
         children: [
-          { path: 'dashboard', component: DashboardComponent },
+          { path: '', component: DashboardComponent },
           { path: 'turmas', component: TurmasComponent },
           { path: 'locais', component: LocaisComponent },
           {

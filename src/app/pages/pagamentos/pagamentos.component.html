@@ -17,13 +17,20 @@
       <thead>
         <tr>
           <th>Nome</th>
-          <th>Status de Pagamento</th>
+          <th class="d-none d-md-table-cell">Status de Pagamento</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let customer of customers">
           <td>{{ customer.name }}</td>
-          <td class="email-column">
+          <td
+            class="email-column"
+            [class]="
+              customer.subscriptions[0].payment_error
+                ? 'badge-danger'
+                : 'badge-success '
+            "
+          >
             {{ customer.subscriptions[0].payment_error || "Assinatura ativa" }}
           </td>
         </tr>
