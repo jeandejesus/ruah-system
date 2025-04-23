@@ -9,7 +9,7 @@
       placeholder="Buscar por nome ou email..."
       [value]="searchText"
       (input)="onSearch($event)"
-    >
+    />
   </div>
 
   <div class="table-responsive">
@@ -17,18 +17,14 @@
       <thead>
         <tr>
           <th>Nome</th>
-          <th class="email-column">Email</th>
           <th>Status de Pagamento</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let customer of customers">
           <td>{{ customer.name }}</td>
-          <td class="email-column">{{ customer.email }}</td>
-          <td>
-            <span class="badge" [ngClass]="{'bg-success': customer.status === 'ativo', 'bg-danger': customer.status === 'inativo'}">
-              {{ customer.status }}
-            </span>
+          <td class="email-column">
+            {{ customer.subscriptions[0].payment_error || "Assinatura ativa" }}
           </td>
         </tr>
       </tbody>
@@ -44,9 +40,7 @@
 
   <!-- Load More Button -->
   <div class="text-center mt-3" *ngIf="hasMore && !loading">
-    <button class="btn btn-primary" (click)="loadMore()">
-      Carregar Mais
-    </button>
+    <button class="btn btn-primary" (click)="loadMore()">Carregar Mais</button>
   </div>
 
   <!-- No Results Message -->
