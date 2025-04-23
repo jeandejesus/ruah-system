@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.authService.verificaApiRunning().subscribe();
     const pathname = window.location.pathname;
     if (pathname === '/recuperar-senha') {
       this.path = pathname;

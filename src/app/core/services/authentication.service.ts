@@ -13,6 +13,10 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {}
 
+  verificaApiRunning(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/`);
+  }
+
   login(email: string, password: string): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
