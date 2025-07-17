@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlunoService } from 'src/app/core/services/aluno.service';
 interface Turma {
+  _id: string;
   name: string;
   schedule: string;
 }
@@ -23,7 +25,7 @@ export class AlunosListagemComponent implements OnInit {
   alunos: Aluno[] = [];
   searchText: string = '';
 
-  constructor(private alunoService: AlunoService) {}
+  constructor(private alunoService: AlunoService, private router: Router) {}
 
   ngOnInit(): void {
     this.carregarAlunos();
@@ -32,8 +34,6 @@ export class AlunosListagemComponent implements OnInit {
   carregarAlunos(): void {
     this.alunoService.getAlunos().subscribe(
       (response: Aluno[]) => {
-        console.log(response);
-
         this.alunos = response.map((aluno) => ({
           ...aluno,
           turmas: aluno.turmas || [],
@@ -46,12 +46,16 @@ export class AlunosListagemComponent implements OnInit {
   }
 
   getTurmas(aluno: Aluno): string {
-    // Implement the logic to get the turmas for the aluno
-
-    console.log(aluno);
     return aluno.turmas
       .map((turma: Turma) => turma.name + ' - ' + turma.schedule)
       .join(', ');
+  }
+
+  editar(aluno: Aluno): void {
+    const turmasIds = aluno.turmas?.map((t) => t._id) || [];
+    this.router.navigate(['/painel/alunos/cadastro'], {
+      state: { aluno: { ...aluno, turmas: turmasIds } },
+    });
   }
 
   deletarAluno(id: string): void {

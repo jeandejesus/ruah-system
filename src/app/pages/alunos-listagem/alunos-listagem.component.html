@@ -19,7 +19,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let aluno of alunos | alunoFilter : searchText">
-        <td>{{ aluno.name }}</td>
+        <td (click)="editar(aluno)">{{ aluno.name }}</td>
         <td class="celular">{{ aluno.email }}</td>
         <td class="celular">{{ aluno.phone }}</td>
         <td>

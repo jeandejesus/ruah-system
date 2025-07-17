@@ -41,10 +41,27 @@ export class AlunosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const aluno = history.state.aluno;
+
+    if (aluno) {
+      this.editMode = true;
+      this.aluno = aluno;
+      let dateStr = this.aluno.birthDate;
+
+      if (dateStr && typeof dateStr === 'string') {
+        // Se vier no formato ISO (YYYY-MM-DD ou YYYY-MM-DDTHH:mm:ss)
+        const match = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})/);
+        if (match) {
+          this.aluno.birthDate = `${match[3]}/${match[2]}/${match[1]}`;
+        }
+        // Se já estiver no formato DD/MM/YYYY, não faz nada
+      }
+    } else {
+      this.aluno.turmas = [];
+    }
     this.turmaService.getTurmas().subscribe((turmas) => {
       this.turmas = turmas;
     });
-    this.aluno.turmas = [];
   }
 
   // Função para abrir o modal (muda o estado de edição)
@@ -74,19 +91,21 @@ export class AlunosComponent implements OnInit {
 
   // Função para enviar o formulário (criação ou atualização de aluno)
   onSubmit() {
-    console.log(this.aluno.birthDate); // Verifique o valor
-    const birthDateString = this.aluno.birthDate; // '25071994'
+    // Aceita tanto DD/MM/YYYY quanto DDMMYYYY
+    let birthDateString = this.aluno.birthDate;
 
-    // Converter a string para o formato ISO 'YYYY-MM-DD'
-    const formattedDate = `${birthDateString.slice(
-      4,
-      8
-    )}-${birthDateString.slice(2, 4)}-${birthDateString.slice(0, 2)}`;
-
-    // Criar um objeto Date
-    const birthDate = new Date(formattedDate);
-
-    this.aluno.birthDate = format(new Date(birthDate), 'yyyy-MM-dd');
+    // Se vier no formato DD/MM/YYYY
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(birthDateString)) {
+      const [day, month, year] = birthDateString.split('/');
+      this.aluno.birthDate = `${year}-${month}-${day}`;
+    }
+    // Se vier no formato DDMMYYYY
+    else if (/^\d{8}$/.test(birthDateString)) {
+      this.aluno.birthDate = `${birthDateString.slice(
+        4,
+        8
+      )}-${birthDateString.slice(2, 4)}-${birthDateString.slice(0, 2)}`;
+    }
 
     if (this.editMode) {
       this.updateAluno();
@@ -116,8 +135,7 @@ export class AlunosComponent implements OnInit {
   updateAluno() {
     // Chama a service para atualizar o aluno
     this.alunosService.updateAluno(this.aluno).subscribe(
-      (response) => {
-        console.log('Aluno atualizado com sucesso:', response);
+      () => {
         this.resetForm();
       },
       (error) => {
@@ -125,7 +143,9 @@ export class AlunosComponent implements OnInit {
       }
     );
   }
-
+  resetHistoryState() {
+    history.replaceState({}, '');
+  }
   // Função para limpar o formulário após a criação ou atualização
   resetForm() {
     this.aluno = {
@@ -142,6 +162,7 @@ export class AlunosComponent implements OnInit {
       turmas: [], // Limpa as turmas selecionadas
     };
     this.editMode = false;
+    this.resetHistoryState(); // Limpa o estado do histórico
   }
 
   // Função para editar um aluno existente (passando dados para o modal)

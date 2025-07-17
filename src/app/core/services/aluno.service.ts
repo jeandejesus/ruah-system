@@ -24,7 +24,7 @@ export class AlunoService {
   }
 
   updateAluno(aluno: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${aluno.id}`, aluno);
+    return this.http.put<any>(`${this.apiUrl}/${aluno._id}`, aluno);
   }
 
   deleteAluno(id: string): Observable<any> {
