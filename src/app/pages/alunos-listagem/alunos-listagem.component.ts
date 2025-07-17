@@ -53,4 +53,17 @@ export class AlunosListagemComponent implements OnInit {
       .map((turma: Turma) => turma.name + ' - ' + turma.schedule)
       .join(', ');
   }
+
+  deletarAluno(id: string): void {
+    if (confirm('Tem certeza que deseja deletar este aluno?')) {
+      this.alunoService.deleteAluno(id).subscribe(
+        () => {
+          this.alunos = this.alunos.filter((aluno) => aluno._id !== id);
+        },
+        (error) => {
+          console.error('Erro ao deletar aluno:', error);
+        }
+      );
+    }
+  }
 }

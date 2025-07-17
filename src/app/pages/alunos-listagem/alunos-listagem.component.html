@@ -10,18 +10,25 @@
     <thead>
       <tr>
         <th>Nome</th>
-        <th>Email</th>
-        <th>Telefone</th>
+        <th class="celular">Email</th>
+        <th class="celular">Telefone</th>
         <th>Turmas</th>
+        <th>Ações</th>
+        <!-- Nova coluna -->
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let aluno of alunos | alunoFilter : searchText">
         <td>{{ aluno.name }}</td>
-        <td>{{ aluno.email }}</td>
-        <td>{{ aluno.phone }}</td>
+        <td class="celular">{{ aluno.email }}</td>
+        <td class="celular">{{ aluno.phone }}</td>
         <td>
           {{ getTurmas(aluno) }}
+        </td>
+        <td>
+          <button (click)="deletarAluno(aluno._id)" class="btn btn-danger">
+            Deletar
+          </button>
         </td>
       </tr>
     </tbody>
