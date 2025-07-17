@@ -101,7 +101,6 @@ export class AlunosComponent implements OnInit {
     this.alunosService.createAluno(this.aluno).subscribe(
       async (response) => {
         this.toastr.success('Operação realizada com sucesso!', 'Sucesso');
-        window.open(response.url, '_blank'); // Abre o Stripe Checkout em nova aba
 
         this.resetForm();
       },
