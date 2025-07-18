@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +20,7 @@ import { AlunoFilterPipe } from './pipes/aluno-filter.pipe';
 import { NgxMaskModule } from 'ngx-mask';
 import { PagamentosComponent } from './pages/pagamentos/pagamentos.component';
 import { CreateSchoolComponent } from './pages/create-school/create-school.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,14 @@ import { CreateSchoolComponent } from './pages/create-school/create-school.compo
       preventDuplicates: true,
     }),
     CommonModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      // Esta linha é crucial
+      // enabled: environment.production, // Geralmente habilitado apenas em produção
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      enabled: true,
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
