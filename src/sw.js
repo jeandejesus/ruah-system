@@ -3,7 +3,7 @@ self.addEventListener("push", function (event) {
   event.waitUntil(
     self.registration.showNotification(data.title, {
       body: data.body,
-      icon: "/assets/icons/icon-192x192.png", // ajuste o caminho do ícone se necessário
+      icon: "src/assets/ruah.PNG",
     })
   );
 });
