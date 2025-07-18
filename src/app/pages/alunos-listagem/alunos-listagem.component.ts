@@ -4,7 +4,8 @@ import { AlunoService } from 'src/app/core/services/aluno.service';
 interface Turma {
   _id: string;
   name: string;
-  schedule: string;
+  startTime: string;
+  endTime: string;
 }
 
 interface Aluno {
@@ -38,6 +39,8 @@ export class AlunosListagemComponent implements OnInit {
           ...aluno,
           turmas: aluno.turmas || [],
         }));
+
+        console.log('Alunos carregados:', this.alunos);
       },
       (error) => {
         console.error('Erro ao carregar alunos:', error);
@@ -47,7 +50,10 @@ export class AlunosListagemComponent implements OnInit {
 
   getTurmas(aluno: Aluno): string {
     return aluno.turmas
-      .map((turma: Turma) => turma.name + ' - ' + turma.schedule)
+      .map(
+        (turma: Turma) =>
+          turma.name + ' - ' + turma.startTime + ' às ' + turma.endTime
+      )
       .join(', ');
   }
 
