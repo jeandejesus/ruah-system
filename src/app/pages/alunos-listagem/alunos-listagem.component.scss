@@ -1,5 +1,5 @@
 // Variáveis para estilos modernos
-$primary-color: #4a90e2;
+$primary-color: #570a0a;
 $secondary-color: #27ae60;
 $background-color: #f4f6f9;
 $text-color: #333;
@@ -50,7 +50,7 @@ table {
   overflow: hidden;
 
   thead {
-    background: linear-gradient(135deg, $primary-color, $secondary-color);
+    background: $primary-color;
     color: #fff;
     text-align: left;
 
@@ -71,7 +71,7 @@ table {
 
       &:hover {
         background-color: rgba($primary-color, 0.1);
-        transform: scale(1.02);
+        transform: scale(1);
         cursor: pointer;
       }
 
@@ -91,7 +91,7 @@ table {
     padding: 10px 15px;
     border: none;
     border-radius: $border-radius;
-    background-color: red;
+    background-color: rgba(255, 0, 0, 0.901);
     color: #fff;
     font-size: 14px;
     cursor: pointer;
@@ -104,6 +104,10 @@ table {
     &:disabled {
       background-color: #ccc;
       cursor: not-allowed;
+    }
+
+    &.btn-danger {
+      background-color: $primary-color;
     }
   }
 }

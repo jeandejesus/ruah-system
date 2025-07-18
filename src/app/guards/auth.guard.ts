@@ -5,13 +5,17 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { environment } from 'src/environments/environment';
- 
+
 export const authGuard = (roleRequired?: string) => {
   // ⬅️ Aqui o parâmetro roleRequired é definido
   const router = inject(Router);
   const http = inject(HttpClient);
   const jwtHelper = new JwtHelperService();
   const token = localStorage.getItem('authToken');
+  if (token) {
+    const expirationDate = jwtHelper.getTokenExpirationDate(token);
+    console.log('Token expira em:', expirationDate);
+  }
 
   if (!token || jwtHelper.isTokenExpired(token)) {
     console.log('Token inválido ou expirado. Redirecionando para login...');
@@ -19,7 +23,7 @@ export const authGuard = (roleRequired?: string) => {
     return false;
   }
   const decodedToken: any = jwtHelper.decodeToken(token);
-
+  console.log('Decoded Token:', decodedToken);
   if (roleRequired && decodedToken.role !== roleRequired) {
     console.log('Usuário sem permissão. Redirecionando para "não autorizado".');
     router.navigate(['/not-authorized']);

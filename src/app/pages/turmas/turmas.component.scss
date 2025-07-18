@@ -1,5 +1,6 @@
 // Variáveis globais
-$primary-color: #4a90e2;
+
+$primary-color: #570a0a;
 $secondary-color: #27ae60;
 $warning-color: #f1c40f;
 $danger-color: #e74c3c;
@@ -24,6 +25,11 @@ div {
     font-size: 24px;
     color: $primary-color;
     margin-bottom: 20px;
+  }
+
+  .btn {
+    background-color: $primary-color;
+    border: none;
   }
 }
 
@@ -68,6 +74,8 @@ div {
     border-radius: $border-radius;
     transition: all 0.3s ease-in-out;
     margin: 0 10px;
+    background-color: $primary-color;
+    border-color: transparent;
 
     &-warning {
       background-color: $warning-color;

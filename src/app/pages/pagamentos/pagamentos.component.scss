@@ -9,8 +9,6 @@ $box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
 // Container adjustments
 .container {
-  padding: 20px;
-  background-color: $background-color;
   min-height: calc(100vh - 60px); /* Adjust based on header/footer height */
 }
 
@@ -44,7 +42,6 @@ table {
   width: 100%;
   border-collapse: collapse;
   background-color: #fff;
-  border-radius: $border-radius;
   box-shadow: $box-shadow;
   overflow: hidden;
 
@@ -78,7 +75,6 @@ table {
       td {
         padding: 15px;
         font-size: 14px;
-        color: $text-color;
         vertical-align: middle; /* Align content vertically */
 
         &:first-child {
@@ -100,25 +96,31 @@ table {
 }
 
 .badge-success {
-  background-color: #b9ffc9;
+  background-color: #064514;
   color: white;
 }
 
 .badge-danger {
-  background-color: #ffa9b1;
+  background-color: #570a0a;
   color: white;
 }
 
 // Responsividade para telas menores
 @media (max-width: 768px) {
   .container {
-    padding: 10px; /* Reduzir padding no mobile */
+    padding: 0px; /* Reduzir padding no mobile */
+
+    h2 {
+      margin: 10px;
+      font-size: 14px; /* Título menor no mobile */
+    }
   }
 
   .search-input {
     max-width: 100%; /* Input ocupa largura total */
     font-size: 14px;
-    padding: 10px 15px;
+    margin: 5px;
+    width: 372px;
   }
 
   table {

@@ -1,8 +1,8 @@
 // Variáveis globais
-$primary-color: #4a90e2;
+$primary-color: #570a0a;
 $secondary-color: #27ae60;
 $warning-color: #f1c40f;
-$danger-color: #e74c3c;
+$danger-color: #fa3f2b;
 $background-color: #f4f6f9;
 $text-color: #333;
 $border-radius: 10px;
@@ -37,7 +37,7 @@ div {
     border-radius: $border-radius;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-
+    background-color: $primary-color;
     &:hover {
       background-color: darken($primary-color, 10%);
     }
