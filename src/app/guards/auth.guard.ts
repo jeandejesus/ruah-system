@@ -12,13 +12,15 @@ export const authGuard = (roleRequired?: string) => {
   const jwtHelper = new JwtHelperService();
   const token = localStorage.getItem('authToken');
 
+  if (token) {
+    const expirationDate = jwtHelper.getTokenExpirationDate(token);
+  }
+
   if (!token || jwtHelper.isTokenExpired(token)) {
-    console.log('Token inválido ou expirado. Redirecionando para login...');
     router.navigate(['/login']);
     return false;
   }
   const decodedToken: any = jwtHelper.decodeToken(token);
-  console.log('Token decodificado:', decodedToken);
 
   if (roleRequired && decodedToken.role !== roleRequired) {
     console.log('Usuário sem permissão. Redirecionando para "não autorizado".');
