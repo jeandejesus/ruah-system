@@ -22,36 +22,36 @@ export class NotificationService {
    */
   requestPermissionAndSubscribe(): void {
     // Verifica se o Service Worker está habilitado (necessário para Web Push)
-    if (this.swPush.isEnabled) {
-      this.swPush
-        .requestSubscription({
-          serverPublicKey: this.VAPID_PUBLIC_KEY, // Chave pública VAPID para o servidor de push
-        })
-        .then((subscription) => {
-          // Envia a assinatura (PushSubscription) para o seu backend NestJS
-          this.addPushSubscriber(subscription).subscribe(
-            () =>
-              console.log(
-                '✅ Assinatura enviada para o servidor NestJS com sucesso!'
-              ),
-            (err) =>
-              console.error(
-                '❌ Falha ao enviar assinatura para o servidor NestJS:',
-                err
-              )
-          );
-        })
-        .catch((err) =>
-          console.error(
-            '🚫 Não foi possível se inscrever para notificações push',
-            err
-          )
-        );
-    } else {
-      console.warn(
-        '⚠️ O Service Worker não está habilitado. O Web Push não funcionará.'
-      );
-    }
+    // if (this.swPush.isEnabled) {
+    //   this.swPush
+    //     .requestSubscription({
+    //       serverPublicKey: this.VAPID_PUBLIC_KEY, // Chave pública VAPID para o servidor de push
+    //     })
+    //     .then((subscription) => {
+    //       // Envia a assinatura (PushSubscription) para o seu backend NestJS
+    //       this.addPushSubscriber(subscription).subscribe(
+    //         () =>
+    //           console.log(
+    //             '✅ Assinatura enviada para o servidor NestJS com sucesso!'
+    //           ),
+    //         (err) =>
+    //           console.error(
+    //             '❌ Falha ao enviar assinatura para o servidor NestJS:',
+    //             err
+    //           )
+    //       );
+    //     })
+    //     .catch((err) =>
+    //       console.error(
+    //         '🚫 Não foi possível se inscrever para notificações push',
+    //         err
+    //       )
+    //     );
+    // } else {
+    //   console.warn(
+    //     '⚠️ O Service Worker não está habilitado. O Web Push não funcionará.'
+    //   );
+    // }
   }
 
   /**

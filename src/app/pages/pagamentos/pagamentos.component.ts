@@ -1,32 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { PagamentosService, Customer, CustomerResponse } from './pagamentos.service';
+import {
+  PagamentosService,
+  Customer,
+  CustomerResponse,
+} from './pagamentos.service';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-pagamentos',
   templateUrl: './pagamentos.component.html',
-  styleUrls: ['./pagamentos.component.scss']
+  styleUrls: ['./pagamentos.component.scss'],
 })
 export class PagamentosComponent implements OnInit {
   customers: Customer[] = [];
   hasMore = false;
   loading = false;
   lastCustomerId: string | undefined = undefined;
-  pageSize = 10;
+  pageSize = 9;
   searchText = '';
   private searchSubject = new Subject<string>();
   private isSearching = false;
 
   constructor(private pagamentosService: PagamentosService) {
-    this.searchSubject.pipe(
-      debounceTime(300),
-      distinctUntilChanged()
-    ).subscribe(searchTerm => {
-      this.searchText = searchTerm;
-      this.isSearching = !!searchTerm;
-      this.resetAndLoad();
-    });
+    this.searchSubject
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe((searchTerm) => {
+        this.searchText = searchTerm;
+        this.isSearching = !!searchTerm;
+        this.resetAndLoad();
+      });
   }
 
   ngOnInit() {
@@ -41,39 +44,45 @@ export class PagamentosComponent implements OnInit {
 
   loadCustomers(loadMore = false) {
     if (this.loading) return;
-    
+
     this.loading = true;
     const startingAfter = loadMore ? this.lastCustomerId : undefined;
 
-    this.pagamentosService.getCustomers(this.pageSize, startingAfter, this.searchText)
+    this.pagamentosService
+      .getCustomers(this.pageSize, startingAfter, this.searchText)
       .subscribe({
         next: (response: CustomerResponse) => {
           const newCustomers = response.customers;
-          
+
           if (loadMore) {
             // Adiciona apenas clientes que ainda não estão na lista
             this.customers = [
               ...this.customers,
-              ...newCustomers.filter(newCustomer => 
-                !this.customers.some(existing => existing.id === newCustomer.id)
-              )
+              ...newCustomers.filter(
+                (newCustomer) =>
+                  !this.customers.some(
+                    (existing) => existing.id === newCustomer.id
+                  )
+              ),
             ];
           } else {
             this.customers = newCustomers;
           }
-          
-          this.hasMore = response.hasMore || (this.isSearching && newCustomers.length === this.pageSize);
-          
+
+          this.hasMore =
+            response.hasMore ||
+            (this.isSearching && newCustomers.length === this.pageSize);
+
           if (newCustomers.length > 0) {
             this.lastCustomerId = newCustomers[newCustomers.length - 1].id;
           }
-          
+
           this.loading = false;
         },
         error: (error: Error) => {
           console.error('Erro ao carregar clientes:', error);
           this.loading = false;
-        }
+        },
       });
   }
 
@@ -86,5 +95,17 @@ export class PagamentosComponent implements OnInit {
     if (this.hasMore && !this.loading) {
       this.loadCustomers(true);
     }
+  }
+
+  getWhatsappLink(customer: any): string {
+    const phone = customer.phone;
+    const name = customer.name;
+    const error = customer.subscriptions[0]?.payment_error;
+    let message = `Olá ${name}, Tudo bem ?`;
+    if (error) {
+      message = `Olá ${name}, seu pagamento está com o seguinte erro: ${error}`;
+    }
+    console.log('Mensagem para WhatsApp:', message);
+    return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
   }
 }

@@ -16,33 +16,32 @@ export class AppComponent implements OnChanges, OnInit {
   ) {}
 
   async ngOnInit(): Promise<Promise<Promise<void>>> {
-    console.log('🚀 Inicializando o AppComponent...', this.swPush.isEnabled);
-    if (this.swPush.isEnabled) {
-      // Verifica o status da permissão atual
-      if (
-        Notification.permission === 'default' ||
-        Notification.permission === 'denied'
-      ) {
-        // Se a permissão ainda não foi dada ou foi negada, solicite.
-        // É melhor fazer isso após uma interação do usuário para evitar ser bloqueado pelo navegador.
-        this.requestPushSubscription();
-      } else if (Notification.permission === 'granted') {
-        // Se a permissão já foi concedida, podemos tentar inscrever novamente
-        // ou apenas garantir que o listener de mensagens esteja ativo.
-        console.log(
-          'Permissão de notificação já concedida. Garantindo inscrição e ouvintes...'
-        );
-        this.notificationService.requestPermissionAndSubscribe(); // Tenta inscrever novamente se necessário
-      }
-    } else {
-      console.warn(
-        '⚠️ Service Worker não habilitado. As notificações push não funcionarão.'
-      );
-    }
-
-    // Opcional: Ativar os listeners para mensagens e cliques se o app estiver em foreground
-    this.notificationService.listenForPushMessages();
-    this.notificationService.listenForNotificationClicks();
+    // console.log('🚀 Inicializando o AppComponent...', this.swPush.isEnabled);
+    // if (this.swPush.isEnabled) {
+    //   // Verifica o status da permissão atual
+    //   if (
+    //     Notification.permission === 'default' ||
+    //     Notification.permission === 'denied'
+    //   ) {
+    //     // Se a permissão ainda não foi dada ou foi negada, solicite.
+    //     // É melhor fazer isso após uma interação do usuário para evitar ser bloqueado pelo navegador.
+    //     this.requestPushSubscription();
+    //   } else if (Notification.permission === 'granted') {
+    //     // Se a permissão já foi concedida, podemos tentar inscrever novamente
+    //     // ou apenas garantir que o listener de mensagens esteja ativo.
+    //     console.log(
+    //       'Permissão de notificação já concedida. Garantindo inscrição e ouvintes...'
+    //     );
+    //     this.notificationService.requestPermissionAndSubscribe(); // Tenta inscrever novamente se necessário
+    //   }
+    // } else {
+    //   console.warn(
+    //     '⚠️ Service Worker não habilitado. As notificações push não funcionarão.'
+    //   );
+    // }
+    // // Opcional: Ativar os listeners para mensagens e cliques se o app estiver em foreground
+    // this.notificationService.listenForPushMessages();
+    // this.notificationService.listenForNotificationClicks();
   }
   token = localStorage.getItem('authToken');
 
