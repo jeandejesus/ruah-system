@@ -1,6 +1,14 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnInit,
+  Renderer2,
+  SimpleChanges,
+} from '@angular/core';
 import { NotificationService } from './services/notification.service';
 import { SwPush } from '@angular/service-worker';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +20,16 @@ export class AppComponent implements OnChanges, OnInit {
     'BMsge5mDL0_eUOtxONeKm5MrT4ZGA2RY2KCt2x-xIzCMtMEWM7thyxclQCGY51z9nRrpoINF_DxKyI7L7pnAW-U';
   constructor(
     private notificationService: NotificationService,
-    private swPush: SwPush
-  ) {}
+    private swPush: SwPush,
+    private renderer: Renderer2,
+    private router: Router
+  ) {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.renderer.removeClass(document.body, 'no-scroll');
+      });
+  }
 
   async ngOnInit(): Promise<Promise<Promise<void>>> {
     // console.log('🚀 Inicializando o AppComponent...', this.swPush.isEnabled);

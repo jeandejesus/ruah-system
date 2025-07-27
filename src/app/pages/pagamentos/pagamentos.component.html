@@ -43,32 +43,6 @@
       </div>
     </div>
 
-    <!-- <div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th class="d-none d-md-table-cell">Status de Pagamento</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let customer of customers">
-          <td>{{ customer.name }}</td>
-          <td
-            class="email-column"
-            [class]="
-              customer.subscriptions[0].payment_error
-                ? 'badge-danger'
-                : 'badge-success '
-            "
-          >
-            {{ customer.subscriptions[0].payment_error || "Assinatura ativa" }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div> -->
-
     <!-- Loading Spinner -->
     <div class="d-flex justify-content-center my-3" *ngIf="loading">
       <div class="spinner-border text-primary" role="status">

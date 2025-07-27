@@ -83,6 +83,7 @@ export class LayoutComponent implements OnInit {
   closeSidebarOnMobileIfOpen() {
     if (this.isSidebarClosed) {
       this.isSidebarClosed = !this.isSidebarClosed;
+      this.renderer.removeClass(document.body, 'no-scroll');
     }
   }
 }

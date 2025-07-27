@@ -123,10 +123,9 @@ export class AlunosComponent implements OnInit {
 
         this.resetForm();
       },
-      async (error) => {
-        this.toastr.error('Ocorreu um erro. Tente novamente.', 'Erro');
-
-        console.error('Erro ao cadastrar aluno:', error);
+      async (er) => {
+        console.error('Erro ao criar aluno:', er);
+        this.toastr.error(er.error.message);
       }
     );
   }
