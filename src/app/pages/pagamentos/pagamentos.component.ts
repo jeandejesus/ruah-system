@@ -105,7 +105,6 @@ export class PagamentosComponent implements OnInit {
     if (error) {
       message = `Olá ${name}, seu pagamento está com o seguinte erro: ${error}`;
     }
-    console.log('Mensagem para WhatsApp:', message);
     return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
   }
 }

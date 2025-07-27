@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { DashboardService } from '../core/services/dashboard.service';
@@ -27,7 +27,8 @@ export class LayoutComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2
   ) {}
   ngOnInit() {
     const token = localStorage.getItem('authToken');
@@ -63,10 +64,25 @@ export class LayoutComponent implements OnInit {
   }
 
   toggleSidebar() {
+    const isMobile = window.innerWidth <= 768;
+
+    if (isMobile) {
+      if (!this.isSidebarClosed) {
+        this.renderer.addClass(document.body, 'no-scroll');
+      } else {
+        this.renderer.removeClass(document.body, 'no-scroll');
+      }
+    }
     this.isSidebarClosed = !this.isSidebarClosed;
   }
 
   closeSidebarOnMobile() {
     this.isSidebarClosed = !this.isSidebarClosed;
+  }
+
+  closeSidebarOnMobileIfOpen() {
+    if (this.isSidebarClosed) {
+      this.isSidebarClosed = !this.isSidebarClosed;
+    }
   }
 }
