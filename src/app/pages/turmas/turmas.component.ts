@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { TurmaService } from 'src/app/core/services/turma.service';
 import * as bootstrap from 'bootstrap';
 import { LocaisService } from 'src/app/core/services/locais.service';
@@ -25,7 +25,7 @@ export class TurmasComponent implements OnInit {
   constructor(
     private turmaService: TurmaService,
     private localService: LocaisService,
-    private router: Router
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -94,7 +94,7 @@ export class TurmasComponent implements OnInit {
         this.carregarTurmas();
         this.fecharModal();
       },
-      error: (error) => console.error('Erro ao criar a turma', error),
+      error: (er) => this.toastr.error(er.error.message),
     });
   }
 
@@ -107,7 +107,7 @@ export class TurmasComponent implements OnInit {
         this.carregarTurmas();
         this.fecharModal();
       },
-      error: (error) => console.error('Erro ao atualizar a turma', error),
+      error: (er) => this.toastr.error(er.error.message),
     });
   }
 
@@ -118,7 +118,7 @@ export class TurmasComponent implements OnInit {
           console.log('Turma excluída com sucesso!', response);
           this.carregarTurmas();
         },
-        error: (error) => console.error('Erro ao excluir a turma', error),
+        error: (er) => this.toastr.error(er.error.message),
       });
     }
   }
