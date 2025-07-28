@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlunoService } from 'src/app/core/services/aluno.service';
 import { TurmaService } from 'src/app/core/services/turma.service';
-import { format } from 'date-fns';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
@@ -11,26 +10,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./alunos.component.scss'],
 })
 export class AlunosComponent implements OnInit {
-  // Aluno objeto com as propriedades necessárias
-  aluno: any = {
-    name: '',
-    cpf: '',
-    rg: '',
-    birthDate: Date,
-    phone: '',
-    email: '',
-    address: '',
-    emergencyContact: { name: '', phone: '' },
-    responsible: { name: '', cpf: '', rg: '', phone: '' },
-    isMinor: false,
-    turmas: [], // Múltiplas turmas podem ser selecionadas
-  };
+  aluno: any = this.getEmptyAluno();
   isLoading = false;
-
-  // Para controle de edição e criação
   editMode: boolean = false;
-
-  // Lista de turmas - Aqui você deve preencher com os dados reais
   turmas: any[] = [];
 
   constructor(
@@ -42,44 +24,26 @@ export class AlunosComponent implements OnInit {
 
   ngOnInit(): void {
     const aluno = history.state.aluno;
-
     if (aluno) {
       this.editMode = true;
-      this.aluno = aluno;
-      let dateStr = this.aluno.birthDate;
-
-      if (dateStr && typeof dateStr === 'string') {
-        // Se vier no formato ISO (YYYY-MM-DD ou YYYY-MM-DDTHH:mm:ss)
-        const match = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      this.aluno = { ...aluno };
+      if (typeof this.aluno.birthDate === 'string') {
+        const match = this.aluno.birthDate.match(/^\d{4}-\d{2}-\d{2}/);
         if (match) {
-          this.aluno.birthDate = `${match[3]}/${match[2]}/${match[1]}`;
+          const [year, month, day] = match[0].split('-');
+          this.aluno.birthDate = `${day}/${month}/${year}`;
         }
-        // Se já estiver no formato DD/MM/YYYY, não faz nada
       }
-    } else {
-      this.aluno.turmas = [];
     }
+
     this.turmaService.getTurmas().subscribe((turmas) => {
       this.turmas = turmas;
     });
   }
 
-  // Função para abrir o modal (muda o estado de edição)
   openModal() {
-    this.editMode = false; // Quando abrir para adicionar um novo aluno
-    this.aluno = {
-      name: '',
-      cpf: '',
-      rg: '',
-      birthDate: Date,
-      phone: '',
-      email: '',
-      address: '',
-      emergencyContact: { name: '', phone: '' },
-      responsible: { name: '', cpf: '', rg: '', phone: '' },
-      isMinor: false,
-      turmas: [], // Limpa as turmas ao abrir para criação
-    };
+    this.editMode = false;
+    this.aluno = this.getEmptyAluno();
     const modalElement = document.getElementById('alunoModal');
     if (modalElement) {
       const modal = new window.bootstrap.Modal(modalElement);
@@ -89,87 +53,71 @@ export class AlunosComponent implements OnInit {
     }
   }
 
-  // Função para enviar o formulário (criação ou atualização de aluno)
   onSubmit() {
-    // Aceita tanto DD/MM/YYYY quanto DDMMYYYY
-    let birthDateString = this.aluno.birthDate;
-
-    // Se vier no formato DD/MM/YYYY
-    if (/^\d{2}\/\d{2}\/\d{4}$/.test(birthDateString)) {
-      const [day, month, year] = birthDateString.split('/');
-      this.aluno.birthDate = `${year}-${month}-${day}`;
-    }
-    // Se vier no formato DDMMYYYY
-    else if (/^\d{8}$/.test(birthDateString)) {
-      this.aluno.birthDate = `${birthDateString.slice(
-        4,
-        8
-      )}-${birthDateString.slice(2, 4)}-${birthDateString.slice(0, 2)}`;
-    }
-
+    const alunoCopy = { ...this.aluno };
+    this.formatDate(alunoCopy);
     if (this.editMode) {
-      this.updateAluno();
+      this.updateAluno(alunoCopy);
     } else {
-      this.createAluno();
+      this.createAluno(alunoCopy);
     }
   }
 
-  // Função para criar um novo aluno
-  createAluno() {
-    // Chama a service para criar o aluno
-    this.alunosService.createAluno(this.aluno).subscribe(
-      async (response) => {
-        this.toastr.success('Operação realizada com sucesso!', 'Sucesso');
-
-        this.resetForm();
-      },
-      async (er) => {
-        console.error('Erro ao criar aluno:', er);
-        this.toastr.error(er.error.message);
-      }
-    );
+  private formatDate(aluno: any) {
+    const str = aluno.birthDate;
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(str)) {
+      const [day, month, year] = str.split('/');
+      aluno.birthDate = `${year}-${month}-${day}`;
+    } else if (/^\d{8}$/.test(str)) {
+      aluno.birthDate = `${str.slice(4)}-${str.slice(2, 4)}-${str.slice(0, 2)}`;
+    }
   }
 
-  // Função para editar um aluno (ativada se editMode for verdadeiro)
-  updateAluno() {
-    // Chama a service para atualizar o aluno
-    this.alunosService.updateAluno(this.aluno).subscribe(
+  createAluno(aluno: any) {
+    this.alunosService.createAluno(aluno).subscribe(
       () => {
+        this.toastr.success('Operação realizada com sucesso!', 'Sucesso');
         this.resetForm();
       },
       (error) => {
-        console.error('Erro ao atualizar aluno:', error);
+        this.toastr.error(error.error?.message || 'Erro ao criar aluno');
       }
     );
   }
+
+  updateAluno(aluno: any) {
+    this.alunosService.updateAluno(aluno).subscribe(
+      () => {
+        this.toastr.success('Atualizado com sucesso!', 'Sucesso');
+        this.resetForm();
+      },
+      (error) => {
+        this.toastr.error(error.error?.message || 'Erro ao atualizar aluno');
+      }
+    );
+  }
+
   resetHistoryState() {
     history.replaceState({}, '');
   }
-  // Função para limpar o formulário após a criação ou atualização
+
   resetForm() {
-    this.aluno = {
-      name: '',
-      cpf: '',
-      rg: '',
-      birthDate: Date,
-      phone: '',
-      email: '',
-      address: '',
-      emergencyContact: { name: '', phone: '' },
-      responsible: { name: '', cpf: '', rg: '', phone: '' },
-      isMinor: false,
-      turmas: [], // Limpa as turmas selecionadas
-    };
+    this.aluno = this.getEmptyAluno();
     this.editMode = false;
-    this.resetHistoryState(); // Limpa o estado do histórico
+    this.resetHistoryState();
   }
 
-  // Função para editar um aluno existente (passando dados para o modal)
   editAluno(aluno: any) {
     this.editMode = true;
-    this.aluno = { ...aluno }; // Preenche os campos com os dados do aluno
+    this.aluno = { ...aluno };
+    if (typeof this.aluno.birthDate === 'string') {
+      const match = this.aluno.birthDate.match(/^\d{4}-\d{2}-\d{2}/);
+      if (match) {
+        const [year, month, day] = match[0].split('-');
+        this.aluno.birthDate = `${day}/${month}/${year}`;
+      }
+    }
 
-    // Garantir que as turmas selecionadas no aluno sejam refletidas no campo de seleção
     const modalElement = document.getElementById('alunoModal');
     if (modalElement) {
       const modal = new window.bootstrap.Modal(modalElement);
@@ -177,5 +125,21 @@ export class AlunosComponent implements OnInit {
     } else {
       console.error('Modal element not found');
     }
+  }
+
+  getEmptyAluno() {
+    return {
+      name: '',
+      cpf: '',
+      rg: '',
+      birthDate: '',
+      phone: '',
+      email: '',
+      address: '',
+      emergencyContact: { name: '', phone: '' },
+      responsible: { name: '', cpf: '', rg: '', phone: '' },
+      isMinor: false,
+      turmas: [],
+    };
   }
 }
