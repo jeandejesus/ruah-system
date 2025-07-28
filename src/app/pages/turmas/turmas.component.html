@@ -81,25 +81,6 @@
           </div>
 
           <div class="form-group">
-            <label for="duracao">Duração</label>
-            <input
-              type="number"
-              id="duracao"
-              class="form-control"
-              required
-              [(ngModel)]="Novaturma.duration"
-              name="duracao"
-              #duracaoModel="ngModel"
-            />
-            <div
-              *ngIf="duracaoModel.invalid && duracaoModel.touched"
-              class="text-danger"
-            >
-              O campo duração é obrigatório.
-            </div>
-          </div>
-
-          <div class="form-group">
             <label for="local">Local</label>
             <select
               id="local"
