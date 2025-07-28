@@ -6,7 +6,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { NotificationService } from './services/notification.service';
-import { SwPush } from '@angular/service-worker';
+import { SwPush, SwUpdate } from '@angular/service-worker';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
 
@@ -22,43 +22,27 @@ export class AppComponent implements OnChanges, OnInit {
     private notificationService: NotificationService,
     private swPush: SwPush,
     private renderer: Renderer2,
-    private router: Router
+    private router: Router,
+    private swUpdate: SwUpdate
   ) {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         this.renderer.removeClass(document.body, 'no-scroll');
       });
+
+    if (swUpdate.isEnabled) {
+      swUpdate.versionUpdates.subscribe((event) => {
+        if (event.type === 'VERSION_READY') {
+          if (confirm('Nova versão disponível. Deseja atualizar agora?')) {
+            window.location.reload();
+          }
+        }
+      });
+    }
   }
 
-  async ngOnInit(): Promise<Promise<Promise<void>>> {
-    // console.log('🚀 Inicializando o AppComponent...', this.swPush.isEnabled);
-    // if (this.swPush.isEnabled) {
-    //   // Verifica o status da permissão atual
-    //   if (
-    //     Notification.permission === 'default' ||
-    //     Notification.permission === 'denied'
-    //   ) {
-    //     // Se a permissão ainda não foi dada ou foi negada, solicite.
-    //     // É melhor fazer isso após uma interação do usuário para evitar ser bloqueado pelo navegador.
-    //     this.requestPushSubscription();
-    //   } else if (Notification.permission === 'granted') {
-    //     // Se a permissão já foi concedida, podemos tentar inscrever novamente
-    //     // ou apenas garantir que o listener de mensagens esteja ativo.
-    //     console.log(
-    //       'Permissão de notificação já concedida. Garantindo inscrição e ouvintes...'
-    //     );
-    //     this.notificationService.requestPermissionAndSubscribe(); // Tenta inscrever novamente se necessário
-    //   }
-    // } else {
-    //   console.warn(
-    //     '⚠️ Service Worker não habilitado. As notificações push não funcionarão.'
-    //   );
-    // }
-    // // Opcional: Ativar os listeners para mensagens e cliques se o app estiver em foreground
-    // this.notificationService.listenForPushMessages();
-    // this.notificationService.listenForNotificationClicks();
-  }
+  async ngOnInit(): Promise<Promise<Promise<void>>> {}
   token = localStorage.getItem('authToken');
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -73,10 +57,5 @@ export class AppComponent implements OnChanges, OnInit {
       .replace(/_/g, '/');
     const rawData = window.atob(base64);
     return new Uint8Array([...rawData].map((char) => char.charCodeAt(0)));
-  }
-
-  requestPushSubscription(): void {
-    console.log('🚀 Solicitando inscrição para notificações push...');
-    this.notificationService.requestPermissionAndSubscribe();
   }
 }

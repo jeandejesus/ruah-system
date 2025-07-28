@@ -9,49 +9,32 @@ import { Observable } from 'rxjs';
 })
 export class NotificationService {
   // ✨ Substitua esta chave pela sua Chave Pública VAPID do backend NestJS ✨
-  readonly VAPID_PUBLIC_KEY =
+  readonly VALID_PUBLIC_KEY =
     'BMsge5mDL0_eUOtxONeKm5MrT4ZGA2RY2KCt2x-xIzCMtMEWM7thyxclQCGY51z9nRrpoINF_DxKyI7L7pnAW-U';
 
   // URL do seu backend NestJS para inscrever o usuário
-  readonly BACKEND_URL = 'http://localhost:3000/auth/subscribe'; // Ajuste conforme a URL do seu backend
+  readonly BACKEND_URL = 'https://ruah-system-back.onrender.com/auth/subscribe'; // Ajuste conforme a URL do seu backend
 
   constructor(private swPush: SwPush, private http: HttpClient) {}
 
-  /**
-   * Solicita permissão para notificações e se inscreve para push.
-   */
-  requestPermissionAndSubscribe(): void {
-    // Verifica se o Service Worker está habilitado (necessário para Web Push)
-    // if (this.swPush.isEnabled) {
-    //   this.swPush
-    //     .requestSubscription({
-    //       serverPublicKey: this.VAPID_PUBLIC_KEY, // Chave pública VAPID para o servidor de push
-    //     })
-    //     .then((subscription) => {
-    //       // Envia a assinatura (PushSubscription) para o seu backend NestJS
-    //       this.addPushSubscriber(subscription).subscribe(
-    //         () =>
-    //           console.log(
-    //             '✅ Assinatura enviada para o servidor NestJS com sucesso!'
-    //           ),
-    //         (err) =>
-    //           console.error(
-    //             '❌ Falha ao enviar assinatura para o servidor NestJS:',
-    //             err
-    //           )
-    //       );
-    //     })
-    //     .catch((err) =>
-    //       console.error(
-    //         '🚫 Não foi possível se inscrever para notificações push',
-    //         err
-    //       )
-    //     );
-    // } else {
-    //   console.warn(
-    //     '⚠️ O Service Worker não está habilitado. O Web Push não funcionará.'
-    //   );
-    // }
+  requestPermission() {
+    Notification.requestPermission().then((permission) => {
+      if (permission === 'granted') {
+        console.log('Permissão concedida para notificações');
+      }
+    });
+  }
+
+  subscribeToNotifications() {
+    this.swPush
+      .requestSubscription({
+        serverPublicKey: this.VALID_PUBLIC_KEY,
+      })
+      .then((sub) => {
+        // envie para o servidor Node
+        this.http.post(this.BACKEND_URL, sub).subscribe();
+      })
+      .catch((err) => console.error('Erro ao se inscrever', err));
   }
 
   /**

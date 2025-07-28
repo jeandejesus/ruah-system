@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { SchoolService } from 'src/app/core/services/school.service';
 import { School } from 'src/app/interfaces/school.interface';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private schoolService: SchoolService,
     private toastr: ToastrService,
-    private route: ActivatedRoute // Add ActivatedRoute to constructor
+    private route: ActivatedRoute,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +48,17 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('authToken', response.access_token); // Armazena o token no localStorage
 
         this.checkSchool(response);
+        Notification.requestPermission().then((permission) => {
+          console.log('Permissão:', permission);
+
+          if (permission === 'granted') {
+            this.notificationService.subscribeToNotifications();
+          } else if (permission === 'denied') {
+            console.warn('Usuário negou as notificações');
+          } else {
+            console.log('Usuário ainda não escolheu (default)');
+          }
+        });
       },
       error: (error) => {
         console.error('Erro no login:', error);
