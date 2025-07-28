@@ -50,7 +50,7 @@ div {
   }
 
   tbody {
-    text-align: start;
+    text-align: center;
     tr {
       &:nth-child(even) {
         background-color: #f9f9f9;
@@ -62,7 +62,7 @@ div {
     }
 
     td {
-      padding: 10px;
+      padding: 0;
       border-bottom: 1px solid #ddd;
     }
   }
@@ -175,10 +175,6 @@ div {
 
 // Responsividade
 @media (max-width: 768px) {
-  div {
-    padding: 15px;
-  }
-
   .table {
     font-size: 12px;
   }

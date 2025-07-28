@@ -17,7 +17,18 @@ export class TurmasComponent implements OnInit {
     startTime: '',
     endTime: '',
     local: '',
+    diasDaSemana: [],
   };
+
+  diasSemana = [
+    'domingo',
+    'segunda',
+    'terça',
+    'quarta',
+    'quinta',
+    'sexta',
+    'sábado',
+  ];
 
   editMode = false;
   turmaId: string | null = null;
@@ -56,6 +67,7 @@ export class TurmasComponent implements OnInit {
         startTime: turma.startTime || '',
         endTime: turma.endTime || '',
         local: turma.local?._id || '',
+        diasDaSemana: turma.diasDaSemana || [],
       };
     } else {
       this.editMode = false;
@@ -64,6 +76,7 @@ export class TurmasComponent implements OnInit {
         startTime: '',
         endTime: '',
         local: '',
+        diasDaSemana: [],
       };
     }
 
