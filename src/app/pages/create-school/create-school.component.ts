@@ -24,7 +24,6 @@ export class CreateSchoolComponent {
 
     if (token) {
       const user = jwtHelper.decodeToken(token);
-      console.log('Decoded token:', user);
       if (user) {
         this.school.userId = user.sub;
       }
@@ -32,7 +31,6 @@ export class CreateSchoolComponent {
   }
 
   onSubmit() {
-    console.log('Creating school:', this.school);
     this.schoolService.createSchool(this.school).subscribe({
       next: (response) => {
         localStorage.setItem('schoolId', response._id);

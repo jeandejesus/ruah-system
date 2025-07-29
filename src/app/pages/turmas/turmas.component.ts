@@ -103,7 +103,6 @@ export class TurmasComponent implements OnInit {
   criarTurma(): void {
     this.turmaService.criarTurma(this.Novaturma).subscribe({
       next: (response) => {
-        console.log('Turma criada com sucesso!', response);
         this.carregarTurmas();
         this.fecharModal();
       },
@@ -115,8 +114,7 @@ export class TurmasComponent implements OnInit {
     if (!this.turmaId) return;
 
     this.turmaService.atualizarTurma(this.turmaId, this.Novaturma).subscribe({
-      next: (response) => {
-        console.log('Turma atualizada com sucesso!', response);
+      next: () => {
         this.carregarTurmas();
         this.fecharModal();
       },
@@ -127,8 +125,7 @@ export class TurmasComponent implements OnInit {
   excluirTurma(id: string): void {
     if (confirm('Tem certeza que deseja excluir esta turma?')) {
       this.turmaService.deletarTurma(id).subscribe({
-        next: (response) => {
-          console.log('Turma excluída com sucesso!', response);
+        next: () => {
           this.carregarTurmas();
         },
         error: (er) => this.toastr.error(er.error.message),

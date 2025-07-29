@@ -6,8 +6,7 @@ self.addEventListener("push", function (event) {
       body: data.body,
       icon: "src/assets/ruah.PNG",
       data: {
-        url: data.url, // 👈 importante!
-      },
+        url: data.url,
     })
   );
 });
@@ -15,7 +14,7 @@ self.addEventListener("push", function (event) {
 self.addEventListener("notificationclick", function (event) {
   console.log("⚡ notificationclick DISPARADO!");
 
-  event.notification.close(); // Fecha a notificação
+  event.notification.close();
 
   const urlToOpen = event.notification.data?.url;
   console.log("Notification click event:", urlToOpen);

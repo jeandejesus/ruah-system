@@ -49,8 +49,6 @@ export class LoginComponent implements OnInit {
 
         this.checkSchool(response);
         Notification.requestPermission().then((permission) => {
-          console.log('Permissão:', permission);
-
           if (permission === 'granted') {
             this.notificationService.subscribeToNotifications();
           } else if (permission === 'denied') {
@@ -74,7 +72,6 @@ export class LoginComponent implements OnInit {
   private async checkSchool(login: any) {
     this.schoolService.getSchoolByUserId(login.user.id).subscribe({
       next: (school: School) => {
-        console.log('Escola:', school);
         if (school) {
           this.router.navigate(['/painel/pagamentos/assinaturas']); // Redireciona para a página do dashboard
         } else {

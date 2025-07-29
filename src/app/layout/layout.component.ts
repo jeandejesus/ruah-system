@@ -40,7 +40,6 @@ export class LayoutComponent implements OnInit {
       this.school.userId = decodedToken.sub;
       this.dashboardService.getSchoolById(decodedToken.sub).subscribe({
         next: (school) => {
-          console.log(school);
           if (school) {
             this.noExistesSchool = false;
             this.school = school;

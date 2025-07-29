@@ -39,8 +39,6 @@ export class AlunosListagemComponent implements OnInit {
           ...aluno,
           turmas: aluno.turmas || [],
         }));
-
-        console.log('Alunos carregados:', this.alunos);
       },
       (error) => {
         console.error('Erro ao carregar alunos:', error);
