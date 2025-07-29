@@ -53,13 +53,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       preventDuplicates: true,
     }),
     CommonModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      // Esta linha é crucial
-      // enabled: environment.production, // Geralmente habilitado apenas em produção
-      // Register the ServiceWorker as soon as the app is stable
-      // or after 30 seconds (whichever comes first).
+
+    ServiceWorkerModule.register('sw.js', {
       enabled: true,
-      registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
   providers: [
