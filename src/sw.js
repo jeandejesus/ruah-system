@@ -7,6 +7,7 @@ self.addEventListener("push", function (event) {
       icon: "src/assets/ruah.PNG",
       data: {
         url: data.url,
+      }, // <- Corrigido: estava com parênteses errados aqui
     })
   );
 });

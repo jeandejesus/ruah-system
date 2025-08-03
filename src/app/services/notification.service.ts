@@ -1,69 +1,78 @@
-// src/app/notification/notification.service.ts
 import { Injectable } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root', // Isso registra o serviço na raiz da aplicação, tornando-o disponível globalmente.
+  providedIn: 'root',
 })
 export class NotificationService {
-  // ✨ Substitua esta chave pela sua Chave Pública VAPID do backend NestJS ✨
+  // Sua chave pública VAPID
   readonly VALID_PUBLIC_KEY =
     'BMsge5mDL0_eUOtxONeKm5MrT4ZGA2RY2KCt2x-xIzCMtMEWM7thyxclQCGY51z9nRrpoINF_DxKyI7L7pnAW-U';
 
-  // URL do seu backend NestJS para inscrever o usuário
-  readonly BACKEND_URL = 'https://ruah-system-back.onrender.com/auth/subscribe'; // Ajuste conforme a URL do seu backend
+  // Endpoint do backend para registrar subscription
+  readonly BACKEND_URL = 'https://ruah-system-back.onrender.com/auth/subscribe';
 
   constructor(private swPush: SwPush, private http: HttpClient) {}
 
-  requestPermission() {
-    Notification.requestPermission().then((permission) => {
-      if (permission === 'granted') {
-        console.log('Permissão concedida para notificações');
-      }
+  // Método para pedir permissão para notificações
+  requestPermission(): Promise<NotificationPermission> {
+    return Notification.requestPermission().then((permission) => {
+      console.log('Permissão para notificações:', permission);
+      return permission;
     });
   }
 
-  subscribeToNotifications() {
-    this.swPush
-      .requestSubscription({
-        serverPublicKey: this.VALID_PUBLIC_KEY,
-      })
-      .then((sub) => {
-        // envie para o servidor Node
-        this.http.post(this.BACKEND_URL, sub).subscribe();
-      })
-      .catch((err) => console.error('Erro ao se inscrever', err));
+  // Inscreve o usuário nas notificações push, garantindo que o SW esteja pronto
+  async subscribeToNotifications(): Promise<void> {
+    try {
+      console.log('Aguardando service worker estar pronto...');
+      const registration = await navigator.serviceWorker.ready;
+
+      if (Notification.permission === 'denied') {
+        console.warn(
+          'Permissão para notificações negada. Solicite ao usuário que habilite nas configurações.'
+        );
+        return;
+      }
+
+      if (Notification.permission !== 'granted') {
+        const permission = await this.requestPermission();
+        if (permission !== 'granted') {
+          console.warn('Permissão para notificações não concedida.');
+          return;
+        }
+      }
+
+      console.log('Tentando se inscrever para notificações...');
+      const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: this.VALID_PUBLIC_KEY,
+      });
+
+      console.log('Assinatura recebida:', subscription);
+
+      // Envia a inscrição para o backend
+      this.http.post(this.BACKEND_URL, subscription).subscribe({
+        next: () =>
+          console.log('Subscription registrada no backend com sucesso.'),
+        error: (err) =>
+          console.error('Erro ao registrar subscription no backend:', err),
+      });
+    } catch (err) {
+      console.error('Erro ao se inscrever para notificações:', err);
+    }
   }
 
-  /**
-   * Envia a assinatura para o backend.
-   * @param subscription A PushSubscription a ser enviada.
-   * @returns Um Observable da requisição HTTP.
-   */
-  private addPushSubscriber(subscription: PushSubscription): Observable<any> {
-    return this.http.post(this.BACKEND_URL, subscription);
-  }
-
-  /**
-   * Opcional: Escuta por mensagens push recebidas quando o PWA está em primeiro plano.
-   * O Service Worker já lida com a exibição da notificação, mas você pode ter lógica extra aqui.
-   */
   listenForPushMessages(): void {
     this.swPush.messages.subscribe((message) => {
-      console.log('📬 Mensagem Push recebida no foreground:', message);
-      // Exemplo: exibir um toast ou badge na UI
+      console.log('Mensagem push recebida no foreground:', message);
     });
   }
 
-  /**
-   * Opcional: Escuta por cliques em notificações.
-   */
   listenForNotificationClicks(): void {
     this.swPush.notificationClicks.subscribe(({ action, notification }) => {
-      console.log('👆 Notificação clicada:', action, notification);
-      // Exemplo: redirecionar o usuário para uma URL específica da notificação
+      console.log('Notificação clicada:', action, notification);
       if (notification.data && notification.data.url) {
         window.open(notification.data.url, '_blank');
       }

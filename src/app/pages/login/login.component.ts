@@ -48,13 +48,17 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('authToken', response.access_token); // Armazena o token no localStorage
 
         this.checkSchool(response);
-        Notification.requestPermission().then((permission) => {
+        Notification.requestPermission().then(async (permission) => {
           if (permission === 'granted') {
-            this.notificationService.subscribeToNotifications();
-          } else if (permission === 'denied') {
-            console.warn('Usuário negou as notificações');
+            await this.notificationService.subscribeToNotifications();
           } else {
-            console.log('Usuário ainda não escolheu (default)');
+            const permission =
+              await this.notificationService.requestPermission();
+            if (permission === 'granted') {
+              await this.notificationService.subscribeToNotifications();
+            } else {
+              console.warn('Usuário não concedeu permissão para notificações');
+            }
           }
         });
       },

@@ -56,6 +56,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 
     ServiceWorkerModule.register('sw.js', {
       enabled: true,
+      registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
   providers: [
