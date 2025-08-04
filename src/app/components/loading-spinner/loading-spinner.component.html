@@ -1,9 +1,14 @@
-<div *ngIf="isLoading" class="d-flex flex-column align-items-center">
-  <img
-    src="assets/ruah.PNG"
-    alt="Logo Ruah"
-    class="img-fluid mb-3 loading-spinner"
-    style="max-width: 150px"
-  />
-  <p class="text-muted text-sm">{{ loadingText }}</p>
+<div
+  class="row h-100 justify-content-center w-100 image-container align-items-center"
+  *ngIf="isLoading"
+>
+  <div class="d-flex flex-column align-items-center">
+    <img
+      src="assets/ruah.PNG"
+      alt="Logo Ruah"
+      class="img-fluid mb-3 loading-spinner"
+      style="max-width: 150px"
+    />
+    <p class="text-muted text-sm">{{ loadingText }}</p>
+  </div>
 </div>

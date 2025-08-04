@@ -1,10 +1,6 @@
 <!-- dashboard.component.html -->
-<div
-  class="row mt-5 justify-content-center w-100 image-container"
-  *ngIf="carregando"
->
-  <app-loading-spinner [isLoading]="carregando"></app-loading-spinner>
-</div>
+
+<app-loading-spinner [isLoading]="carregando"></app-loading-spinner>
 
 <div *ngIf="!carregando">
   <!-- Restante do seu HTML... -->
@@ -12,7 +8,7 @@
     <h2>Clientes e Status de Pagamento</h2>
 
     <!-- Search Input -->
-    <div class="mb-3">
+    <div class="mb-3 d-flex justify-content-center">
       <input
         type="text"
         class="form-control search-input"

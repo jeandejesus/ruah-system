@@ -10,12 +10,17 @@ $box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 // Container adjustments
 .container {
   min-height: calc(100vh - 60px); /* Adjust based on header/footer height */
+  padding: 10px;
+  h2 {
+    text-align: center;
+    marigin-top: 20px;
+  }
 }
 
 // Input de pesquisa estilizado
 .search-input {
   width: 100%;
-  max-width: 400px;
+  max-width: 477px;
   padding: 12px 18px;
   margin-bottom: 20px;
   border: none;
