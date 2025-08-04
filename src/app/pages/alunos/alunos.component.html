@@ -1,6 +1,5 @@
 <form (ngSubmit)="onSubmit()" class="mt-4">
   <div class="row">
-    <!-- Nome do aluno -->
     <div class="col-md-6 col-12 mb-3">
       <label for="name" class="form-label">Nome</label>
       <input
@@ -13,7 +12,6 @@
       />
     </div>
 
-    <!-- CPF -->
     <div class="col-md-6 col-12 mb-3">
       <label for="cpf" class="form-label">CPF</label>
       <input
@@ -30,7 +28,6 @@
   </div>
 
   <div class="row">
-    <!-- RG -->
     <div class="col-md-6 col-12 mb-3">
       <label for="rg" class="form-label">RG</label>
       <input
@@ -59,7 +56,6 @@
   </div>
 
   <div class="row">
-    <!-- Telefone -->
     <div class="col-md-6 col-12 mb-3">
       <label for="phone" class="form-label">Telefone</label>
       <input
@@ -73,7 +69,6 @@
       />
     </div>
 
-    <!-- Email -->
     <div class="col-md-6 col-12 mb-3">
       <label for="email" class="form-label">Email</label>
       <input
@@ -87,7 +82,6 @@
   </div>
 
   <div class="row">
-    <!-- Endereço -->
     <div class="col-md-6 col-12 mb-3">
       <label for="address" class="form-label">Endereço</label>
       <input
@@ -99,7 +93,6 @@
       />
     </div>
 
-    <!-- Contato de Emergência -->
     <div class="col-md-6 col-12 mb-3">
       <label for="emergencyContactName" class="form-label"
         >Contato de Emergência (Nome)</label
@@ -110,9 +103,6 @@
         id="emergencyContactName"
         [(ngModel)]="aluno.emergencyContact.name"
         name="emergencyContactName"
-        name="phone"
-        mask="(00) 00000-0000"
-        placeholder="(00) 00000-0000"
       />
     </div>
     <div class="col-md-6 col-12 mb-3">
@@ -150,7 +140,6 @@
   </div>
 
   <div class="row">
-    <!-- Se é menor de idade -->
     <div class="col-md-6 col-12 mb-3 form-check">
       <input
         type="checkbox"
@@ -164,7 +153,6 @@
   </div>
 
   <div class="row" *ngIf="aluno.isMinor">
-    <!-- Responsável (Nome) -->
     <div class="col-md-6 col-12 mb-3">
       <label for="responsibleName" class="form-label">Responsável (Nome)</label>
       <input
@@ -176,7 +164,6 @@
       />
     </div>
 
-    <!-- Responsável (CPF) -->
     <div class="col-md-6 col-12 mb-3">
       <label for="responsibleCpf" class="form-label">Responsável (CPF)</label>
       <input
@@ -190,7 +177,6 @@
       />
     </div>
 
-    <!-- Responsável (RG) -->
     <div class="col-md-6 col-12 mb-3">
       <label for="responsibleRg" class="form-label">Responsável (RG)</label>
       <input
@@ -204,7 +190,6 @@
       />
     </div>
 
-    <!-- Responsável (Telefone) -->
     <div class="col-md-6 col-12 mb-3">
       <label for="responsiblePhone" class="form-label"
         >Responsável (Telefone)</label
@@ -221,7 +206,6 @@
     </div>
   </div>
 
-  <!-- Botões -->
   <div class="row justify-content-center mt-3">
     <button type="submit" class="btn btn-primary col-3 m-2">
       {{ editMode ? "Atualizar" : "Cadastrar" }}
