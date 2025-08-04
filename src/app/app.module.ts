@@ -21,6 +21,9 @@ import { NgxMaskModule } from 'ngx-mask';
 import { PagamentosComponent } from './pages/pagamentos/pagamentos.component';
 import { CreateSchoolComponent } from './pages/create-school/create-school.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { LocaisComponent } from './pages/locais/locais.component';
+import { LocaisRoutingModule } from './pages/locais/locais-routing.module';
 
 @NgModule({
   declarations: [
@@ -35,6 +38,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     AlunoFilterPipe,
     PagamentosComponent,
     CreateSchoolComponent,
+    LoadingSpinnerComponent,
+    LocaisComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,7 +58,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       preventDuplicates: true,
     }),
     CommonModule,
-
+    LocaisRoutingModule,
     ServiceWorkerModule.register('sw.js', {
       enabled: true,
       registrationStrategy: 'registerWhenStable:30000',
@@ -62,6 +67,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}

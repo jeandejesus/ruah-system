@@ -25,7 +25,7 @@ interface Aluno {
 export class AlunosListagemComponent implements OnInit {
   alunos: Aluno[] = [];
   searchText: string = '';
-
+  carregando: boolean = true;
   constructor(private alunoService: AlunoService, private router: Router) {}
 
   ngOnInit(): void {
@@ -35,6 +35,7 @@ export class AlunosListagemComponent implements OnInit {
   carregarAlunos(): void {
     this.alunoService.getAlunos().subscribe(
       (response: Aluno[]) => {
+        this.carregando = false;
         this.alunos = response.map((aluno) => ({
           ...aluno,
           turmas: aluno.turmas || [],
@@ -42,6 +43,7 @@ export class AlunosListagemComponent implements OnInit {
       },
       (error) => {
         console.error('Erro ao carregar alunos:', error);
+        this.carregando = false;
       }
     );
   }

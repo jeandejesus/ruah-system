@@ -21,7 +21,7 @@ export class PagamentosComponent implements OnInit {
   searchText = '';
   private searchSubject = new Subject<string>();
   private isSearching = false;
-
+  carregando = true;
   constructor(private pagamentosService: PagamentosService) {
     this.searchSubject
       .pipe(debounceTime(300), distinctUntilChanged())
@@ -43,6 +43,7 @@ export class PagamentosComponent implements OnInit {
   }
 
   loadCustomers(loadMore = false) {
+    this.carregando = true;
     if (this.loading) return;
 
     this.loading = true;
@@ -78,10 +79,12 @@ export class PagamentosComponent implements OnInit {
           }
 
           this.loading = false;
+          this.carregando = false;
         },
         error: (error: Error) => {
           console.error('Erro ao carregar clientes:', error);
           this.loading = false;
+          this.carregando = false;
         },
       });
   }

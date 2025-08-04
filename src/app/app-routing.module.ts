@@ -56,8 +56,8 @@ const routes: Routes = [
       },
       {
         path: 'locais',
-        loadChildren: () =>
-          import('./pages/locais/locais.module').then((m) => m.LocaisModule),
+        component: LocaisComponent,
+        canActivate: [() => authGuard('owner')], // Apenas administradores
       },
     ],
   },

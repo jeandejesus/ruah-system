@@ -32,6 +32,7 @@ export class TurmasComponent implements OnInit {
 
   editMode = false;
   turmaId: string | null = null;
+  carregando: boolean = true;
 
   constructor(
     private turmaService: TurmaService,
@@ -45,15 +46,22 @@ export class TurmasComponent implements OnInit {
   }
 
   carregarTurmas(): void {
+    this.carregando = true;
     this.turmaService.getTurmas().subscribe({
-      next: (response) => (this.turmas = response),
+      next: (response) => {
+        this.turmas = response;
+        this.carregando = false;
+      },
       error: (error) => console.error('Erro ao carregar as turmas', error),
     });
   }
 
   carregarLocais(): void {
     this.localService.getLocais().subscribe({
-      next: (response) => (this.locais = response),
+      next: (response) => {
+        this.locais = response;
+        this.carregando = false;
+      },
       error: (error) => console.error('Erro ao carregar os locais', error),
     });
   }

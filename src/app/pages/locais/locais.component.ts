@@ -12,7 +12,7 @@ export class LocaisComponent implements OnInit {
   localAtual: Local = { name: '', address: '' };
   editando = false;
   modalInstance: bootstrap.Modal | undefined;
-
+  carregando = true;
   constructor(private locaisService: LocaisService) {}
 
   ngOnInit(): void {
@@ -20,8 +20,10 @@ export class LocaisComponent implements OnInit {
   }
 
   carregarLocais() {
+    this.carregando = true;
     this.locaisService.getLocais().subscribe((data) => {
       this.locais = data;
+      this.carregando = false;
     });
   }
 

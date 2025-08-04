@@ -17,11 +17,17 @@ export class DashboardComponent implements OnInit {
   school: School = {};
   repasses: any[] = [];
 
+  // --- NOVAS PROPRIEDADES ---
+  totalArrecadadoMes: number | null = null;
+  loadingTotalMes: boolean = true;
+  // --- FIM NOVAS PROPRIEDADES ---
+
   constructor(
     private dashboardService: DashboardService,
     private router: Router,
     private pagamentosService: PagamentosService
   ) {}
+
   ngOnInit() {
     const token = localStorage.getItem('authToken');
     let decodedToken: any;
@@ -30,18 +36,23 @@ export class DashboardComponent implements OnInit {
     }
     if (decodedToken) {
       this.school.userId = decodedToken.sub;
+      this.loadingTotalMes = true;
+
       this.dashboardService.getSchoolById(decodedToken.sub).subscribe({
         next: (school) => {
           if (school) {
             this.noExistesSchool = false;
             this.school = school;
+
             this.pagamentosService.getNextPayout().subscribe({
               next: (response) => {
-                this.repasses = response;
-                console.log('Próximos repasses:', response);
+                this.repasses = response.payouts;
+                this.totalArrecadadoMes = response.pendingBalance;
+                this.loadingTotalMes = false;
               },
               error: (error) => {
                 console.error('Erro ao buscar próximos repasses:', error);
+                this.loadingTotalMes = false;
               },
             });
           }
