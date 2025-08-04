@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
     this.schoolService.getSchoolByUserId(login.user.id).subscribe({
       next: (school: School) => {
         if (school) {
-          this.router.navigate(['/painel/pagamentos/assinaturas']); // Redireciona para a página do dashboard
+          this.router.navigate(['/painel']); // Redireciona para a página do dashboard
         } else {
           this.router.navigate(['/criar-escola']);
         }

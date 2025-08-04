@@ -56,4 +56,10 @@ export class PagamentosService {
     }
     return this.http.get<CustomerResponse>(url);
   }
+
+  getNextPayout(): Observable<any> {
+    let url = `${this.apiUrl}/stripe/next-payout`;
+
+    return this.http.get<any>(url);
+  }
 }

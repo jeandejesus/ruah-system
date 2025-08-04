@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { School } from 'src/app/interfaces/school.interface';
+import { PagamentosService } from '../pagamentos/pagamentos.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,10 +15,12 @@ export class DashboardComponent implements OnInit {
   noExistesSchool = true;
   errorMessage: string = '';
   school: School = {};
+  repasses: any[] = [];
 
   constructor(
     private dashboardService: DashboardService,
-    private router: Router
+    private router: Router,
+    private pagamentosService: PagamentosService
   ) {}
   ngOnInit() {
     const token = localStorage.getItem('authToken');
@@ -32,6 +35,15 @@ export class DashboardComponent implements OnInit {
           if (school) {
             this.noExistesSchool = false;
             this.school = school;
+            this.pagamentosService.getNextPayout().subscribe({
+              next: (response) => {
+                this.repasses = response;
+                console.log('Próximos repasses:', response);
+              },
+              error: (error) => {
+                console.error('Erro ao buscar próximos repasses:', error);
+              },
+            });
           }
         },
       });

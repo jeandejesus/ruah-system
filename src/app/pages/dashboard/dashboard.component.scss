@@ -1,5 +1,14 @@
 .container {
   max-width: 900px;
+  flex-direction: column;
+
+  .image-container {
+    margin: 0;
+  }
+
+  .bg-success {
+    width: 100px;
+  }
 }
 
 .card {

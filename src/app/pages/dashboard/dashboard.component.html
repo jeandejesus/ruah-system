@@ -1,10 +1,36 @@
 <div class="container d-flex">
-  <div class="row mt-5 justify-content-center w-100">
+  <div class="row mt-5 justify-content-center w-100 image-container">
     <img
       src="assets/ruah.PNG"
       alt="Logo Ruah"
       class="img-fluid mb-3"
       style="max-width: 150px"
     />
+  </div>
+
+  <!-- Título -->
+  <div class="row justify-content-center mb-3">
+    <h4 class="text-center">Próximos Repasses</h4>
+  </div>
+
+  <!-- Lista de repasses -->
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="list-group">
+        <!-- Aqui entram os repasses com *ngFor* no Angular -->
+        <div
+          *ngFor="let repasse of repasses"
+          class="list-group-item d-flex justify-content-between align-items-center"
+        >
+          <span>
+            <strong>Data:</strong>
+            {{ repasse.date | date : "dd/MM/yyyy" }}
+          </span>
+          <span class="badge bg-success fs-6">
+            R$ {{ repasse.amount | number : "1.2-2" }}
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
