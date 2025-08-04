@@ -52,6 +52,24 @@
               R$ {{ repasse.amount | number : "1.2-2" }}
             </span>
           </div>
+          <span class="fim-repasses" *ngIf="mostarMenos">
+            Não há mais repasses previstos no momento.
+          </span>
+          <button
+            class="btn btn-primary"
+            (click)="carregarProximosRepasses(true)"
+            *ngIf="!mostarMenos"
+          >
+            Carregar Mais
+          </button>
+
+          <button
+            *ngIf="mostarMenos"
+            class="btn btn-danger"
+            (click)="carregarProximosRepasses(false)"
+          >
+            Mostrar Menos
+          </button>
         </div>
       </div>
     </div>

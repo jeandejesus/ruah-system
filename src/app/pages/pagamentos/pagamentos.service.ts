@@ -57,8 +57,8 @@ export class PagamentosService {
     return this.http.get<CustomerResponse>(url);
   }
 
-  getNextPayout(): Observable<any> {
-    let url = `${this.apiUrl}/stripe/next-payout`;
+  getNextPayout(limit: number): Observable<any> {
+    let url = `${this.apiUrl}/stripe/next-payout?limit=${limit}`;
 
     return this.http.get<any>(url);
   }

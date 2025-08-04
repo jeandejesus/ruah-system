@@ -16,11 +16,10 @@ export class DashboardComponent implements OnInit {
   errorMessage: string = '';
   school: School = {};
   repasses: any[] = [];
-
-  // --- NOVAS PROPRIEDADES ---
   totalArrecadadoMes: number | null = null;
   loadingTotalMes: boolean = true;
-  // --- FIM NOVAS PROPRIEDADES ---
+  limitPagementos = 6;
+  mostarMenos = false;
 
   constructor(
     private dashboardService: DashboardService,
@@ -43,22 +42,39 @@ export class DashboardComponent implements OnInit {
           if (school) {
             this.noExistesSchool = false;
             this.school = school;
-
-            this.pagamentosService.getNextPayout().subscribe({
-              next: (response) => {
-                this.repasses = response.payouts;
-                this.totalArrecadadoMes = response.pendingBalance;
-                this.loadingTotalMes = false;
-              },
-              error: (error) => {
-                console.error('Erro ao buscar próximos repasses:', error);
-                this.loadingTotalMes = false;
-              },
-            });
+            this.carregarProximosRepasses();
           }
         },
       });
     }
+  }
+
+  carregarProximosRepasses(carregarMais?: boolean) {
+    if (carregarMais) {
+      this.limitPagementos = this.limitPagementos + 3;
+    } else {
+      this.loadingTotalMes = true;
+
+      this.limitPagementos = 6;
+      this.mostarMenos = false;
+    }
+    this.pagamentosService.getNextPayout(this.limitPagementos).subscribe({
+      next: (response) => {
+        if (
+          this.repasses.length > 6 &&
+          this.repasses.length === response.payouts.length
+        ) {
+          this.mostarMenos = true;
+        }
+        this.repasses = response.payouts;
+        this.totalArrecadadoMes = response.pendingBalance;
+        this.loadingTotalMes = false;
+      },
+      error: (error) => {
+        console.error('Erro ao buscar próximos repasses:', error);
+        this.loadingTotalMes = false;
+      },
+    });
   }
 
   onSubmit() {
