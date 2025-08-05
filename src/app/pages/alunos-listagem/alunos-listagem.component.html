@@ -1,6 +1,6 @@
 <app-loading-spinner [isLoading]="carregando"></app-loading-spinner>
 
-<div class="mt-4" *ngIf="!carregando">
+<div class="mt-4 container-principal" *ngIf="!carregando">
   <input
     type="text"
     [(ngModel)]="searchText"
@@ -8,31 +8,54 @@
     class="search-input"
   />
 
-  <table>
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th class="celular">Email</th>
-        <th class="celular">Telefone</th>
-        <th>Turmas</th>
-        <th>Ações</th>
-        <!-- Nova coluna -->
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let aluno of alunos | alunoFilter : searchText">
-        <td (click)="editar(aluno)">{{ aluno.name }}</td>
-        <td class="celular">{{ aluno.email }}</td>
-        <td class="celular">{{ aluno.phone }}</td>
-        <td>
-          {{ getTurmas(aluno) }}
-        </td>
-        <td>
-          <button (click)="deletarAluno(aluno._id)" class="btn btn-danger">
-            Deletar
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th class="celular">Email</th>
+          <th class="celular">Telefone</th>
+          <th>Turmas</th>
+          <th>Ações</th>
+          <!-- Nova coluna -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let aluno of alunos | alunoFilter : searchText">
+          <td (click)="editar(aluno)">{{ aluno.name }}</td>
+          <td class="celular">{{ aluno.email }}</td>
+          <td class="celular">{{ aluno.phone }}</td>
+          <td>
+            {{ getTurmas(aluno) }}
+          </td>
+          <td>
+            <button (click)="deletarAluno(aluno._id)" class="btn btn-danger">
+              Deletar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Controles de Paginação -->
+<div class="pagination-container" *ngIf="!carregando">
+  <button
+    class="pagination-button"
+    (click)="paginaAnterior()"
+    [disabled]="currentPage === 1"
+  >
+    Anterior
+  </button>
+  <span class="pagination-info"
+    >Página {{ currentPage }} de {{ getTotalPages() }}</span
+  >
+  <button
+    class="pagination-button"
+    (click)="proximaPagina()"
+    [disabled]="currentPage === getTotalPages()"
+  >
+    Próxima
+  </button>
 </div>

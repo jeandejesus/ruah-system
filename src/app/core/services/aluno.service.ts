@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
@@ -11,8 +11,12 @@ export class AlunoService {
 
   constructor(private http: HttpClient) {}
 
-  getAlunos(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getAlunos(page: number, limit: number): Observable<any[]> {
+    let params = new HttpParams();
+    params = params.append('page', page.toString());
+    params = params.append('limit', limit.toString());
+
+    return this.http.get<any[]>(this.apiUrl, { params });
   }
 
   getAlunoById(id: string): Observable<any> {

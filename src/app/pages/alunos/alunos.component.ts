@@ -36,9 +36,11 @@ export class AlunosComponent implements OnInit {
       }
     }
 
-    this.turmaService.getTurmas().subscribe((turmas) => {
-      this.turmas = turmas;
-    });
+    if (this.aluno.turmas.length === 0) {
+      this.turmaService.getTurmas().subscribe((turmas) => {
+        this.turmas = turmas;
+      });
+    }
   }
 
   openModal() {
