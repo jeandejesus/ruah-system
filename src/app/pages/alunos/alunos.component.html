@@ -8,6 +8,7 @@
         id="name"
         [(ngModel)]="aluno.name"
         name="name"
+        placeholder="Nome completo"
         required
       />
     </div>
@@ -21,7 +22,7 @@
         [(ngModel)]="aluno.cpf"
         name="cpf"
         mask="000.000.000-00"
-        placeholder="Digite seu CPF"
+        placeholder="000.000.000-00"
         required
       />
     </div>
@@ -37,7 +38,7 @@
         [(ngModel)]="aluno.rg"
         name="rg"
         mask="00.000.000-0"
-        placeholder="Digite seu RG"
+        placeholder="00.000.000-0"
       />
     </div>
 
@@ -77,6 +78,7 @@
         id="email"
         [(ngModel)]="aluno.email"
         name="email"
+        placeholder="exemplo@email.com"
       />
     </div>
   </div>
@@ -90,6 +92,7 @@
         id="address"
         [(ngModel)]="aluno.address"
         name="address"
+        placeholder="Rua, Número, Bairro, Cidade"
       />
     </div>
 
@@ -103,8 +106,10 @@
         id="emergencyContactName"
         [(ngModel)]="aluno.emergencyContact.name"
         name="emergencyContactName"
+        placeholder="Nome do contato de emergência"
       />
     </div>
+
     <div class="col-md-6 col-12 mb-3">
       <label for="responsiblePhone" class="form-label"
         >Contato de emergência (Telefone)</label
@@ -139,7 +144,7 @@
     </div>
   </div>
   <div class="row check-bock mb-3">
-    <div class="col">
+    <div>
       <input
         type="checkbox"
         class="form-check-input"
@@ -149,7 +154,35 @@
       />
       <label class="form-check-label" for="isPix"> Pagamento via Pix? </label>
     </div>
+    <div class="col mt-3" *ngIf="aluno.isPix">
+      <label for="billingDay">Dia do pagamento</label>
+      <input
+        id="billingDay"
+        type="number"
+        min="1"
+        max="31"
+        class="form-control"
+        [(ngModel)]="aluno.billingDay"
+        name="billingDay"
+        required
+      />
+    </div>
 
+    <div class="col mt-3" *ngIf="aluno.isPix">
+      <label for="monthlyFee">Valor da mensalidade</label>
+      <input
+        id="monthlyFee"
+        type="text"
+        class="form-control"
+        [(ngModel)]="aluno.monthlyFee"
+        name="monthlyFee"
+        placeholder="R$ 0,00"
+        (ngModelChange)="formatMonthlyFee($event)"
+      />
+    </div>
+  </div>
+
+  <div class="row">
     <div class="col">
       <input
         type="checkbox"
@@ -171,6 +204,7 @@
         id="responsibleName"
         [(ngModel)]="aluno.responsible.name"
         name="responsibleName"
+        placeholder="Nome do responsável"
       />
     </div>
 
@@ -183,7 +217,7 @@
         [(ngModel)]="aluno.responsible.cpf"
         name="responsibleCpf"
         mask="000.000.000-00"
-        placeholder="Digite o CPF do responsável"
+        placeholder="000.000.000-00"
       />
     </div>
 
@@ -196,7 +230,7 @@
         [(ngModel)]="aluno.responsible.rg"
         name="responsibleRg"
         mask="00.000.000-0"
-        placeholder="Digite seu RG"
+        placeholder="00.000.000-0"
       />
     </div>
 

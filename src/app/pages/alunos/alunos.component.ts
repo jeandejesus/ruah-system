@@ -36,11 +36,9 @@ export class AlunosComponent implements OnInit {
       }
     }
 
-    if (this.aluno.turmas.length === 0) {
-      this.turmaService.getTurmas().subscribe((turmas) => {
-        this.turmas = turmas;
-      });
-    }
+    this.turmaService.getTurmas().subscribe((turmas) => {
+      this.turmas = turmas;
+    });
   }
 
   openModal() {
@@ -57,6 +55,7 @@ export class AlunosComponent implements OnInit {
 
   onSubmit() {
     const alunoCopy = { ...this.aluno };
+    console.log(alunoCopy);
     this.formatDate(alunoCopy);
     if (this.editMode) {
       this.updateAluno(alunoCopy);
@@ -144,6 +143,29 @@ export class AlunosComponent implements OnInit {
       isMinor: false,
       isPix: false,
       turmas: [],
+      monthlyFee: '',
+      billingDay: 10,
     };
+  }
+
+  formatMonthlyFee(value: string) {
+    if (value === null || value === undefined || value === '') {
+      this.aluno.monthlyFee = '';
+      return;
+    }
+
+    // Remove tudo que não seja número (incluindo vírgulas e pontos)
+    const numericValue = value.replace(/\D/g, '');
+
+    // Converte para um número e divide por 100 para ter as casas decimais
+    const floatValue = parseFloat(numericValue) / 100;
+
+    // Formata o número para o padrão de moeda brasileiro
+    const formattedValue = new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    }).format(floatValue);
+
+    this.aluno.monthlyFee = formattedValue.toString();
   }
 }

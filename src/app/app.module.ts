@@ -25,6 +25,7 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
 import { LocaisComponent } from './pages/locais/locais.component';
 import { LocaisRoutingModule } from './pages/locais/locais-routing.module';
 import { PagamentosPixComponent } from './pages/pagamentos-pix/pagamentos-pix.component';
+import { CurrencyBrPipe } from './pipes/currency-br.pipe';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { PagamentosPixComponent } from './pages/pagamentos-pix/pagamentos-pix.co
     LoadingSpinnerComponent,
     LocaisComponent,
     PagamentosPixComponent,
+    CurrencyBrPipe,
   ],
   imports: [
     BrowserModule,
