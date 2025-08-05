@@ -189,7 +189,13 @@ button[type="button"]:hover {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5) !important;
   }
 }
-
+::ng-deep .ng-value {
+  margin: 5px;
+  padding: 5px;
+  span {
+    padding: 4px;
+  }
+}
 @media (max-width: 768px) {
   .container {
     padding: 10px;

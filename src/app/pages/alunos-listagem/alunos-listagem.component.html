@@ -2,8 +2,10 @@
 
 <div class="mt-4 container-principal" *ngIf="!carregando">
   <input
+    #searchInput
     type="text"
     [(ngModel)]="searchText"
+    (ngModelChange)="carregarAlunos()"
     placeholder="Buscar aluno..."
     class="search-input"
   />
@@ -21,7 +23,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let aluno of alunos | alunoFilter : searchText">
+        <tr *ngFor="let aluno of alunos">
           <td (click)="editar(aluno)">{{ aluno.name }}</td>
           <td class="celular">{{ aluno.email }}</td>
           <td class="celular">{{ aluno.phone }}</td>

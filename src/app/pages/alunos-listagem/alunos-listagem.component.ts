@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlunoService } from 'src/app/core/services/aluno.service';
+import { ViewChild, ElementRef } from '@angular/core';
 
 // Definição das interfaces para garantir a tipagem correta
 interface Turma {
@@ -40,6 +41,7 @@ export class AlunosListagemComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 5;
   totalAlunos: number = 0;
+  @ViewChild('searchInput') searchInput!: ElementRef;
 
   constructor(private alunoService: AlunoService, private router: Router) {}
 
@@ -49,23 +51,29 @@ export class AlunosListagemComponent implements OnInit {
   }
 
   carregarAlunos(): void {
+    if (this.searchText.length && this.searchText.length < 3) {
+      return;
+    }
+
     this.carregando = true;
-    // Chama o serviço com os parâmetros de página e limite
-    this.alunoService.getAlunos(this.currentPage, this.itemsPerPage).subscribe(
-      (response: any) => {
-        this.carregando = false;
-        const alunos = response.students || [];
-        this.alunos = alunos.map((aluno: any) => ({
-          ...aluno,
-          turmas: aluno.turmas || [],
-        }));
-        this.totalAlunos = response.total || 0;
-      },
-      (error) => {
-        console.error('Erro ao carregar alunos:', error);
-        this.carregando = false;
-      }
-    );
+    this.alunoService
+      .getAlunos(this.currentPage, this.itemsPerPage, this.searchText)
+      .subscribe(
+        (response: any) => {
+          this.carregando = false;
+          const alunos = response.students || [];
+          this.alunos = alunos.map((aluno: any) => ({
+            ...aluno,
+            turmas: aluno.turmas || [],
+          }));
+          this.totalAlunos = response.total || 0;
+          setTimeout(() => this.searchInput.nativeElement.focus(), 0);
+        },
+        (error) => {
+          console.error('Erro ao carregar alunos:', error);
+          this.carregando = false;
+        }
+      );
   }
 
   // Método para ir para uma página específica

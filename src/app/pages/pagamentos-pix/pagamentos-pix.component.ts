@@ -1,6 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlunoService } from 'src/app/core/services/aluno.service';
-
+interface Aluno {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
+  isMinor: boolean;
+  turmas: Turma[];
+}
+interface Turma {
+  _id: string;
+  name: string;
+  startTime: string;
+  endTime: string;
+}
 @Component({
   selector: 'app-pagamentos-pix',
   templateUrl: './pagamentos-pix.component.html',
@@ -11,7 +25,7 @@ export class PagamentosPixComponent implements OnInit {
   mesAtual: string = '';
   carregando = true;
 
-  constructor(private alunosPixService: AlunoService) {}
+  constructor(private alunosPixService: AlunoService, private router: Router) {}
 
   ngOnInit() {
     this.carregando = true;
@@ -48,5 +62,12 @@ export class PagamentosPixComponent implements OnInit {
           }
         }
       });
+  }
+
+  editar(aluno: Aluno): void {
+    const turmasIds = aluno.turmas?.map((t) => t._id) || [];
+    this.router.navigate(['/painel/alunos/cadastro'], {
+      state: { aluno: { ...aluno, turmas: turmasIds } },
+    });
   }
 }

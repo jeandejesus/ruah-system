@@ -20,7 +20,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let aluno of alunos">
-        <td>{{ aluno.name }}</td>
+        <td (click)="editar(aluno)">{{ aluno.name }}</td>
         <td>
           <span
             class="badge"

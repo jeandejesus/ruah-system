@@ -11,10 +11,14 @@ export class AlunoService {
 
   constructor(private http: HttpClient) {}
 
-  getAlunos(page: number, limit: number): Observable<any[]> {
-    let params = new HttpParams();
-    params = params.append('page', page.toString());
-    params = params.append('limit', limit.toString());
+  getAlunos(page: number, limit: number, term?: string): Observable<any[]> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('limit', limit.toString());
+
+    if (term && term.trim() !== '') {
+      params = params.set('term', term.trim());
+    }
 
     return this.http.get<any[]>(this.apiUrl, { params });
   }
