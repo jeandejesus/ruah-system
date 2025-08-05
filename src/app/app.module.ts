@@ -24,6 +24,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { LocaisComponent } from './pages/locais/locais.component';
 import { LocaisRoutingModule } from './pages/locais/locais-routing.module';
+import { PagamentosPixComponent } from './pages/pagamentos-pix/pagamentos-pix.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { LocaisRoutingModule } from './pages/locais/locais-routing.module';
     CreateSchoolComponent,
     LoadingSpinnerComponent,
     LocaisComponent,
+    PagamentosPixComponent,
   ],
   imports: [
     BrowserModule,

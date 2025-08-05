@@ -88,6 +88,7 @@ export class AlunosComponent implements OnInit {
   }
 
   updateAluno(aluno: any) {
+    console.log('Atualizando aluno:', aluno);
     this.alunosService.updateAluno(aluno).subscribe(
       () => {
         this.toastr.success('Atualizado com sucesso!', 'Sucesso');
@@ -141,6 +142,7 @@ export class AlunosComponent implements OnInit {
       emergencyContact: { name: '', phone: '' },
       responsible: { name: '', cpf: '', rg: '', phone: '' },
       isMinor: false,
+      isPix: false,
       turmas: [],
     };
   }

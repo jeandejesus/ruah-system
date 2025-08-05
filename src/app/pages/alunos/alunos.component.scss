@@ -198,6 +198,13 @@ button[type="button"]:hover {
   form {
     padding: 15px;
     margin: 10px;
+
+    .check-bock {
+      flex-direction: column;
+      .col {
+        margin: 10px 0;
+      }
+    }
   }
 
   h2 {

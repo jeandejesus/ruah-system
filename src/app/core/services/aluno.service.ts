@@ -34,4 +34,15 @@ export class AlunoService {
   deleteAluno(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
+
+  getAlunosPix(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/pix`);
+  }
+
+  marcarPagamento(alunoId: string, month: string): Observable<any> {
+    return this.http.patch(
+      `${this.apiUrl}/mark-payment/${alunoId}?month=${month}`,
+      {}
+    );
+  }
 }

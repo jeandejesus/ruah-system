@@ -11,6 +11,7 @@ import { AlunosListagemComponent } from './pages/alunos-listagem/alunos-listagem
 import { PagamentosComponent } from './pages/pagamentos/pagamentos.component';
 import { authGuard } from './guards/auth.guard';
 import { CreateSchoolComponent } from './pages/create-school/create-school.component';
+import { PagamentosPixComponent } from './pages/pagamentos-pix/pagamentos-pix.component';
 
 const routes: Routes = [
   {
@@ -37,7 +38,10 @@ const routes: Routes = [
           { path: 'locais', component: LocaisComponent },
           {
             path: 'pagamentos',
-            children: [{ path: 'assinaturas', component: PagamentosComponent }],
+            children: [
+              { path: 'assinaturas', component: PagamentosComponent },
+              { path: 'pix', component: PagamentosPixComponent },
+            ],
           },
           {
             path: 'alunos',

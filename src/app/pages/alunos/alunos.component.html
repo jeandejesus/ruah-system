@@ -138,9 +138,19 @@
       </ng-select>
     </div>
   </div>
+  <div class="row check-bock mb-3">
+    <div class="col">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="isPix"
+        [(ngModel)]="aluno.isPix"
+        name="isPix"
+      />
+      <label class="form-check-label" for="isPix"> Pagamento via Pix? </label>
+    </div>
 
-  <div class="row">
-    <div class="col-md-6 col-12 mb-3 form-check">
+    <div class="col">
       <input
         type="checkbox"
         class="form-check-input"

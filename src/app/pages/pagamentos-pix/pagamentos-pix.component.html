@@ -1,0 +1,61 @@
+<!-- Spinner centralizado -->
+<app-loading-spinner [isLoading]="carregando"></app-loading-spinner>
+
+<!-- Tabela de alunos -->
+<div
+  class="container table-responsive"
+  *ngIf="!carregando && alunos.length > 0"
+>
+  <h2 class="titulo-pix">Clientes e Status de Pagamento PIX</h2>
+  <table class="table table-striped table-hover table-bordered align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>Nome</th>
+        <th>
+          Status de Pagamento
+          <span class="text-muted">({{ mesAtual }})</span>
+        </th>
+        <th>Ação</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let aluno of alunos">
+        <td>{{ aluno.name }}</td>
+        <td>
+          <span
+            class="badge"
+            [ngClass]="{
+              'bg-success': isPago(aluno),
+              'bg-danger': !isPago(aluno)
+            }"
+          >
+            <i
+              class="bi"
+              [ngClass]="{
+                'bi-check-circle-fill': isPago(aluno),
+                'bi-x-circle-fill': !isPago(aluno)
+              }"
+            ></i>
+            {{ isPago(aluno) ? "Pago" : "Não pago" }}
+          </span>
+        </td>
+        <td>
+          <button
+            *ngIf="!isPago(aluno)"
+            class="btn btn-sm btn-success"
+            (click)="marcarComoPago(aluno._id)"
+          >
+            <i class="bi bi-cash-coin me-1"></i>
+            Marcar como pago
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="!alunos.length">
+  <div class="alert text-center mt-5" role="alert">
+    Não há alunos cadastrados na opção PIX
+  </div>
+</div>
