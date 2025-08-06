@@ -43,7 +43,7 @@ export class LayoutComponent implements OnInit {
         projection: { name: 1 },
       };
       this.schoolService.getSchoolById(decodedToken.sub, query).subscribe({
-        next: (school) => {
+        next: (school: School) => {
           if (school) {
             this.noExistesSchool = false;
             this.school = school;
@@ -53,20 +53,20 @@ export class LayoutComponent implements OnInit {
     }
   }
 
-  logout() {
+  logout(): void {
     localStorage.removeItem('authToken');
     this.router.navigate(['/login']);
   }
 
-  toggleAlunoMenu() {
+  toggleAlunoMenu(): void {
     this.alunoMenuOpen = !this.alunoMenuOpen;
   }
 
-  togglePagamentoMenu() {
+  togglePagamentoMenu(): void {
     this.pagamentoMenuOpen = !this.pagamentoMenuOpen;
   }
 
-  toggleSidebar() {
+  toggleSidebar(): void {
     const isMobile = window.innerWidth <= 768;
 
     if (isMobile) {
@@ -79,11 +79,11 @@ export class LayoutComponent implements OnInit {
     this.isSidebarClosed = !this.isSidebarClosed;
   }
 
-  closeSidebarOnMobile() {
+  closeSidebarOnMobile(): void {
     this.isSidebarClosed = !this.isSidebarClosed;
   }
 
-  closeSidebarOnMobileIfOpen() {
+  closeSidebarOnMobileIfOpen(): void {
     if (this.isSidebarClosed) {
       this.isSidebarClosed = !this.isSidebarClosed;
       this.renderer.removeClass(document.body, 'no-scroll');

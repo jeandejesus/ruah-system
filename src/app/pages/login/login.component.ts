@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { SchoolService } from 'src/app/core/services/school.service';
+import { QueryParams } from 'src/app/interfaces/query.interface';
 import { School } from 'src/app/interfaces/school.interface';
 import { NotificationService } from 'src/app/services/notification.service';
 
@@ -39,7 +40,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  async onSubmit() {
+  async onSubmit(): Promise<void> {
     this.loading = true;
 
     this.authService.login(this.email, this.password).subscribe({
@@ -73,8 +74,11 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  private async checkSchool(login: any) {
-    this.schoolService.getSchoolById(login.user.id).subscribe({
+  private async checkSchool(login: any): Promise<void> {
+    const query: QueryParams = {
+      projection: { _id: 1 },
+    };
+    this.schoolService.getSchoolById(login.user.id, query).subscribe({
       next: (school: School) => {
         if (school) {
           this.router.navigate(['/painel']); // Redireciona para a página do dashboard
@@ -94,7 +98,7 @@ export class LoginComponent implements OnInit {
 
   // Método para redirecionar para a página de recuperação de senha
 
-  forgotPassword() {
+  forgotPassword(): void {
     this.authService.resetSenha(this.email).subscribe({
       next: () => {
         this.toastr.success(
