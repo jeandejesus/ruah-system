@@ -81,7 +81,13 @@ export class AlunosComponent implements OnInit {
         this.resetForm();
       },
       (error) => {
-        this.toastr.error(error.error?.message || 'Erro ao criar aluno');
+        if (Array.isArray(error.error?.message)) {
+          error.error.message.forEach((msg: string) => {
+            this.toastr.error(msg);
+          });
+        } else {
+          this.toastr.error(error.error?.message || 'Erro ao criar aluno');
+        }
       }
     );
   }
@@ -94,7 +100,13 @@ export class AlunosComponent implements OnInit {
         this.resetForm();
       },
       (error) => {
-        this.toastr.error(error.error?.message || 'Erro ao atualizar aluno');
+        if (Array.isArray(error.error?.message)) {
+          error.error.message.forEach((msg: string) => {
+            this.toastr.error(msg);
+          });
+        } else {
+          this.toastr.error(error.error?.message || 'Erro ao criar aluno');
+        }
       }
     );
   }

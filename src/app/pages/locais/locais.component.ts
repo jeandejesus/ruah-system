@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as bootstrap from 'bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { Local, LocaisService } from 'src/app/core/services/locais.service';
 
 @Component({
@@ -13,7 +14,10 @@ export class LocaisComponent implements OnInit {
   editando = false;
   modalInstance: bootstrap.Modal | undefined;
   carregando = true;
-  constructor(private locaisService: LocaisService) {}
+  constructor(
+    private locaisService: LocaisService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.carregarLocais();
@@ -54,15 +58,39 @@ export class LocaisComponent implements OnInit {
     if (this.editando && this.localAtual._id) {
       this.locaisService
         .updateLocal(this.localAtual._id, this.localAtual)
-        .subscribe(() => {
-          this.carregarLocais();
-          this.fecharModal();
+        .subscribe({
+          next: () => {
+            this.toastr.success('Local atualizado com sucesso');
+            this.carregarLocais();
+            this.fecharModal();
+          },
+          error: (error) => {
+            this.exibirErros(error);
+          },
         });
     } else {
-      this.locaisService.createLocal(this.localAtual).subscribe(() => {
-        this.carregarLocais();
-        this.fecharModal();
+      this.locaisService.createLocal(this.localAtual).subscribe({
+        next: () => {
+          this.toastr.success('Local criado com sucesso');
+          this.carregarLocais();
+          this.fecharModal();
+        },
+        error: (error) => {
+          this.exibirErros(error);
+        },
       });
+    }
+  }
+
+  private exibirErros(error: any): void {
+    const mensagens = error.error?.message;
+
+    if (Array.isArray(mensagens)) {
+      mensagens.forEach((msg: string) => {
+        this.toastr.error(msg);
+      });
+    } else {
+      this.toastr.error(mensagens || 'Erro ao salvar local');
     }
   }
 
