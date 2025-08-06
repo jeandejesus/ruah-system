@@ -54,8 +54,8 @@ export class AlunosListagemComponent implements OnInit {
     if (this.searchText.length && this.searchText.length < 3) {
       return;
     }
+    if (!this.searchText.length) this.carregando = true;
 
-    this.carregando = true;
     this.alunoService
       .getAlunos(this.currentPage, this.itemsPerPage, this.searchText)
       .subscribe(

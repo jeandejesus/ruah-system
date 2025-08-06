@@ -4,6 +4,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { School } from 'src/app/interfaces/school.interface';
 import { PagamentosService } from '../pagamentos/pagamentos.service';
+import { AlunoService } from 'src/app/core/services/aluno.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,11 +21,14 @@ export class DashboardComponent implements OnInit {
   loadingTotalMes: boolean = true;
   limitPagementos = 6;
   mostarMenos = false;
+  totalArrecadadoMesPix: number | null = null;
+  loadingTotalMesPix: boolean = true;
 
   constructor(
     private dashboardService: DashboardService,
     private router: Router,
-    private pagamentosService: PagamentosService
+    private pagamentosService: PagamentosService,
+    private alunoService: AlunoService
   ) {}
 
   ngOnInit() {
@@ -43,6 +47,16 @@ export class DashboardComponent implements OnInit {
             this.noExistesSchool = false;
             this.school = school;
             this.carregarProximosRepasses();
+            this.alunoService.getTotalPixReceivedInMonth().subscribe({
+              next: (response) => {
+                this.totalArrecadadoMesPix = response;
+                this.loadingTotalMesPix = false;
+              },
+              error: (error) => {
+                console.error('Erro ao buscar próximos repasses:', error);
+                this.loadingTotalMes = false;
+              },
+            });
           }
         },
       });

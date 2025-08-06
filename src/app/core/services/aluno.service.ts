@@ -49,4 +49,8 @@ export class AlunoService {
       {}
     );
   }
+
+  getTotalPixReceivedInMonth(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/pix/received`);
+  }
 }

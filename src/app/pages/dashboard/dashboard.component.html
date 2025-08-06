@@ -1,15 +1,11 @@
 <app-loading-spinner [isLoading]="loadingTotalMes"></app-loading-spinner>
 <div class="container d-flex">
   <div *ngIf="!loadingTotalMes">
-    <div class="row justify-content-center mb-3">
-      <h4 class="text-center mt-2">Próximos Repasses</h4>
-    </div>
-
-    <div class="row justify-content-center mb-4">
+    <div class="row justify-content-center mb-4 mt-5">
       <div class="col-md-8">
         <div class="card text-center shadow-sm">
           <div class="card-body">
-            <h5 class="card-title text-primary">Total Entrada</h5>
+            <h5 class="card-title text-primary">Total Entrada Stripe</h5>
             <p class="card-text fs-4 fw-bold text-success">
               {{ totalArrecadadoMes | currency : "BRL" : "symbol" : "1.2-2" }}
             </p>
@@ -26,12 +22,34 @@
             >
               Erro ao carregar total.
             </p>
+            <h5 class="card-title text-primary">Total Entrada Pix</h5>
+            <p class="card-text fs-4 fw-bold text-success">
+              {{
+                totalArrecadadoMesPix | currency : "BRL" : "symbol" : "1.2-2"
+              }}
+            </p>
+
+            <p
+              class="text-muted text-sm"
+              *ngIf="!loadingTotalMesPix && totalArrecadadoMesPix === 0"
+            >
+              Nenhuma arrecadação este mês ainda via pix.
+            </p>
+            <p
+              class="text-muted text-sm"
+              *ngIf="!loadingTotalMesPix && totalArrecadadoMesPix === null"
+            >
+              Erro ao carregar total.
+            </p>
           </div>
         </div>
       </div>
     </div>
 
     <div class="row justify-content-center">
+      <div class="row justify-content-center mb-3">
+        <h4 class="text-center mt-2">Próximos Repasses do stripe</h4>
+      </div>
       <div class="col-md-8">
         <div class="list-group">
           <div
