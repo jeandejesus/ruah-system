@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   mostarMenos = false;
   totalArrecadadoMesPix: number | null = null;
   loadingTotalMesPix: boolean = true;
+  mostrarValores = false;
 
   private subscriptions: Subscription = new Subscription();
 
