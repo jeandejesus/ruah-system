@@ -3,5 +3,5 @@ export interface School {
   phone?: string;
   email?: string;
   userId?: string;
-  id?: string;
+  _id?: string;
 }

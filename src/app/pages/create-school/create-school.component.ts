@@ -16,6 +16,7 @@ export class CreateSchoolComponent {
     phone: '',
     email: '',
     userId: '',
+    _id: '',
   };
 
   constructor(private schoolService: SchoolService, private router: Router) {
@@ -32,9 +33,11 @@ export class CreateSchoolComponent {
 
   onSubmit() {
     this.schoolService.createSchool(this.school).subscribe({
-      next: (response) => {
-        localStorage.setItem('schoolId', response._id);
-        this.router.navigate(['/painel']);
+      next: (response: School) => {
+        if (response._id) {
+          localStorage.setItem('schoolId', response._id);
+          this.router.navigate(['/painel']);
+        }
       },
       error: (error) => {
         console.error('Error creating school:', error);

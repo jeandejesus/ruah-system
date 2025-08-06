@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { School } from 'src/app/interfaces/school.interface';
 import { PagamentosService } from '../pagamentos/pagamentos.service';
 import { AlunoService } from 'src/app/core/services/aluno.service';
+import { SchoolService } from 'src/app/core/services/school.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
   loadingTotalMesPix: boolean = true;
 
   constructor(
-    private dashboardService: DashboardService,
+    private schoolService: SchoolService,
     private router: Router,
     private pagamentosService: PagamentosService,
     private alunoService: AlunoService
@@ -41,7 +41,7 @@ export class DashboardComponent implements OnInit {
       this.school.userId = decodedToken.sub;
       this.loadingTotalMes = true;
 
-      this.dashboardService.getSchoolById(decodedToken.sub).subscribe({
+      this.schoolService.getSchoolById(decodedToken.sub).subscribe({
         next: (school) => {
           if (school) {
             this.noExistesSchool = false;
@@ -92,7 +92,7 @@ export class DashboardComponent implements OnInit {
   }
 
   onSubmit() {
-    this.dashboardService.createSchool(this.school).subscribe({
+    this.schoolService.createSchool(this.school).subscribe({
       next: (response) => {
         console.log(response);
       },

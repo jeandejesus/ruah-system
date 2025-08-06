@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
   }
 
   private async checkSchool(login: any) {
-    this.schoolService.getSchoolByUserId(login.user.id).subscribe({
+    this.schoolService.getSchoolById(login.user.id).subscribe({
       next: (school: School) => {
         if (school) {
           this.router.navigate(['/painel']); // Redireciona para a página do dashboard

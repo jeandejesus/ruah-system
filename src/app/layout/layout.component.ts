@@ -1,8 +1,9 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { DashboardService } from '../core/services/dashboard.service';
 import { School } from '../interfaces/school.interface';
+import { QueryParams } from '../interfaces/query.interface';
+import { SchoolService } from '../core/services/school.service';
 
 @Component({
   selector: 'app-layout',
@@ -26,7 +27,7 @@ export class LayoutComponent implements OnInit {
   isSidebarClosed = false; // Estado inicial do menu lateral
 
   constructor(
-    private dashboardService: DashboardService,
+    private schoolService: SchoolService,
     private router: Router,
     private renderer: Renderer2
   ) {}
@@ -38,7 +39,10 @@ export class LayoutComponent implements OnInit {
     }
     if (decodedToken) {
       this.school.userId = decodedToken.sub;
-      this.dashboardService.getSchoolById(decodedToken.sub).subscribe({
+      const query: QueryParams = {
+        projection: { name: 1 },
+      };
+      this.schoolService.getSchoolById(decodedToken.sub, query).subscribe({
         next: (school) => {
           if (school) {
             this.noExistesSchool = false;

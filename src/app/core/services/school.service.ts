@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { QueryParams } from 'src/app/interfaces/query.interface';
+import { School } from 'src/app/interfaces/school.interface';
+import { HttpParamsService } from './http-params.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,25 +12,40 @@ import { environment } from 'src/environments/environment';
 export class SchoolService {
   private apiUrl = `${environment.apiUrl}/admin`;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private httpParamsService: HttpParamsService // injetando o serviço
+  ) {}
 
-  getSchoolByUserId(userId: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/school/${userId}`);
+  // 🔁 Método reutilizável para headers com token
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('authToken');
+    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 
-  createSchool(schoolData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/schools`, schoolData);
+  getSchoolById(schoolId: string, query: QueryParams = {}): Observable<School> {
+    const params = this.httpParamsService.toHttpParams(query);
+
+    return this.http.get<School>(`${this.apiUrl}/school/${schoolId}`, {
+      headers: this.getAuthHeaders(),
+      params,
+    });
   }
 
-  updateSchool(id: string, schoolData: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/schools/${id}`, schoolData);
+  // ✅ Criar uma escola
+  createSchool(school: School): Observable<School> {
+    return this.http.post<School>(`${this.apiUrl}/schools`, school, {
+      headers: this.getAuthHeaders(),
+    });
   }
 
-  deleteSchool(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/schools/${id}`);
-  }
+  // ✅ Buscar todas as escolas com suporte a filtros
+  getAllSchools(query: QueryParams = {}): Observable<School[]> {
+    const params = this.httpParamsService.toHttpParams(query);
 
-  getSchoolById(id: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/schools/${id}`);
+    return this.http.get<School[]>(`${this.apiUrl}/schools`, {
+      headers: this.getAuthHeaders(),
+      params,
+    });
   }
 }
