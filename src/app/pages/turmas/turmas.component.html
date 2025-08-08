@@ -9,22 +9,21 @@
     <div class="card" *ngFor="let turma of turmas">
       <div class="card-header">
         <h5 class="class-name">{{ turma.name }}</h5>
-        <span class="location">{{ turma.local.name }}</span>
       </div>
 
       <div class="card-body">
         <div class="detail-group">
-          <label>Horário:</label>
+          <label>Horário </label>
           <p>{{ turma.startTime }} - {{ turma.endTime }}</p>
         </div>
         <div class="detail-group">
-          <label>Local:</label>
+          <label>Local </label>
           <p class="ml-2">{{ turma.local.name }}</p>
         </div>
         <div class="detail-group">
-          <label>Dias:</label>
+          <label>Dias </label>
           <div class="days-list">
-            <span class="day-tag" *ngFor="let dia of turma.diasDaSemana">
+            <span *ngFor="let dia of turma.diasDaSemana">
               {{ dia }}
             </span>
           </div>
