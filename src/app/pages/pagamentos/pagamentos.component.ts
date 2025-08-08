@@ -116,6 +116,9 @@ export class PagamentosComponent implements OnInit {
 
   onSearch(event: Event) {
     const input = event.target as HTMLInputElement;
+    if (input.value.length && input.value.length < 3) {
+      return;
+    }
     this.searchSubject.next(input.value);
   }
 
