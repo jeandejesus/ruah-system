@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  ChangeDetectorRef,
+} from '@angular/core';
 import {
   PagamentosService,
   Customer,
@@ -13,6 +19,8 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   styleUrls: ['./pagamentos.component.scss'],
 })
 export class PagamentosComponent implements OnInit {
+  @ViewChild('loadMoreAnchor') loadMoreAnchor!: ElementRef;
+
   customers: Customer[] = [];
   hasMore = false;
   loading = false;
@@ -22,7 +30,12 @@ export class PagamentosComponent implements OnInit {
   private searchSubject = new Subject<string>();
   private isSearching = false;
   carregando = true;
-  constructor(private pagamentosService: PagamentosService) {
+  private shouldScroll = false; // <-- controla quando rolar
+
+  constructor(
+    private pagamentosService: PagamentosService,
+    private cdr: ChangeDetectorRef
+  ) {
     this.searchSubject
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe((searchTerm) => {
@@ -56,7 +69,6 @@ export class PagamentosComponent implements OnInit {
           const newCustomers = response.customers;
 
           if (loadMore) {
-            // Adiciona apenas clientes que ainda não estão na lista
             this.customers = [
               ...this.customers,
               ...newCustomers.filter(
@@ -66,6 +78,7 @@ export class PagamentosComponent implements OnInit {
                   )
               ),
             ];
+            this.shouldScroll = true; // marca que precisa rolar
           } else {
             this.customers = newCustomers;
           }
@@ -80,6 +93,18 @@ export class PagamentosComponent implements OnInit {
 
           this.loading = false;
           this.carregando = false;
+
+          // força detecção de mudanças para garantir que HTML foi atualizado
+          this.cdr.detectChanges();
+
+          // se for loadMore, agora sim rola
+          if (this.shouldScroll && this.loadMoreAnchor) {
+            this.loadMoreAnchor.nativeElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+            this.shouldScroll = false;
+          }
         },
         error: (error: Error) => {
           console.error('Erro ao carregar clientes:', error);
