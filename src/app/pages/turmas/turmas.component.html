@@ -18,6 +18,10 @@
           <p>{{ turma.startTime }} - {{ turma.endTime }}</p>
         </div>
         <div class="detail-group">
+          <label>Local:</label>
+          <p class="ml-2">{{ turma.local.name }}</p>
+        </div>
+        <div class="detail-group">
           <label>Dias:</label>
           <div class="days-list">
             <span class="day-tag" *ngFor="let dia of turma.diasDaSemana">
