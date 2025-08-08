@@ -33,6 +33,7 @@ export interface FormattedSubscription {
   cancel_at: Date | null;
   cancellation_reason: string | null;
   payment_error: string | null; // mensagem detalhada de erro ou expiração
+  valorAssintaura: string;
 }
 @Injectable({
   providedIn: 'root',

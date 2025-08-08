@@ -31,7 +31,13 @@
               >
                 {{ customer.phone }}
               </a>
-
+              <p class="card-text fw-bold mt-3">
+                Assinatura:
+                {{
+                  +customer.subscriptions[0].valorAssintaura / 100
+                    | currency : "BRL" : "symbol" : "1.2-2"
+                }}
+              </p>
               <span
                 class="badge px-3 py-2 m-2"
                 [class]="

@@ -21,11 +21,6 @@ button {
 
 .card {
   border-radius: 10px;
-  transition: transform 0.3s ease-in-out;
-
-  &:hover {
-    transform: scale(1.05);
-  }
 
   h5 {
     font-weight: bold;
