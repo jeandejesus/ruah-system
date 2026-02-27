@@ -1,0 +1,362 @@
+// ===============================
+// 🎨 VARIÁVEIS RUAH (NEW)
+// ===============================
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap');
+
+$primary: #5c101c;
+$primary-light: #7a1a28;
+$dark: #0a0a0a;
+$dark-soft: #141414;
+$dark-card: #1a1a1a;
+$text: #ffffff;
+$text-muted: rgba(255, 255, 255, 0.7);
+$text-dim: rgba(255, 255, 255, 0.5);
+$gold: #c9a227;
+$gold-light: #e0b82d;
+$border: rgba(255, 255, 255, 0.1);
+
+$font-display: 'Cormorant Garamond', Georgia, serif;
+$font-body: 'Inter', -apple-system, sans-serif;
+
+$transition-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+// ===============================
+// 🌤 FUNDO GERAL
+// ===============================
+:host {
+  display: block;
+  background: $dark;
+  color: $text;
+  font-family: $font-body;
+  min-height: 100vh;
+  
+  body {
+    height: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+.checkout-section {
+  padding: 80px 16px;
+  background: linear-gradient(180deg, $dark 0%, $dark-soft 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.checkout-container {
+  width: 100%;
+  max-width: 720px;
+}
+
+.checkout-header {
+  text-align: center;
+  margin-bottom: 40px;
+  
+  .section-eyebrow {
+    display: block;
+    font-family: $font-body;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: $gold;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-family: $font-display;
+    font-size: clamp(32px, 5vw, 44px);
+    font-weight: 500;
+    color: $text;
+    margin: 0;
+  }
+}
+
+// ===============================
+// 💳 CARD CHECKOUT
+// ===============================
+.checkout-card {
+  background: $dark-card;
+  border-radius: 20px;
+  padding: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+}
+
+// ===============================
+// 🔒 CONFIANÇA
+// ===============================
+.trust-box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 32px;
+  font-size: 13px;
+  color: $text-muted;
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid $border;
+    color: $gold;
+    
+    span {
+      color: $text-muted;
+    }
+  }
+}
+
+// ===============================
+// 📦 FIELDSETS
+// ===============================
+form {
+  fieldset {
+    border: 1px solid $border;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 28px;
+    background: rgba(0, 0, 0, 0.2);
+
+    legend {
+      padding: 0 12px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: $gold;
+      font-family: $font-body;
+    }
+  }
+
+  // ===============================
+  // 🧱 CAMPOS
+  // ===============================
+  .row {
+    margin: 16px 0;
+    
+    label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 8px;
+      color: $text-muted;
+      font-weight: 500;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 10px;
+      border: 1px solid $border;
+      background: rgba(255, 255, 255, 0.03);
+      font-size: 15px;
+      color: $text;
+      font-family: $font-body;
+      transition: all 0.3s ease;
+      color-scheme: dark;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.2);
+      }
+
+      &:focus {
+        outline: none;
+        border-color: $gold;
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 0 0 1px $gold;
+      }
+    }
+  }
+
+  // ===============================
+  // 💰 INFO PARCELA / DISPLAY
+  // ===============================
+  .value-display {
+    padding: 14px 16px;
+    border-radius: 10px;
+    background: rgba($primary, 0.2);
+    border: 1px solid rgba($primary, 0.4);
+    font-size: 16px;
+    font-weight: 600;
+    color: $text;
+  }
+
+  .parcela-info {
+    padding: 14px 16px;
+    border-radius: 10px;
+    background: rgba($gold, 0.08);
+    border: 1px solid rgba($gold, 0.3);
+    font-size: 20px;
+    font-family: $font-display;
+    font-weight: 600;
+    color: $gold;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+
+    small {
+      font-family: $font-body;
+      font-size: 12px;
+      font-weight: 400;
+      color: $text-muted;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+  }
+
+  // ===============================
+  // 🔘 BOTÃO
+  // ===============================
+  button[type="submit"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 18px 36px;
+    border-radius: 50px;
+    border: none;
+    background: $primary;
+    color: $text;
+    font-family: $font-body;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 10px;
+
+    transition: all 0.4s $transition-smooth;
+    box-shadow: 0 4px 30px rgba($primary, 0.4);
+
+    &:hover:not(:disabled) {
+      background: $primary-light;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 40px rgba($primary, 0.5);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+  }
+}
+
+// ===============================
+// 🎉 SUCESSO
+// ===============================
+.success-box {
+  margin-top: 32px;
+  padding: 32px;
+  background: rgba(46, 204, 113, 0.05);
+  border: 1px solid rgba(46, 204, 113, 0.2);
+  border-radius: 16px;
+  text-align: center;
+  
+  h3 {
+    color: #2ecc71;
+    font-family: $font-display;
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+  
+  p {
+    color: $text-muted;
+    font-size: 15px;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  
+  .btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 32px;
+    border-radius: 50px;
+    background: #25d366;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+    
+    &:hover {
+      background: #128c7e;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(37, 211, 102, 0.4);
+    }
+  }
+}
+
+// ===============================
+// 📐 GRID DESKTOP
+// ===============================
+@media (min-width: 768px) {
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    
+    .row {
+      margin: 0;
+    }
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    
+    .row {
+      margin: 0;
+    }
+  }
+}
+
+.installment-select {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.03);
+  font-size: 15px;
+  font-family: $font-body;
+  color: $text;
+  cursor: pointer;
+
+  // seta custom (cross-browser) - cor gold
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23c9a227' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 9 9 12'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 14px;
+  
+  option {
+    background: $dark-card;
+    color: $text;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $gold;
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+// Global option dark style fix for some browsers
+select option {
+  background-color: $dark-card;
+  color: $text;
+}

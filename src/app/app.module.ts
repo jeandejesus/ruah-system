@@ -1,10 +1,11 @@
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+import { CheckoutCartaoComponent } from './pages/checkout-cartao/checkout-cartao.component';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './core/interceptor/auth.interceptor';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Importe o FormsModule
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
@@ -13,7 +14,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { AlunosComponent } from './pages/alunos/alunos.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ToastrModule } from 'ngx-toastr';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Necessário para animações
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { AlunosListagemComponent } from './pages/alunos-listagem/alunos-listagem.component';
 import { AlunoFilterPipe } from './pipes/aluno-filter.pipe';
@@ -40,10 +41,11 @@ import { CurrencyBrPipe } from './pipes/currency-br.pipe';
     AlunoFilterPipe,
     PagamentosComponent,
     CreateSchoolComponent,
-    LoadingSpinnerComponent,
     LocaisComponent,
     PagamentosPixComponent,
+    CheckoutCartaoComponent,
     CurrencyBrPipe,
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,9 +55,7 @@ import { CurrencyBrPipe } from './pipes/currency-br.pipe';
     ReactiveFormsModule,
     NgSelectModule,
     BrowserAnimationsModule,
-    // Importando a animação
     NgxMaskModule.forRoot(),
-    BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-right',
@@ -71,7 +71,6 @@ import { CurrencyBrPipe } from './pipes/currency-br.pipe';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
-
   bootstrap: [AppComponent],
 })
 export class AppModule {}

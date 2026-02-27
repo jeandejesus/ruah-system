@@ -12,11 +12,13 @@ import { PagamentosComponent } from './pages/pagamentos/pagamentos.component';
 import { authGuard } from './guards/auth.guard';
 import { CreateSchoolComponent } from './pages/create-school/create-school.component';
 import { PagamentosPixComponent } from './pages/pagamentos-pix/pagamentos-pix.component';
+import { CheckoutCartaoComponent } from './pages/checkout-cartao/checkout-cartao.component';
+import { LandingRuahComponent } from './pages/landing-ruah/landing-ruah.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/login',
+    redirectTo: '/inicio',
     pathMatch: 'full',
   },
 
@@ -69,7 +71,10 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'recuperar-senha', component: LoginComponent },
 
-  { path: '**', redirectTo: 'login' }, // Redireciona qualquer rota inválida para login
+  { path: 'checkout/cartao', component: CheckoutCartaoComponent },
+  { path: 'inicio', component: LandingRuahComponent },
+
+  { path: '**', redirectTo: 'inicio' }, // Redireciona qualquer rota inválida para login
 ];
 
 @NgModule({

@@ -1,0 +1,141 @@
+<div id="top-anchor"></div>
+
+<section class="checkout-section">
+  <div class="checkout-container reveal-fade-up active">
+    <div class="checkout-header">
+      <span class="section-eyebrow">Finalizar Assinatura</span>
+      <h2>Pagamento por Cartão</h2>
+    </div>
+
+    <div class="checkout-card">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <fieldset>
+          <legend>Plano</legend>
+          <div class="row">
+            <label>Selecione o plano</label>
+            <select formControlName="planoKey" class="installment-select">
+              <option *ngFor="let p of planos" [value]="p.key">
+                {{ p.title }}
+              </option>
+            </select>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Pagamento</legend>
+
+          <div class="grid-3">
+            <div class="row">
+              <label>Valor (R$)</label>
+              <div class="value-display">
+                {{
+                  form.get("value")?.value | currency: "BRL" : "symbol" : "1.2-2"
+                }}
+              </div>
+            </div>
+            <div class="row">
+              <label>Parcelas</label>
+              <select formControlName="installmentCount" class="installment-select">
+                <option *ngFor="let n of [1, 2, 3, 4, 5, 6]" [value]="n">
+                  {{ n }}x
+                </option>
+              </select>
+            </div>
+
+            <div class="row">
+              <label>Vencimento</label>
+              <input type="date" formControlName="dueDate" />
+            </div>
+          </div>
+          <div class="row">
+            <label>Descrição</label>
+            <div class="parcela-info">
+              {{
+                form.get("value")?.value / form.get("installmentCount")?.value
+                  | currency: "BRL" : "symbol" : "1.2-2"
+              }}
+              <small>por parcela</small>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Cartão</legend>
+          <div class="row">
+            <label>Nome no Cartão</label>
+            <input formControlName="holderName" />
+          </div>
+          <div class="row">
+            <label>Número</label>
+            <input formControlName="number" placeholder="0000 0000 0000 0000" />
+          </div>
+          <div class="grid-3">
+            <div class="row">
+              <label>Mês</label>
+              <input formControlName="expiryMonth" placeholder="MM" />
+            </div>
+            <div class="row">
+              <label>Ano</label>
+              <input formControlName="expiryYear" placeholder="AAAA" />
+            </div>
+            <div class="row">
+              <label>CVV</label>
+              <input formControlName="ccv" placeholder="123" />
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Dados do Cliente</legend>
+          <div class="grid-2">
+            <div class="row">
+              <label>Nome</label>
+              <input formControlName="name" />
+            </div>
+            <div class="row">
+              <label>E-mail</label>
+              <input formControlName="email" type="email" />
+            </div>
+          </div>
+          <div class="grid-3">
+            <div class="row">
+              <label>CPF/CNPJ</label>
+              <input formControlName="cpfCnpj" />
+            </div>
+            <div class="row">
+              <label>CEP</label>
+              <input formControlName="postalCode" />
+            </div>
+            <div class="row">
+              <label>Número</label>
+              <input formControlName="addressNumber" />
+            </div>
+          </div>
+          <div class="row">
+            <label>Celular</label>
+            <input formControlName="mobilePhone" />
+          </div>
+        </fieldset>
+        <div class="trust-box">
+          <div class="trust-item">🔒 <span>Pagamento 100% seguro</span></div>
+          <div class="trust-item">💳 <span>Cartão tokenizado </span></div>
+          <div class="trust-item">
+            ⛪ <span>RUAH ESCOLA DE DANÇA E PROFECIA </span>
+          </div>
+        </div>
+
+        <button type="submit" [disabled]="loading" class="btn-primary">
+          {{ loading ? "Processando..." : "Finalizar Pagamento" }}
+        </button>
+      </form>
+
+      <div *ngIf="createdPayment" class="result success-box reveal-scale active">
+        <h3>🎉 Pagamento realizado com sucesso!</h3>
+        <p>Clique no botão abaixo para nos avisar pelo WhatsApp e obter a liberação imediata do seu pacote.</p>
+        <a class="btn-whatsapp" href="https://wa.me/5541987917610?text=Ol%C3%A1!%20Acabei%20de%20realizar%20o%20pagamento%20do%20meu%20pacote%20na%20Ruah.%20O%20ID%20do%20pagamento%20%C3%A9%20{{createdPayment?.id}}" target="_blank">
+          Falar no WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -4,7 +4,11 @@
   box-sizing: border-box;
 }
 
+html,
 body {
+  height: auto;
+  -webkit-overflow-scrolling: touch;
+
   font-family: sans-serif;
   background-color: #fff;
   color: #000;
