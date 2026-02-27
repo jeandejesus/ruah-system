@@ -980,11 +980,21 @@ html {
 
   &:hover {
     transform: translateY(-6px);
-    border-color: rgba($primary, 0.3);
+    border-color: rgba(#25d366, 0.4);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 
     .location-icon {
       opacity: 1;
+      color: #25d366;
+    }
+
+    .whatsapp-cta {
+      transform: translateY(-2px);
+      color: #25d366;
+      
+      span {
+        opacity: 1;
+      }
     }
   }
 
@@ -994,6 +1004,30 @@ html {
 
     .location-badge {
       display: block;
+    }
+  }
+
+  .whatsapp-cta {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: $text-dim;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: all 0.4s ease;
+
+    i {
+      font-size: 18px;
+    }
+
+    span {
+      transition: opacity 0.4s ease;
     }
   }
 }
