@@ -78,8 +78,7 @@ html {
 
 .reveal-card {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s $transition-smooth, transform 0.8s $transition-smooth;
+   transition: opacity 0.8s $transition-smooth, transform 0.8s $transition-smooth;
 
   &.active {
     opacity: 1;
@@ -734,8 +733,7 @@ html {
   }
 
   .style-card:nth-child(even) {
-    transform: translateY(40px);
-
+ 
     &:hover {
       transform: translateY(32px);
     }
