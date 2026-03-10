@@ -1,6 +1,8 @@
 export interface PackagePlan {
+  _id?: string;
   key: number;
   title: string;
+  subtitle?: string;
   price: number; // valor total
   installmentCount: number;
   installmentValue: number;
@@ -36,5 +38,12 @@ export const RUAH_PACKAGES: PackagePlan[] = [
     price: 599.4,
     installmentCount: 6,
     installmentValue: 99.9,
+  },
+   {
+    key: 5,
+    title: 'plano de teste cartão ',
+    price: 10,
+    installmentCount: 6,
+    installmentValue: 1,
   }
 ];

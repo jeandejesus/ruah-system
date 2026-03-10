@@ -10,7 +10,7 @@ import { Local, LocaisService } from 'src/app/core/services/locais.service';
 })
 export class LocaisComponent implements OnInit {
   locais: Local[] = [];
-  localAtual: Local = { name: '', address: '' };
+  localAtual: Local = { name: '', address: '', dayTime: '' };
   editando = false;
   modalInstance: bootstrap.Modal | undefined;
   carregando = true;
@@ -33,7 +33,7 @@ export class LocaisComponent implements OnInit {
 
   abrirModal(local?: Local) {
     this.editando = !!local;
-    this.localAtual = local ? { ...local } : { name: '', address: '' };
+    this.localAtual = local ? { ...local } : { name: '', address: '', dayTime: '' };
 
     const modalElement = document.getElementById('localModal');
     if (modalElement) {

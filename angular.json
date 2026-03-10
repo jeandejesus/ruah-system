@@ -27,7 +27,9 @@
               "src/favicon.ico",
               "src/assets",
               "src/sw.js",
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              "src/robots.txt",
+              "src/sitemap.xml"
             ],
             "styles": [
               "node_modules/normalize.css/normalize.css",

@@ -14,7 +14,7 @@
           <div class="row">
             <label>Selecione o plano</label>
             <select formControlName="planoKey" class="installment-select">
-              <option *ngFor="let p of planos" [value]="p.key">
+              <option *ngFor="let p of planos" [ngValue]="p.key">
                 {{ p.title }}
               </option>
             </select>
@@ -36,7 +36,7 @@
             <div class="row">
               <label>Parcelas</label>
               <select formControlName="installmentCount" class="installment-select">
-                <option *ngFor="let n of [1, 2, 3, 4, 5, 6]" [value]="n">
+                <option *ngFor="let n of [1, 2, 3, 4, 5, 6]" [ngValue]="n">
                   {{ n }}x
                 </option>
               </select>
@@ -64,10 +64,16 @@
           <div class="row">
             <label>Nome no Cartão</label>
             <input formControlName="holderName" />
+            <div *ngIf="form.get('holderName')?.invalid && form.get('holderName')?.touched" class="invalid-feedback">
+              Insira o nome completo como impresso no cartão.
+            </div>
           </div>
           <div class="row">
             <label>Número</label>
             <input formControlName="number" placeholder="0000 0000 0000 0000" />
+            <div *ngIf="form.get('number')?.invalid && form.get('number')?.touched" class="invalid-feedback">
+              Número de cartão inválido.
+            </div>
           </div>
           <div class="grid-3">
             <div class="row">
@@ -81,7 +87,16 @@
             <div class="row">
               <label>CVV</label>
               <input formControlName="ccv" placeholder="123" />
+              <div *ngIf="form.get('ccv')?.invalid && form.get('ccv')?.touched" class="invalid-feedback">
+                CVV inválido.
+              </div>
             </div>
+          </div>
+          <div class="row full-width" *ngIf="form.errors?.['expiryPast'] && (form.get('expiryMonth')?.touched || form.get('expiryYear')?.touched)">
+            <div class="invalid-feedback">A data de expiração deve ser futura.</div>
+          </div>
+          <div class="row full-width" *ngIf="form.errors?.['expiryInvalid'] && (form.get('expiryMonth')?.touched || form.get('expiryYear')?.touched)">
+            <div class="invalid-feedback">Data de expiração inválida.</div>
           </div>
         </fieldset>
 
@@ -91,20 +106,32 @@
             <div class="row">
               <label>Nome</label>
               <input formControlName="name" />
+              <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="invalid-feedback">
+                Insira o nome completo.
+              </div>
             </div>
             <div class="row">
               <label>E-mail</label>
               <input formControlName="email" type="email" />
+              <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="invalid-feedback">
+                E-mail inválido.
+              </div>
             </div>
           </div>
           <div class="grid-3">
             <div class="row">
               <label>CPF/CNPJ</label>
               <input formControlName="cpfCnpj" />
+              <div *ngIf="form.get('cpfCnpj')?.invalid && form.get('cpfCnpj')?.touched" class="invalid-feedback">
+                CPF/CNPJ inválido.
+              </div>
             </div>
             <div class="row">
               <label>CEP</label>
               <input formControlName="postalCode" />
+              <div *ngIf="form.get('postalCode')?.invalid && form.get('postalCode')?.touched" class="invalid-feedback">
+                CEP inválido (8 dígitos).
+              </div>
             </div>
             <div class="row">
               <label>Número</label>
@@ -113,7 +140,10 @@
           </div>
           <div class="row">
             <label>Celular</label>
-            <input formControlName="mobilePhone" />
+            <input formControlName="mobilePhone" placeholder="(00) 00000-0000" />
+            <div *ngIf="form.get('mobilePhone')?.invalid && form.get('mobilePhone')?.touched" class="invalid-feedback">
+              Celular inválido.
+            </div>
           </div>
         </fieldset>
         <div class="trust-box">

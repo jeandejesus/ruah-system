@@ -1,0 +1,165 @@
+<div class="admin-packages">
+  <div class="page-header">
+    <div class="header-content">
+      <div class="header-icon">📦</div>
+      <div>
+        <h1>Gerenciar Pacotes</h1>
+        <p class="subtitle">Cadastre e gerencie os planos de aulas da Ruah</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORMULÁRIO DE CRIAÇÃO / EDIÇÃO -->
+  <div class="card form-card" id="form-section">
+    <h2 class="card-title">
+      {{ editingId ? '✏️ Editar Pacote' : '➕ Novo Pacote' }}
+    </h2>
+
+    <form [formGroup]="form" (ngSubmit)="save()" class="pkg-form">
+      <div class="form-grid">
+        <!-- Key -->
+        <div class="field">
+          <label for="key">Chave (key) *</label>
+          <input
+            id="key"
+            type="number"
+            formControlName="key"
+            placeholder="Ex.: 1"
+            [class.invalid]="form.get('key')?.invalid && form.get('key')?.touched"
+          />
+          <span class="error" *ngIf="form.get('key')?.hasError('required') && form.get('key')?.touched">
+            Obrigatório
+          </span>
+        </div>
+
+        <!-- Title -->
+        <div class="field">
+          <label for="title">Título *</label>
+          <input
+            id="title"
+            type="text"
+            formControlName="title"
+            placeholder="Ex.: 1 Modalidade"
+            [class.invalid]="form.get('title')?.invalid && form.get('title')?.touched"
+          />
+          <span class="error" *ngIf="form.get('title')?.hasError('required') && form.get('title')?.touched">
+            Obrigatório
+          </span>
+        </div>
+
+        <!-- Subtitle -->
+        <div class="field full">
+          <label for="subtitle">Subtítulo (opcional)</label>
+          <input
+            id="subtitle"
+            type="text"
+            formControlName="subtitle"
+            placeholder="Ex.: Turma fechada - apenas alunos indicados"
+          />
+        </div>
+
+        <!-- Price -->
+        <div class="field">
+          <label for="price">Valor Total (R$) *</label>
+          <input
+            id="price"
+            type="number"
+            step="0.01"
+            formControlName="price"
+            placeholder="Ex.: 479.40"
+            [class.invalid]="form.get('price')?.invalid && form.get('price')?.touched"
+          />
+          <span class="error" *ngIf="form.get('price')?.hasError('required') && form.get('price')?.touched">
+            Obrigatório
+          </span>
+        </div>
+
+        <!-- Installment Count -->
+        <div class="field">
+          <label for="installmentCount">Nº de Parcelas *</label>
+          <input
+            id="installmentCount"
+            type="number"
+            formControlName="installmentCount"
+            placeholder="Ex.: 6"
+            [class.invalid]="form.get('installmentCount')?.invalid && form.get('installmentCount')?.touched"
+          />
+        </div>
+
+        <!-- Installment Value -->
+        <div class="field disabled-field">
+          <label for="installmentValue">Valor da Parcela (R$) * (Cálculo automático)</label>
+          <input
+            id="installmentValue"
+            type="number"
+            step="0.01"
+            formControlName="installmentValue"
+            placeholder="Ex.: 79.90"
+            readonly
+          />
+        </div>
+
+        <!-- Highlight -->
+        <div class="field highlight-field">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="highlight" />
+            <span>Destacar como "Mais popular"</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-save" [disabled]="saving">
+          <span *ngIf="!saving">{{ editingId ? '💾 Salvar alterações' : '✅ Criar pacote' }}</span>
+          <span *ngIf="saving">Salvando...</span>
+        </button>
+        <button type="button" class="btn-cancel" *ngIf="editingId" (click)="cancelEdit()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- LISTAGEM -->
+  <div class="card list-card">
+    <h2 class="card-title">📋 Pacotes Cadastrados</h2>
+
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Carregando...</p>
+    </div>
+
+    <div *ngIf="!loading && packages.length === 0" class="empty-state">
+      <span class="empty-icon">📭</span>
+      <p>Nenhum pacote cadastrado ainda. Crie o primeiro acima!</p>
+    </div>
+
+    <div class="packages-grid" *ngIf="!loading && packages.length > 0">
+      <div
+        class="pkg-card"
+        *ngFor="let pkg of packages"
+        [class.highlighted]="pkg.highlight"
+      >
+        <div class="pkg-badge" *ngIf="pkg.highlight">⭐ Mais popular</div>
+
+        <div class="pkg-header">
+          <span class="pkg-key">#{{ pkg.key }}</span>
+          <h3>{{ pkg.title }}</h3>
+          <p class="pkg-subtitle" *ngIf="pkg.subtitle">{{ pkg.subtitle }}</p>
+        </div>
+
+        <div class="pkg-pricing">
+          <span class="pkg-price">{{ formatCurrency(pkg.price) }}</span>
+          <span class="pkg-installment">
+            {{ pkg.installmentCount }}x de {{ formatCurrency(pkg.installmentValue) }}
+          </span>
+        </div>
+
+        <div class="pkg-actions">
+          <button class="btn-edit" (click)="startEdit(pkg)">✏️ Editar</button>
+          <button class="btn-delete" (click)="delete(pkg)">🗑️ Excluir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

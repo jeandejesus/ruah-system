@@ -15,6 +15,10 @@
           <label>Endereço:</label>
           <p>{{ local.address }}</p>
         </div>
+        <div class="detail-group" *ngIf="local.dayTime">
+          <label>Dia/Hora:</label>
+          <p>{{ local.dayTime }}</p>
+        </div>
       </div>
 
       <div class="card-footer">
@@ -65,6 +69,16 @@
               [(ngModel)]="localAtual.address"
               name="address"
               required
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Dia/Hora</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="localAtual.dayTime"
+              name="dayTime"
+              placeholder="Ex: Segunda-feira - 19h30"
             />
           </div>
           <button type="submit" class="btn btn-primary">Salvar</button>

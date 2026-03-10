@@ -1,0 +1,305 @@
+.admin-packages {
+  padding: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ── PAGE HEADER ─────────────────────────────────── */
+.page-header {
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .header-icon {
+    font-size: 2.4rem;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a1a2e;
+  }
+
+  .subtitle {
+    margin: 0.2rem 0 0;
+    color: #6b7280;
+    font-size: 0.9rem;
+  }
+}
+
+/* ── CARDS ───────────────────────────────────────── */
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
+}
+
+.card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 1.5rem;
+}
+
+/* ── FORM ────────────────────────────────────────── */
+.pkg-form {
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    &.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    input[type='text'],
+    input[type='number'] {
+      padding: 0.55rem 0.9rem;
+      border: 1.5px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      transition: border-color 0.2s;
+
+      &:focus {
+        outline: none;
+        border-color: #7c3aed;
+      }
+
+      &.invalid {
+        border-color: #ef4444;
+      }
+    }
+
+    .error {
+      font-size: 0.78rem;
+      color: #ef4444;
+    }
+  }
+
+  .highlight-field {
+    justify-content: flex-end;
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: #374151;
+
+      input[type='checkbox'] {
+        width: 16px;
+        height: 16px;
+        accent-color: #7c3aed;
+      }
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+}
+
+/* ── BUTTONS ─────────────────────────────────────── */
+.btn-save {
+  background: linear-gradient(135deg, #7c3aed, #5b21b6);
+  color: #fff;
+  border: none;
+  padding: 0.65rem 1.8rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+}
+
+.btn-cancel {
+  background: transparent;
+  border: 1.5px solid #d1d5db;
+  color: #374151;
+  padding: 0.65rem 1.4rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: #f3f4f6;
+  }
+}
+
+/* ── PACKAGES GRID ───────────────────────────────── */
+.packages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.2rem;
+}
+
+.pkg-card {
+  position: relative;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.4rem;
+  transition: box-shadow 0.2s, border-color 0.2s;
+
+  &:hover {
+    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.12);
+    border-color: #c4b5fd;
+  }
+
+  &.highlighted {
+    border-color: #7c3aed;
+    background: linear-gradient(135deg, #f5f3ff, #ffffff);
+  }
+}
+
+.pkg-badge {
+  position: absolute;
+  top: -0.6rem;
+  left: 1rem;
+  background: linear-gradient(135deg, #7c3aed, #5b21b6);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.8rem;
+  border-radius: 20px;
+}
+
+.pkg-header {
+  margin-bottom: 1rem;
+
+  .pkg-key {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    font-weight: 600;
+  }
+
+  h3 {
+    margin: 0.2rem 0 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1a1a2e;
+  }
+
+  .pkg-subtitle {
+    margin: 0.2rem 0 0;
+    font-size: 0.8rem;
+    color: #6b7280;
+  }
+}
+
+.pkg-pricing {
+  margin-bottom: 1.2rem;
+
+  .pkg-price {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #7c3aed;
+  }
+
+  .pkg-installment {
+    font-size: 0.82rem;
+    color: #6b7280;
+  }
+}
+
+.pkg-actions {
+  display: flex;
+  gap: 0.6rem;
+
+  .btn-edit {
+    flex: 1;
+    background: #f5f3ff;
+    color: #7c3aed;
+    border: 1.5px solid #c4b5fd;
+    padding: 0.45rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #ede9fe;
+    }
+  }
+
+  .btn-delete {
+    flex: 1;
+    background: #fef2f2;
+    color: #ef4444;
+    border: 1.5px solid #fca5a5;
+    padding: 0.45rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #fee2e2;
+    }
+  }
+}
+
+/* ── LOADING / EMPTY ─────────────────────────────── */
+.loading-state,
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3rem;
+  color: #9ca3af;
+  font-size: 0.95rem;
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #7c3aed;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

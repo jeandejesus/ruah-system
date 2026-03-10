@@ -14,6 +14,7 @@ import { CreateSchoolComponent } from './pages/create-school/create-school.compo
 import { PagamentosPixComponent } from './pages/pagamentos-pix/pagamentos-pix.component';
 import { CheckoutCartaoComponent } from './pages/checkout-cartao/checkout-cartao.component';
 import { LandingRuahComponent } from './pages/landing-ruah/landing-ruah.component';
+import { AdminPackagesComponent } from './pages/admin-packages/admin-packages.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,7 @@ const routes: Routes = [
               { path: 'lista', component: AlunosListagemComponent },
             ],
           },
+          { path: 'pacotes', component: AdminPackagesComponent },
         ],
         canActivate: [() => authGuard('owner')], // Apenas administradores
       },

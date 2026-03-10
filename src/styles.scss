@@ -20,6 +20,22 @@ body {
   width: 100%;
 }
 
+
 .content {
   height: 100vh;
+}
+
+.invalid-feedback {
+  color: #dc3545;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+input.ng-invalid.ng-touched {
+  border-color: #dc3545;
+}
+
+input.ng-invalid.ng-touched:focus {
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
 }

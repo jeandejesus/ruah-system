@@ -112,6 +112,16 @@
       </li>
 
       <li class="nav-item">
+        <a
+          class="nav-link"
+          routerLink="/painel/pacotes"
+          (click)="closeSidebarOnMobile()"
+        >
+          <i class="bi bi-box-seam"></i> Pacotes
+        </a>
+      </li>
+
+      <li class="nav-item">
         <a class="nav-link logout" (click)="logout()">
           <i class="bi bi-box-arrow-right"></i> Sair
         </a>

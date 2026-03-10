@@ -3,14 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AsaasCheckoutService } from '../../core/services/asaas-checkout.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { PackagePlan, RUAH_PACKAGES } from 'src/app/shared/packages.constants';
+import { PackagePlan } from 'src/app/shared/packages.constants';
+import { PackagesService } from 'src/app/core/services/packages.service';
+import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 
-interface PlanoOption {
-  key: string;
-  label: string;
-  value: number;
-  description: string;
-}
 
 @Component({
   selector: 'app-checkout-cartao',
@@ -21,8 +17,9 @@ export class CheckoutCartaoComponent implements OnInit, AfterViewInit {
   form!: FormGroup;
   loading = false;
   createdPayment: any | null = null;
+  loadingPlanos = true;
 
-  planos: PackagePlan[] = RUAH_PACKAGES;
+  planos: PackagePlan[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -30,6 +27,7 @@ export class CheckoutCartaoComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private toast: ToastrService,
     private router: Router,
+    private packagesService: PackagesService,
   ) {}
 
   ngAfterViewInit(): void {
@@ -48,52 +46,75 @@ export class CheckoutCartaoComponent implements OnInit, AfterViewInit {
       replaceUrl: true,
       queryParamsHandling: 'preserve'
     });
+
     const qp = this.route.snapshot.queryParamMap;
     const planoKeyQP = qp.get('pacote');
-    console.log('Query param planoKey:', planoKeyQP);
 
     const valueQP = Number(qp.get('value') || 0);
-    const descriptionQP = qp.get('description') || '';
     const customerIdQP = qp.get('customerId') || '';
     const dueDate = qp.get('dueDate') || this.today();
 
-    const defaultPlano = this.planos[Number(planoKeyQP) - 1] || this.planos[0];
-
     this.form = this.fb.group({
-      // sele��o do plano
-      planoKey: [defaultPlano.key, [Validators.required]],
-
-      // pagamento
-      customerId: [customerIdQP], // opcional no primeiro contato
+      planoKey: [null, [Validators.required]],
+      customerId: [customerIdQP],
       value: [
-        valueQP || defaultPlano.price,
+        valueQP || null,
         [Validators.required, Validators.min(1)],
       ],
       installmentCount: [6, [Validators.min(1), Validators.max(6)]],
       dueDate: [dueDate, [Validators.required]],
-
-      // dados do cart�o
-      holderName: ['', Validators.required],
-      number: ['', [Validators.required, Validators.minLength(13)]],
-      expiryMonth: ['', [Validators.required, Validators.minLength(2)]],
-      expiryYear: ['', [Validators.required, Validators.minLength(4)]],
-      ccv: ['', [Validators.required, Validators.minLength(3)]],
-
-      // dados do titular/cliente (para criar no Asaas se necessrio)
-      name: ['', Validators.required],
-      email: ['', [Validators.email]],
-      cpfCnpj: [''],
-      postalCode: [''],
-      addressNumber: [''],
-      mobilePhone: [''],
+      holderName: ['', [Validators.required, CustomValidators.fullName]],
+      number: ['', [Validators.required, CustomValidators.creditCard]],
+      expiryMonth: ['', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])$/)]],
+      expiryYear: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
+      ccv: ['', [Validators.required, Validators.pattern(/^\d{3,4}$/)]],
+      name: ['', [Validators.required, CustomValidators.fullName]],
+      email: ['', [Validators.required, Validators.email]],
+      cpfCnpj: ['', [Validators.required, CustomValidators.cpfCnpj]],
+      postalCode: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
+      addressNumber: ['', [Validators.required]],
+      mobilePhone: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(11)]],
+    }, {
+      validators: [CustomValidators.cardExpiry('expiryMonth', 'expiryYear')]
     });
 
-    // Reage � troca do plano para atualizar valor/descri��o automaticamente
+    // Atualiza valor automaticamente ao trocar o plano
     this.form.get('planoKey')?.valueChanges.subscribe((key: number) => {
-      console.log('Plano selecionado:', key);
-      const plano = this.planos.find((p) => p.key == key) || defaultPlano;
-      console.log('Dados do plano encontrado:', plano);
-      this.form.patchValue({ value: plano.price }, { emitEvent: false });
+      if (!key) return;
+      const plano = this.planos.find((p) => p.key === key);
+      if (plano) {
+        this.form.patchValue(
+          { value: plano.price, installmentCount: plano.installmentCount },
+          { emitEvent: false },
+        );
+      }
+    });
+
+    // Busca planos da API e inicializa o formulário já com o plano pré-selecionado
+    this.packagesService.getAll().subscribe({
+      next: (planos) => {
+        this.planos = planos;
+        this.loadingPlanos = false;
+
+        const defaultPlano =
+          this.planos.find((p) => p.key == Number(planoKeyQP)) ??
+          this.planos[0];
+
+        if (defaultPlano) {
+          // Utiliza timeout para garantir que os options do *ngFor ja existam no DOM
+          setTimeout(() => {
+            this.form.patchValue({
+              planoKey: defaultPlano.key,
+              value: valueQP || defaultPlano.price,
+              installmentCount: defaultPlano.installmentCount ?? 6
+            });
+          });
+        }
+      },
+      error: () => {
+        this.toast.error('Erro ao carregar planos. Tente novamente.');
+        this.loadingPlanos = false;
+      },
     });
   }
 
@@ -105,7 +126,8 @@ export class CheckoutCartaoComponent implements OnInit, AfterViewInit {
   async submit() {
     console.log('Form data:', this.form.value);
     if (this.form.invalid) {
-      this.toast.error('Preencha os campos obrigat�rios.');
+      this.form.markAllAsTouched();
+      this.toast.error('Por favor, corrija os erros no formulário antes de continuar.');
       return;
     }
 
@@ -121,9 +143,9 @@ export class CheckoutCartaoComponent implements OnInit, AfterViewInit {
         const customerPayload: any = {
           name: f.name,
           email: f.email || undefined,
-          cpfCnpj: f.cpfCnpj || undefined,
-          mobilePhone: f.mobilePhone || undefined,
-          postalCode: f.postalCode || undefined,
+          cpfCnpj: f.cpfCnpj ? String(f.cpfCnpj).replace(/\D/g, '') : undefined,
+          mobilePhone: f.mobilePhone ? String(f.mobilePhone).replace(/\D/g, '') : undefined,
+          postalCode: f.postalCode ? String(f.postalCode).replace(/\D/g, '') : undefined,
           addressNumber: f.addressNumber || undefined,
         };
         const created = await this.api
@@ -150,10 +172,10 @@ export class CheckoutCartaoComponent implements OnInit, AfterViewInit {
           creditCardHolderInfo: {
             name: f.name,
             email: f.email || undefined,
-            cpfCnpj: f.cpfCnpj || undefined,
-            postalCode: f.postalCode || undefined,
+            cpfCnpj: f.cpfCnpj ? String(f.cpfCnpj).replace(/\D/g, '') : undefined,
+            postalCode: f.postalCode ? String(f.postalCode).replace(/\D/g, '') : undefined,
             addressNumber: f.addressNumber || undefined,
-            mobilePhone: f.mobilePhone || undefined,
+            mobilePhone: f.mobilePhone ? String(f.mobilePhone).replace(/\D/g, '') : undefined,
           },
         })
         .toPromise();

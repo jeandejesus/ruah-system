@@ -78,7 +78,8 @@ html {
 
 .reveal-card {
   opacity: 0;
-   transition: opacity 0.8s $transition-smooth, transform 0.8s $transition-smooth;
+  transform: translateY(30px);
+  transition: opacity 0.8s $transition-smooth, transform 0.8s $transition-smooth;
 
   &.active {
     opacity: 1;

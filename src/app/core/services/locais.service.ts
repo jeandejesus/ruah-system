@@ -7,6 +7,7 @@ export interface Local {
   _id?: string;
   name: string;
   address: string;
+  dayTime?: string;
 }
 
 @Injectable({

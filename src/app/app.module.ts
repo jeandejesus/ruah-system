@@ -27,6 +27,7 @@ import { LocaisComponent } from './pages/locais/locais.component';
 import { LocaisRoutingModule } from './pages/locais/locais-routing.module';
 import { PagamentosPixComponent } from './pages/pagamentos-pix/pagamentos-pix.component';
 import { CurrencyBrPipe } from './pipes/currency-br.pipe';
+import { AdminPackagesComponent } from './pages/admin-packages/admin-packages.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { CurrencyBrPipe } from './pipes/currency-br.pipe';
     CheckoutCartaoComponent,
     CurrencyBrPipe,
     LoadingSpinnerComponent,
+    AdminPackagesComponent,
   ],
   imports: [
     BrowserModule,
