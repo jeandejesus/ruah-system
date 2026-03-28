@@ -65,8 +65,7 @@ const routes: Routes = [
       {
         path: 'locais',
         component: LocaisComponent,
-        canActivate: [() => authGuard('owner')], // Apenas administradores
-      },
+       },
     ],
   },
 

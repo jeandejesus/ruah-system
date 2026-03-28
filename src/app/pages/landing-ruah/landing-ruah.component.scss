@@ -806,14 +806,17 @@ html {
 }
 
 .package-grid {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 24px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .package-card {
+  width: 100%;
+  max-width: 380px;
   position: relative;
   background: $dark-card;
   padding: 40px 32px;
@@ -901,14 +904,15 @@ html {
 }
 
 @media (min-width: 768px) {
-  .package-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .package-card {
+    width: calc(50% - 12px);
+    max-width: none;
   }
 }
 
 @media (min-width: 1100px) {
-  .package-grid {
-    grid-template-columns: repeat(4, 1fr);
+  .package-card {
+    width: calc(25% - 18px);
   }
 }
 
