@@ -185,15 +185,29 @@ export class LandingRuahComponent implements OnInit, AfterViewInit {
       lead_unit: unidade
     });
 
+    // Dispara evento para o Facebook Pixel
+    this.pushToMetaPixel('Lead', {
+      content_name: 'Aula Experimental',
+      content_category: 'Lead',
+      value: 0,
+      currency: 'BRL'
+    });
+
     this.trialSent = true;
   }
 
   // === RASTREAMENTO ===
   trackCta(ctaName: string): void {
-    this.pushToDataLayer({
+    const data = {
       event: 'cta_click',
       cta_name: ctaName
-    });
+    };
+    this.pushToDataLayer(data);
+
+    // Se for clique em pacote, rastreia como início de checkout no Meta
+    if (ctaName === 'select_package') {
+      this.pushToMetaPixel('InitiateCheckout');
+    }
   }
 
   trackWhatsApp(location: string): void {
@@ -201,12 +215,29 @@ export class LandingRuahComponent implements OnInit, AfterViewInit {
       event: 'contact_whatsapp',
       button_location: location
     });
+
+    // Rastreia como contato no Meta
+    this.pushToMetaPixel('Contact', {
+      content_category: 'WhatsApp',
+      content_name: location
+    });
   }
 
   private pushToDataLayer(data: Record<string, string>): void {
     const w = window as any;
     if (w.dataLayer) {
       w.dataLayer.push(data);
+    }
+  }
+
+  private pushToMetaPixel(event: string, params?: any): void {
+    const w = window as any;
+    if (w.fbq) {
+      if (params) {
+        w.fbq('track', event, params);
+      } else {
+        w.fbq('track', event);
+      }
     }
   }
 }
