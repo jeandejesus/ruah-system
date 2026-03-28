@@ -22,7 +22,7 @@
     <p class="hero-subtitle">Fôlego de vida e espiritualidade em movimento</p>
 
     <div class="hero-cta-group">
-      <a class="btn-primary" (click)="scrollToPacotes()">
+      <a class="btn-primary" (click)="scrollToPacotes(); trackCta('hero_cta')">
         Quero viver essa experiência
       </a>
       <span class="hero-age">A partir de 11 anos</span>
@@ -187,7 +187,7 @@
   </div>
 </section>
 
-<!-- PACOTES -->
+<!-- PACOTES (CONVERSÃO PRIMÁRIA) -->
 <section class="packages" id="pacotes">
   <div class="packages-header">
     <span class="section-eyebrow reveal-fade-up">Investimento</span>
@@ -227,6 +227,7 @@
         class="btn-secondary"
         [routerLink]="['/checkout/cartao']"
         [queryParams]="{ pacote: pkg.key }"
+        (click)="trackCta('select_package')"
       >
         Quero esse pacote
       </button>
@@ -234,69 +235,7 @@
   </div>
 </section>
 
-
-<!-- LOCALIZAÇÕES -->
-<section class="locations">
-  <div class="locations-header">
-    <span class="section-eyebrow reveal-fade-up">Onde Happens</span>
-    <h2 class="reveal-fade-up" style="transition-delay: 0.1s">Nossas Unidades</h2>
-    <p class="locations-subtitle reveal-fade-up" style="transition-delay: 0.2s">
-      Aulas acontecendo em paróquias de Curitiba e studio parceiro
-    </p>
-  </div>
-
-  <!-- Loading state -->
-  <div *ngIf="loadingLocais" class="packages-loading">
-    <div class="loading-dots">
-      <span></span><span></span><span></span>
-    </div>
-  </div>
-
-  <div class="locations-grid" *ngIf="!loadingLocais">
-    <a
-      class="location-card reveal-card"
-      *ngFor="let local of locais; let i = index"
-      [attr.href]="'https://wa.me/5541987917610?text=' + 'Olá! Gostaria de saber sobre as aulas na ' + local.name + '.'"
-      target="_blank"
-      rel="noopener"
-      [style.transition-delay]="(i * 0.1) + 's'"
-    >
-      <div class="location-icon">◈</div>
-      <h3>{{ local.name }}</h3>
-      <p *ngIf="local.dayTime">{{ local.dayTime }}</p>
-      <span>{{ local.address }}</span>
-      
-      <div class="whatsapp-cta">
-        <i class="bi bi-whatsapp"></i>
-        <span>Tire suas dúvidas pelo WhatsApp</span>
-      </div>
-    </a>
-  </div>
-</section>
-
-<!-- CTA FINAL -->
-<section class="final-cta">
-  <div class="cta-particles"></div>
-
-  <div class="cta-content">
-    <span class="section-eyebrow reveal-fade-up">Pronto para começar?</span>
-    <h2 class="reveal-fade-up" style="transition-delay: 0.1s">
-      Você não foi chamado <br />
-      <em>para ficar parado</em>
-    </h2>
-    <p class="reveal-fade-up" style="transition-delay: 0.2s">
-      Junte-se a nós nessa jornada de fé, arte e transformação
-    </p>
-
-    <div class="reveal-fade-up" style="transition-delay: 0.3s">
-      <a class="btn-primary btn-large" (click)="scrollToPacotes()">
-        Entrar para a Ruah
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- TESTEMUNHOS (PROVA SOCIAL) -->
+<!-- TESTEMUNHOS (PROVA SOCIAL — logo após os preços para validar a decisão) -->
 <section class="testimonials">
   <div class="testimonials-header">
     <span class="section-eyebrow reveal-fade-up">Transformações</span>
@@ -328,7 +267,47 @@
   </div>
 </section>
 
-<!-- FAQ (QUEBRA DE OBJEÇÕES) -->
+<!-- LOCALIZAÇÕES -->
+<section class="locations">
+  <div class="locations-header">
+    <span class="section-eyebrow reveal-fade-up">Onde Acontece</span>
+    <h2 class="reveal-fade-up" style="transition-delay: 0.1s">Nossas Unidades</h2>
+    <p class="locations-subtitle reveal-fade-up" style="transition-delay: 0.2s">
+      Aulas acontecendo em paróquias de Curitiba e studio parceiro
+    </p>
+  </div>
+
+  <!-- Loading state -->
+  <div *ngIf="loadingLocais" class="packages-loading">
+    <div class="loading-dots">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <div class="locations-grid" *ngIf="!loadingLocais">
+    <a
+      class="location-card reveal-card"
+      *ngFor="let local of locais; let i = index"
+      [attr.href]="'https://wa.me/5541987917610?text=' + 'Olá! Gostaria de saber sobre as aulas na ' + local.name + '.'"
+      target="_blank"
+      rel="noopener"
+      [style.transition-delay]="(i * 0.1) + 's'"
+      (click)="trackWhatsApp('location_' + local.name)"
+    >
+      <div class="location-icon">◈</div>
+      <h3>{{ local.name }}</h3>
+      <p *ngIf="local.dayTime">{{ local.dayTime }}</p>
+      <span>{{ local.address }}</span>
+      
+      <div class="whatsapp-cta">
+        <i class="bi bi-whatsapp"></i>
+        <span>Tire suas dúvidas pelo WhatsApp</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- FAQ (QUEBRA DE OBJEÇÕES — antes da aula experimental para remover últimas dúvidas) -->
 <section class="faq" id="faq">
   <div class="faq-container">
     <div class="faq-header">
@@ -350,6 +329,83 @@
   </div>
 </section>
 
+<!-- AGENDAR AULA EXPERIMENTAL (CONVERSÃO SECUNDÁRIA — captura quem não comprou online) -->
+<section class="trial-class" id="aula-experimental">
+  <div class="trial-container">
+    <div class="trial-visual reveal-scale">
+      <div class="trial-badge-icon">✦</div>
+      <h3>Sua primeira aula é <em>gratuita</em></h3>
+      <p>Venha experimentar uma aula sem compromisso. Conheça a energia, os professores e a proposta da Ruah antes de se matricular.</p>
+      <div class="trial-benefits">
+        <span>✓ Sem compromisso</span>
+        <span>✓ Todas as modalidades</span>
+        <span>✓ Para iniciantes</span>
+      </div>
+    </div>
+
+    <div class="trial-form-wrapper reveal-fade-up">
+      <div *ngIf="!trialSent">
+        <span class="section-eyebrow">Agendar agora</span>
+        <h2>Quero experimentar</h2>
+        <form (submit)="submitTrialClass($event)" class="trial-form">
+          <div class="form-group">
+            <input type="text" name="name" placeholder="Seu nome" required />
+          </div>
+          <div class="form-group">
+            <input type="tel" name="whatsapp" placeholder="Seu WhatsApp (DDD + número)" required />
+          </div>
+          <div class="form-group">
+            <select name="unidade" required>
+              <option value="" disabled selected>Escolha a unidade</option>
+              <option *ngFor="let local of locais" [value]="local.name">{{ local.name }}</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-gold btn-full">
+            Agendar minha aula gratuita
+          </button>
+        </form>
+      </div>
+
+      <div *ngIf="trialSent" class="trial-success">
+        <div class="success-icon">✓</div>
+        <h3>Aula agendada!</h3>
+        <p>Entraremos em contato pelo WhatsApp para confirmar o melhor horário para você.</p>
+        <a 
+          [href]="trialWhatsAppLink" 
+          class="btn-primary" 
+          target="_blank" 
+          rel="noopener"
+          (click)="trackWhatsApp('trial_confirmation')"
+        >
+          Confirmar pelo WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="final-cta">
+  <div class="cta-particles"></div>
+
+  <div class="cta-content">
+    <span class="section-eyebrow reveal-fade-up">Pronto para começar?</span>
+    <h2 class="reveal-fade-up" style="transition-delay: 0.1s">
+      Você não foi chamado <br />
+      <em>para ficar parado</em>
+    </h2>
+    <p class="reveal-fade-up" style="transition-delay: 0.2s">
+      Junte-se a nós nessa jornada de fé, arte e transformação
+    </p>
+
+    <div class="reveal-fade-up" style="transition-delay: 0.3s">
+      <a class="btn-primary btn-large" (click)="scrollToPacotes()">
+        Entrar para a Ruah
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- WHATSAPP FLOATING BUTTON -->
 <a 
   href="https://wa.me/5541987917610?text=Olá! Vim pelo site e gostaria de agendar uma aula experimental gratuita." 
@@ -357,6 +413,7 @@
   target="_blank" 
   rel="noopener"
   aria-label="Falar conosco no WhatsApp"
+  (click)="trackWhatsApp('float')"
 >
   <div class="whatsapp-badge">Aula experimental gratuita</div>
   <i class="bi bi-whatsapp"></i>

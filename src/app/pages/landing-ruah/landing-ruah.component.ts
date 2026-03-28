@@ -24,6 +24,9 @@ export class LandingRuahComponent implements OnInit, AfterViewInit {
   locais: Local[] = [];
   loadingLocais = true;
 
+  trialSent = false;
+  trialWhatsAppLink = '';
+
   faqItems = [
     {
       question: 'Nunca dancei, posso começar na Ruah?',
@@ -55,14 +58,14 @@ export class LandingRuahComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle('Ruah | Dança e Profecia - Escola de Dança Católica');
+    this.titleService.setTitle('Ruah | Dança e Profecia - Escola de Dança Católica em Curitiba');
 
     this.metaService.addTags([
-      { name: 'description', content: 'Escola de dança Ruah em Curitiba - Transformando vidas através da dança e profecia. Jazz Contemporâneo, Danças Urbanas e formação católica no bairro e proximidades.' },
-      { name: 'keywords', content: 'dança curitiba, escola de dança curitiba, ruah, dança católica curitiba, jazz contemporâneo curitiba, danças urbanas curitiba' },
+      { name: 'description', content: 'Escola de dança Ruah em Curitiba - Transformando vidas através da dança e profecia. Jazz Contemporâneo, Danças Urbanas e formação católica. Agende sua aula experimental gratuita.' },
+      { name: 'keywords', content: 'dança curitiba, escola de dança curitiba, ruah, dança católica curitiba, jazz contemporâneo curitiba, danças urbanas curitiba, aula experimental dança curitiba' },
       { name: 'author', content: 'Ruah System' },
-      { property: 'og:title', content: 'Ruah | Dança e Profecia' },
-      { property: 'og:description', content: 'Transformando vidas através da dança e profecia. Venha dançar conosco!' },
+      { property: 'og:title', content: 'Ruah | Dança e Profecia - Curitiba' },
+      { property: 'og:description', content: 'Agende sua aula experimental gratuita. Transformando vidas através da dança e profecia.' },
       { property: 'og:image', content: './assets/ruah.PNG' },
       { property: 'og:type', content: 'website' }
     ]);
@@ -77,13 +80,11 @@ export class LandingRuahComponent implements OnInit, AfterViewInit {
         this.packages = data;
         this.loadingPackages = false;
         
-        // Inicializa a animação dos cards após eles serem renderizados no DOM
         setTimeout(() => {
           this.observeElements('.package-card.reveal-card');
         }, 50);
       },
       error: () => {
-        // Fallback silencioso — landing não deve quebrar
         this.loadingPackages = false;
       },
     });
@@ -121,7 +122,6 @@ export class LandingRuahComponent implements OnInit, AfterViewInit {
       video.play().catch(() => {});
     }
 
-    // Seletores de animação
     const selectors = [
       '.reveal-fade-up',
       '.reveal-scale',
@@ -144,7 +144,7 @@ export class LandingRuahComponent implements OnInit, AfterViewInit {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('active');
-            observer.unobserve(entry.target); // Para parar de observar após animar
+            observer.unobserve(entry.target);
           }
         });
       },
@@ -154,12 +154,59 @@ export class LandingRuahComponent implements OnInit, AfterViewInit {
     elements.forEach((el) => observer.observe(el));
   }
 
-  scrollToPacotes() {
+  scrollToPacotes(): void {
     const el = document.getElementById('pacotes');
     el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   toggleFaq(index: number): void {
     this.faqItems[index].isOpen = !this.faqItems[index].isOpen;
+  }
+
+  // === CONVERSÃO SECUNDÁRIA: Aula Experimental ===
+  submitTrialClass(event: Event): void {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+    
+    const name = formData.get('name') as string;
+    const whatsapp = formData.get('whatsapp') as string;
+    const unidade = formData.get('unidade') as string;
+
+    // Monta link do WhatsApp com mensagem personalizada
+    const message = `Olá! Meu nome é ${name} e gostaria de agendar uma aula experimental gratuita na unidade ${unidade}. Meu WhatsApp: ${whatsapp}`;
+    this.trialWhatsAppLink = `https://wa.me/5541987917610?text=${encodeURIComponent(message)}`;
+
+    // Dispara evento para o GTM
+    this.pushToDataLayer({
+      event: 'book_trial_class',
+      lead_name: name,
+      lead_whatsapp: whatsapp,
+      lead_unit: unidade
+    });
+
+    this.trialSent = true;
+  }
+
+  // === RASTREAMENTO ===
+  trackCta(ctaName: string): void {
+    this.pushToDataLayer({
+      event: 'cta_click',
+      cta_name: ctaName
+    });
+  }
+
+  trackWhatsApp(location: string): void {
+    this.pushToDataLayer({
+      event: 'contact_whatsapp',
+      button_location: location
+    });
+  }
+
+  private pushToDataLayer(data: Record<string, string>): void {
+    const w = window as any;
+    if (w.dataLayer) {
+      w.dataLayer.push(data);
+    }
   }
 }
