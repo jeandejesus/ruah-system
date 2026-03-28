@@ -24,6 +24,29 @@ export class LandingRuahComponent implements OnInit, AfterViewInit {
   locais: Local[] = [];
   loadingLocais = true;
 
+  faqItems = [
+    {
+      question: 'Nunca dancei, posso começar na Ruah?',
+      answer: 'Com certeza! Temos turmas específicas para iniciantes onde focamos na base técnica e no acolhimento do aluno. Não é necessária experiência prévia.',
+      isOpen: false
+    },
+    {
+      question: 'Preciso de um par para as aulas?',
+      answer: 'Não. Nossas aulas de Jazz Contemporâneo e Danças Urbanas são focadas no desenvolvimento individual e em grupo, sem necessidade de par.',
+      isOpen: false
+    },
+    {
+      question: 'Como funciona a aula experimental?',
+      answer: 'Oferecemos uma aula experimental gratuita para que você conheça nossa metodologia, os professores e o ambiente da escola antes de se matricular.',
+      isOpen: false
+    },
+    {
+      question: 'Quais os locais das aulas em Curitiba?',
+      answer: 'Atualmente temos unidades em paróquias estratégicas de Curitiba e studio parceiro. Verifique a seção de unidades para o endereço mais próximo de você.',
+      isOpen: false
+    }
+  ];
+
   constructor(
     private titleService: Title,
     private metaService: Meta,
@@ -35,8 +58,8 @@ export class LandingRuahComponent implements OnInit, AfterViewInit {
     this.titleService.setTitle('Ruah | Dança e Profecia - Escola de Dança Católica');
 
     this.metaService.addTags([
-      { name: 'description', content: 'Escola de dança Ruah - Transformando vidas através da dança e profecia. Conheça nossos pacotes e modalidades de Ballet, Jazz Contemporâneo e muito mais em uma perspectiva Católica.' },
-      { name: 'keywords', content: 'dança, escola de dança, ruah, dança católica, profecia, ballet, jazz contemporâneo' },
+      { name: 'description', content: 'Escola de dança Ruah em Curitiba - Transformando vidas através da dança e profecia. Jazz Contemporâneo, Danças Urbanas e formação católica no bairro e proximidades.' },
+      { name: 'keywords', content: 'dança curitiba, escola de dança curitiba, ruah, dança católica curitiba, jazz contemporâneo curitiba, danças urbanas curitiba' },
       { name: 'author', content: 'Ruah System' },
       { property: 'og:title', content: 'Ruah | Dança e Profecia' },
       { property: 'og:description', content: 'Transformando vidas através da dança e profecia. Venha dançar conosco!' },
@@ -134,5 +157,9 @@ export class LandingRuahComponent implements OnInit, AfterViewInit {
   scrollToPacotes() {
     const el = document.getElementById('pacotes');
     el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  toggleFaq(index: number): void {
+    this.faqItems[index].isOpen = !this.faqItems[index].isOpen;
   }
 }

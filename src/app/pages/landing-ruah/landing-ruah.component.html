@@ -268,7 +268,7 @@
       
       <div class="whatsapp-cta">
         <i class="bi bi-whatsapp"></i>
-        <span>Agendar Aula experimental pelo WhatsApp</span>
+        <span>Tire suas dúvidas pelo WhatsApp</span>
       </div>
     </a>
   </div>
@@ -295,6 +295,72 @@
     </div>
   </div>
 </section>
+
+<!-- TESTEMUNHOS (PROVA SOCIAL) -->
+<section class="testimonials">
+  <div class="testimonials-header">
+    <span class="section-eyebrow reveal-fade-up">Transformações</span>
+    <h2 class="reveal-fade-up" style="transition-delay: 0.1s">O que dizem nossos alunos</h2>
+  </div>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal-card" style="transition-delay: 0s">
+      <div class="quote-icon">"</div>
+      <p>A Ruah mudou minha forma de rezar. Encontrei na dança uma conexão profunda com o Espírito Santo que nunca imaginei ser possível.</p>
+      <div class="testimonial-author">
+        <div class="author-info">
+          <strong>Maria Clara</strong>
+          <span>Aluna de Jazz Contemporâneo</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card reveal-card" style="transition-delay: 0.1s">
+      <div class="quote-icon">"</div>
+      <p>Mesmo começando do zero, me senti acolhida. Os professores têm uma técnica incrível e uma espiritualidade contagiante.</p>
+      <div class="testimonial-author">
+        <div class="author-info">
+          <strong>João Pedro</strong>
+          <span>Aluno de Danças Urbanas</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ (QUEBRA DE OBJEÇÕES) -->
+<section class="faq" id="faq">
+  <div class="faq-container">
+    <div class="faq-header">
+      <span class="section-eyebrow reveal-fade-up">Dúvidas</span>
+      <h2 class="reveal-fade-up" style="transition-delay: 0.1s">Perguntas Frequentes</h2>
+    </div>
+
+    <div class="faq-grid">
+      <div class="faq-item reveal-fade-up" *ngFor="let item of faqItems; let i = index" [class.open]="item.isOpen">
+        <button class="faq-question" (click)="toggleFaq(i)">
+          <span>{{ item.question }}</span>
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer">
+          <p>{{ item.answer }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHATSAPP FLOATING BUTTON -->
+<a 
+  href="https://wa.me/5541987917610?text=Olá! Vim pelo site e gostaria de agendar uma aula experimental gratuita." 
+  class="whatsapp-float" 
+  target="_blank" 
+  rel="noopener"
+  aria-label="Falar conosco no WhatsApp"
+>
+  <div class="whatsapp-badge">Aula experimental gratuita</div>
+  <i class="bi bi-whatsapp"></i>
+</a>
 
 <!-- FOOTER -->
 <footer class="landing-footer">
